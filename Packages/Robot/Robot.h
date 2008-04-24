@@ -1,6 +1,6 @@
 #include <vector>
 
-virtual class Robot {
+class Robot {
     public:
         unsigned short int getRodaSize();
         unsigned short int setRodaSize(unsigned short int cm);
