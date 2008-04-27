@@ -9,17 +9,19 @@
 
 #include <iostream>
 
-#include <QApplication>
-#include <QLabel>
+#include "ui_RobotQt.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]){
-	cout << "RobotQt Loaded" << endl;
 	QApplication RobotQtApp(argc, argv);
-	QLabel *lblTeste = new QLabel("RobotQt Project is loading...");
+	QMainWindow *RobotQtMainWindow = new QMainWindow;
+	Ui::MainWindow MainWindowUI;
+	MainWindowUI.setupUi(RobotQtMainWindow);
 	
-	lblTeste->show();
+	RobotQtMainWindow->show();
+
+	cout << "RobotQt Loaded" << endl;
 	
     return RobotQtApp.exec();
 }

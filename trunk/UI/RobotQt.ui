@@ -1,24 +1,109 @@
 <ui version="4.0" >
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow" >
+  <property name="windowModality" >
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry" >
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>801</width>
-    <height>572</height>
+    <width>847</width>
+    <height>665</height>
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>MainWindow</string>
+   <string>RobotQt - Robot Simulation</string>
   </property>
-  <widget class="QWidget" name="centralwidget" />
+  <widget class="QWidget" name="centralwidget" >
+   <layout class="QHBoxLayout" >
+    <item>
+     <widget class="QGroupBox" name="groupBox" >
+      <property name="sizePolicy" >
+       <sizepolicy vsizetype="Expanding" hsizetype="Minimum" >
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize" >
+       <size>
+        <width>200</width>
+        <height>550</height>
+       </size>
+      </property>
+      <property name="title" >
+       <string>Robot Addin</string>
+      </property>
+      <layout class="QVBoxLayout" >
+       <item>
+        <widget class="QPushButton" name="btnTest" >
+         <property name="text" >
+          <string>Faça o teste -></string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <spacer>
+      <property name="orientation" >
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType" >
+       <enum>QSizePolicy::Maximum</enum>
+      </property>
+      <property name="sizeHint" >
+       <size>
+        <width>51</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget" >
+      <property name="minimumSize" >
+       <size>
+        <width>550</width>
+        <height>550</height>
+       </size>
+      </property>
+      <property name="currentIndex" >
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab" >
+       <attribute name="title" >
+        <string>Cenario</string>
+       </attribute>
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QLabel" name="lblZuera" >
+          <property name="layoutDirection" >
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text" >
+           <string>ISSO É UM TESTE</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2" >
+       <attribute name="title" >
+        <string>Source Code</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menubar" >
    <property name="geometry" >
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>801</width>
+     <width>847</width>
      <height>22</height>
     </rect>
    </property>
@@ -27,6 +112,7 @@
      <string>RobotQt</string>
     </property>
     <addaction name="actionAbout" />
+    <addaction name="actionAbout_QT" />
     <addaction name="separator" />
     <addaction name="actionQuit" />
    </widget>
@@ -37,6 +123,9 @@
    <property name="text" >
     <string>About RobotQt</string>
    </property>
+   <property name="menuRole" >
+    <enum>QAction::AboutRole</enum>
+   </property>
   </action>
   <action name="actionQuit" >
    <property name="text" >
@@ -46,7 +135,32 @@
     <enum>QAction::QuitRole</enum>
    </property>
   </action>
+  <action name="actionAbout_QT" >
+   <property name="text" >
+    <string>About Qt</string>
+   </property>
+   <property name="menuRole" >
+    <enum>QAction::AboutQtRole</enum>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnTest</sender>
+   <signal>clicked()</signal>
+   <receiver>lblZuera</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>157</x>
+     <y>321</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>316</x>
+     <y>324</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
