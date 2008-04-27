@@ -12,10 +12,12 @@
 #include <QApplication>
 #include <QLabel>
 
+using namespace std;
+
 int main(int argc, char *argv[]){
-	std::cout << "RobotQt Loaded" << std::endl;
+	cout << "RobotQt Loaded" << endl;
 	QApplication RobotQtApp(argc, argv);
-	QLabel *lblTeste = new QLabel("RobotQt Project");
+	QLabel *lblTeste = new QLabel("RobotQt Project is loading...");
 	
 	lblTeste->show();
 	
