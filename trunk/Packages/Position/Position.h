@@ -26,7 +26,7 @@ short getDegree() const;
 
 Position & operator+(const Position &);
 Position & operator-(const Position &);
-//	inline Position & operator=(const Position & p2);
+//inline Position & operator=(const Position & p2);
 
 private:
 	short x;
