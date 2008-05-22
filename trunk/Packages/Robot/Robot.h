@@ -11,44 +11,38 @@
 #define ROBOT_H
 
 #include <vector>
-#include <string>
-#include <iostream>
+#include <QString>
 
-typedef unsigned short int USINT;
-using namespace std;
+class Sensor;
+class Motor;
+class Position;
 
-class Robot {
-    public:
-		//constructor
-		Robot(string Name, USINT Id = 1);
-        
-		//robot characteristics
-		string getName();
-        USINT getId();
-        
-		USINT getWheelSize();
-        void setWheelSize(USINT cm);
-		
-		//robot addins
-		void setMotor(Motor NewMotor);
-        Motor *getMotor(USINT Id);
-        void setSensor(Sensor NewSensor);
-        Sensor *getSensor(USINT Id);
-		
-		//destructor
-		~Robot();
+class Robot
+{
+public:
+	Robot(Qstring _name, ushort _id = 1) : name( _name ), id( _id );
+	~Robot();		 
 
-    private:
-        USINT Id;
-        USINT WheelSize;
-        string Name;
-        
-        vector<Motor> MotorsVector;
-        vector<Sensor> SensorsVector;
+	QString getName();
+	ushort getId();
 
-        //unsigned short int Degree;
-        //short int posX;
-        //short int posY;
+	ushort getWheelSize();
+	void setWheelSize(ushort cm);
+
+	void setMotor(Motor newMotor);
+	Motor *getMotor(ushort id);
+	void setSensor(Sensor newSensor);
+	Sensor *getSensor(ushort id);
+
+private:
+	ushort id;
+	ushort wheelSize;
+	QString name;
+
+	vector<Motor> motorsVector;
+	vector<Sensor> sensorsVector;
+
+	Position actualPosition;
 };
 
 #endif

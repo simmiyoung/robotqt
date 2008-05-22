@@ -1,30 +1,48 @@
+
+//RobotQt - http://robotqt.googlecode.com/
+
+//Packages/Position/Position.cpp
+
+//Revision: $Rev$
+//Author: $Author$
+//Date: $Date$
+
+#include <iostream>
+
 #include "Position.h"
 
-void Position::Set(Position& obj)
+using namespace std;
+
+Position::~Position()
+{
+	cout << "Robot Object destructed done!" << endl;
+}
+
+void Position::set(Position &obj)
 {
 	x = obj.x;
 	y = obj.y;
 	degree = obj.degree;
 }
 
-void Position::Set(short& x, short& y, short& degree)
+void Position::set(short x, short y, short degree)
 {
 	this->x = x;
 	this->y = y;
 	this->degree = degree;
 }
 
-short Position::GetX() const
+short Position::getX() const
 {
 	return x;
 }
 
-short Position::GetY() const
+short Position::getY() const
 {
 	return y;
 }
 
-short Position::GetDegree() const
+short Position::getDegree() const
 {
 	return degree;
 }
@@ -32,9 +50,9 @@ short Position::GetDegree() const
 Position & Position::operator+(const Position & p2) 
 {
 	Position* p3 = new Position;
-	p3->x = this->x + p2.x;
-	p3->y = this->y + p2.y;
-	p3->degree = this->degree + p2.degree;
+	p3->x = x + p2.x;
+	p3->y = y + p2.y;
+	p3->degree = degree + p2.degree;
 
 	return *p3;
 }
@@ -42,9 +60,9 @@ Position & Position::operator+(const Position & p2)
 Position & Position::operator-(const Position & p2) 
 {
 	Position* p3 = new Position;
-	p3->x = this->x - p2.x;
-	p3->y = this->y - p2.y;
-	p3->degree = this->degree - p2.degree;
+	p3->x = x - p2.x;
+	p3->y = y - p2.y;
+	p3->degree = degree - p2.degree;
 
 	return *p3;
 }
