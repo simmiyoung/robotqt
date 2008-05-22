@@ -72,6 +72,6 @@ Position & Position::operator-(const Position & p2)
 //	this->x = p2.x;
 //	this->y = p2.y;
 //	this->degree = p2.degree;
-//	
+//
 //	return *this;
 //}
