@@ -7,63 +7,65 @@
 //Author: $Author$
 //Date: $Date$
 
-#include "Robot.h"
+#include <iostream>
 
-Robot::Robot(string Name, USINT Id)
+#include "Robot.h"
+#include "../Position/Position.h"
+
+using namespace std;
+
+Robot::Robot(string _name, ushort _id) : name( _name ), id( _id )
 {
 	cout << "Robot constructor working..." << endl;
-	this->Name = Name;
-	this->Id = Id;
-	
-	this->setWheelSize(100); //1 meter == 100 cm
+	setWheelSize(100); //1 meter == 100 cm
 	cout << "Robot constructor done!" << endl;
-}
-
-string Robot::getName()
-{
-	return this->Name;
-}
-
-USINT Robot::getId()
-{
-	return this->Id;
-}
-
-USINT Robot::getWheelSize()
-{
-	return this->WheelSize;
-}
-
-void Robot::setWheelSize(USINT cm)
-{
-	this->WheelSize = cm;
-}
-
-void Robot::setMotor(Motor NewMotor)
-{
-	this->MotorsVector.push_back(NewMotor);
-	cout << "NewMotor added" << endl;
-}
-
-Motor Robot::getMotor(USINT Id)
-{
-	//TODO implementation for the Id search
-	return this->MotorsVector[0];
-}
-
-void Robot::setSensor(Sensor NewSensor)
-{
-	this->SensorsVector.push_back(NewSensor);
-	cout << "NewSensor added" << endl;
-}
-
-Sensor Robot::getSensor(USINT Id)
-{
-	//TODO implementation for the Id search
-	return this->SensorsVector[0];
 }
 
 Robot::~Robot()
 {
 	cout << "Robot Object destructed done!" << endl;
+}
+
+QString Robot::getName()
+{
+	return name;
+}
+
+ushort Robot::getId()
+{
+	return id;
+}
+
+ushort Robot::getWheelSize()
+{
+	return wheelSize;
+}
+
+void Robot::setWheelSize(ushort cm)
+{
+	wheelSize = cm;
+}
+
+void Robot::setMotor(Motor newMotor)
+{
+	motorsVector.push_back(newMotor);
+	cout << "NewMotor added" << endl;
+}
+
+Motor Robot::getMotor(ushort id)
+{
+	//TODO implementation for the Id search
+	return motorsVector[0];
+}
+
+void Robot::setSensor(Sensor newSensor)
+{
+	sensorsVector.push_back(newSensor);
+	cout << "NewSensor added" << endl;
+}
+
+Sensor Robot::getSensor(ushort id)
+{
+	//TODO implementation for the Id search
+	return sensorsVector[0];
 }
