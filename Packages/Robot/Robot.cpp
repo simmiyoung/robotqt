@@ -1,11 +1,14 @@
-
-//RobotQt - http://robotqt.googlecode.com/
-
-//Packages/Robot/Robot.cpp
-
-//Revision: $Rev$
-//Author: $Author$
-//Date: $Date$
+// 
+//  Robot.cpp
+//  RobotQt
+//  
+//  Created by Felipe Tonello on 2008-06-22.
+//  Copyright 2008 Felipe Ferreri Tonello. All rights reserved.
+//  http://robotqt.googlecode.com/
+// 
+//  Revision: $Rev$
+//  Author: $Author$
+//  Date: $Date$
 
 #include <iostream>
 

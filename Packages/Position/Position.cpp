@@ -1,11 +1,14 @@
-
-//RobotQt - http://robotqt.googlecode.com/
-
-//Packages/Position/Position.cpp
-
-//Revision: $Rev$
-//Author: $Author$
-//Date: $Date$
+// 
+//  Position.cpp
+//  RobotQt
+//  
+//  Created by Felipe Tonello on 2008-06-22. 
+//  Copyright 2008 Felipe Ferreri Tonello. All rights reserved.
+//  http://robotqt.googlecode.com/
+// 
+//  Revision: $Rev$
+//  Author: $Author$
+//  Date: $Date$
 
 #include <iostream>
 
@@ -15,7 +18,7 @@ using namespace std;
 
 Position::~Position()
 {
-	cout << "Robot Object destructed done!" << endl;
+	cout << "Position Object destructed done!" << endl;
 }
 
 void Position::set(Position &obj)
@@ -67,11 +70,11 @@ Position & Position::operator-(const Position & p2)
 	return *p3;
 }
 
-//Position & Position::operator=(const Position & p2) 
-//{
-//	this->x = p2.x;
-//	this->y = p2.y;
-//	this->degree = p2.degree;
-//
-//	return *this;
-//}
+// Position & Position::operator=(const Position & p2) 
+// {
+//     this->x = p2.x;
+//     this->y = p2.y;
+//     this->degree = p2.degree;
+// 
+//     return *this;
+// }
