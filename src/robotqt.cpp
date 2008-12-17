@@ -1,9 +1,8 @@
 #include "robotqt.h"
 
-RobotQt::RobotQt(QWidget *parent)
-    : QWidget(parent)
+RobotQt::RobotQt()
 {
-	ui.setupUi(this);
+
 }
 
 RobotQt::~RobotQt()

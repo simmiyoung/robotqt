@@ -14,40 +14,41 @@
 #ifndef ROBOT_H_
 #define ROBOT_H_
 
-#include <qstring.h>
-#include <qlist.h>
+#include <QString>
+#include <QList>
+
+#include "RobotPosition.h"
 
 class Motor;
 class Sensor;
-class RobotPosition;
 
 class Robot {
 public:
-	Robot(QString _name, qint8 _id);
-	virtual ~Robot();
+    Robot(QString _name, quint8 _id);
+    virtual ~Robot();
 
-	QString getName() const;
-	qint8 getId() const;
+    QString getName() const;
+    quint8 getId() const;
 
-	qint8 getWheelSize() const;
-	void setWheelSize(qint8 cm);
+    quint8 getWheelSize() const;
+    void setWheelSize(quint8 cm);
 
-	void setMotor(Motor *newMotor);
-	Motor * getMotor(qint8 _id) const;
-	void setSensor(Sensor *newSensor);
-	Sensor * getSensor(qint8 _id) const;
+    void set(Motor *newMotor);
+    void set(Sensor *newSensor);
+    Motor * getMotor(quint8 _id) const;
+    Sensor * getSensor(quint8 _id) const;
 
-	//TODO set position functions
+    // TODO set position functions
 
 private:
-	qint8 id;
-	qint8 wheelSize;
-	QString name;
+    quint8 id;
+    quint8 wheelSize;
+    QString name;
 
-	QList<Motor *> motorList;
-	QList<Sensor *> sensorList;
+    QList<Motor *> motorList;
+    QList<Sensor *> sensorList;
 
-	RobotPosition actualPosition;
+    RobotPosition actualPosition;
 };
 
 #endif /* ROBOT_H_ */

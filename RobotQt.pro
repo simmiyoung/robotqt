@@ -9,5 +9,5 @@ SOURCES += src/robotcore/Robot.cpp \
     src/robotcore/RobotPosition.cpp \
     src/main.cpp \
     src/robotqt.cpp
-FORMS += src/ui/robotqt.ui
+FORMS += 
 RESOURCES += 
