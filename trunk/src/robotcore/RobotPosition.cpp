@@ -13,22 +13,19 @@
 
 #include "RobotPosition.h"
 
-RobotPosition::RobotPosition() : x(0), y(0), degree(0)
+RobotPosition::RobotPosition()
 {
-
-}
-
-RobotPosition::RobotPosition(qint16 _x, qint16 _y, qint8 _degree) :
-	x(_x), y(_y), degree(_degree)
-	{
-
+    RobotPosition(0, 0, 0);
 }
 
 RobotPosition::RobotPosition(const RobotPosition &obj)
 {
-	this->x = obj.x;
-	this->y = obj.y;
-	this->degree = obj.degree;
+    RobotPosition(obj.x, obj.y, obj.degree);
+}
+
+RobotPosition::RobotPosition(quint16 _x, quint16 _y, qint8 _degree)
+{
+    set(_x, _y, _degree);
 }
 
 RobotPosition::~RobotPosition()
@@ -38,58 +35,63 @@ RobotPosition::~RobotPosition()
 
 void RobotPosition::set(const RobotPosition &obj)
 {
-    this->x = obj.x;
-    this->y = obj.y;
-    this->degree = obj.degree;
+    set(obj.x, obj.y, obj.degree);
 }
 
-void RobotPosition::set(qint16 x, qint16 y, qint8 degree)
+void RobotPosition::set(quint16 x, quint16 y, qint8 degree)
 {
-	this->x = x;
-	this->y = y;
-	this->degree = degree;
+    setX(x);
+    setY(y);
+    setDegree(degree);
 }
 
-qint16 RobotPosition::getX() const
+void RobotPosition::setX(quint16 x)
 {
-	return x;
+    this->x = x;
 }
 
-qint16 RobotPosition::getY() const
+void RobotPosition::setY(quint16 y)
 {
-	return y;
+    this->y = y;
+}
+
+/* Degree is in celcius */
+void RobotPosition::setDegree(qint8 degree)
+{
+    this->degree = degree % 360;
+}
+
+quint16 RobotPosition::getX() const
+{
+    return x;
+}
+
+quint16 RobotPosition::getY() const
+{
+    return y;
 }
 
 qint8 RobotPosition::getDegree() const
 {
-	return degree;
+    return degree;
 }
 
 RobotPosition & RobotPosition::operator+(const RobotPosition &obj)
 {
-	Position *n_pos = new RobotPosition;
-	n_pos->x = x - obj.x;
-	n_pos->y = y - obj.y;
-	n_pos->degree = degree - obj.degree;
-
-	return *n_pos;
+    Position *n_pos = new RobotPosition;
+    n_pos->set((x + obj.x), (y + obj.y), (degree + obj.degree));
+    return *n_pos;
 }
 
 RobotPosition & RobotPosition::operator-(const RobotPosition &obj)
 {
-	Position *n_pos = new RobotPosition;
-	n_pos->x = x - obj.x;
-	n_pos->y = y - obj.y;
-	n_pos->degree = degree - obj.degree;
-
-	return *n_pos;
+    Position *n_pos = new RobotPosition;
+    n_pos->set((x - obj.x), (y - obj.y), (degree - obj.degree));
+    return *n_pos;
 }
 
 RobotPosition & RobotPosition::operator=(const RobotPosition &obj)
 {
-	this->x = obj.x;
-	this->y = obj.y;
-	this->degree = obj.degree;
-
-	return *this;
+    set(obj.x, obj.y, obj.degree);
+    return *this;
 }

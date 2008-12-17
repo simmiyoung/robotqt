@@ -12,57 +12,65 @@
  */
 
 #include "Robot.h"
-#include "RobotPosition.h"
 
-Robot::Robot(QString _name, qint8 _id) :
-	name(_name), id(_id)
+
+Robot::Robot(QString _name, quint8 _id) :
+    name(_name), id(_id)
 {
-	setWheelSize(100); //1 meter == 100 cm
+    setWheelSize(100); // 100 cm = 1 m
 }
 
 Robot::~Robot()
 {
-	//TODO: Delete all Motor and Sensor
+    //TODO: Delete all Motor and Sensor
 }
 
-QString Robot::getName()
+QString Robot::getName() const
 {
-        return name;
+    return name;
 }
 
-qint8 Robot::getId()
+quint8 Robot::getId() const
 {
-        return id;
+    return id;
 }
 
-qint8 Robot::getWheelSize()
+quint8 Robot::getWheelSize() const
 {
-        return wheelSize;
+    return wheelSize;
 }
 
-void Robot::setWheelSize(qint8 cm)
+void Robot::setWheelSize(quint8 cm)
 {
-        wheelSize = cm;
+    wheelSize = cm;
 }
 
-void Robot::setMotor(Motor *newMotor)
+void Robot::set(Motor *newMotor)
 {
-        motorList.append(newMotor);
+    motorList.append(newMotor);
 }
 
-Motor *Robot::getMotor(qint8 _id)
+void Robot::set(Sensor *newSensor)
 {
-        //TODO implementation for the Id search
-        return motorList[0];
+    sensorList.append(newSensor);
 }
 
-void Robot::setSensor(Sensor *newSensor)
+Motor * Robot::getMotor(quint8 _id) const
 {
-        sensorList.append(newSensor);
+    for (int i = 0; i < motorList.size(); i++) {
+        if (motorList[i].getId() == _id) {
+            return motorList[i];
+        }
+    }
+    return NULL;
 }
 
-Sensor *Robot::getSensor(qint8 _id)
+Sensor * Robot::getSensor(quint8 _id) const
 {
-        //TODO implementation for the Id search
-        return sensorList[0];
+    for (int i = 0; i < sensorList.size(); i++) {
+        if (sensorList[i].getId() == _id) {
+            return sensorList[i];
+        }
+    }
+    return NULL;
 }

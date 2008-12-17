@@ -16,25 +16,28 @@
 
 class RobotPosition {
 public:
-	RobotPosition();
-	RobotPosition(qint16 _x, qint16 _y, qint8 _degree);
-	RobotPosition(const RobotPosition &obj);
-	virtual ~RobotPosition();
+    RobotPosition();
+    RobotPosition(const RobotPosition &obj);
+    RobotPosition(quint16 _x, quint16 _y, qint8 _degree);
+    virtual ~RobotPosition();
 
-	void set(const RobotPosition &obj);
-	void set(qint16 x, qint16 y, qint8 degree);
-	qint16 getX() const;
-	qint16 getY() const;
-	qint8 getDegree() const;
+    void set(const RobotPosition &obj);
+    void set(quint16 x, quint16 y, qint8 degree);
+    void setX(quint16 x);
+    void setY(quint16 y);
+    void setDegree(qint8 degree);
+    quint16 getX() const;
+    quint16 getY() const;
+    qint8 getDegree() const;
 
-	RobotPosition & operator+(const RobotPosition &obj);
-	RobotPosition & operator-(const RobotPosition &obj);
-	RobotPosition & operator=(const RobotPosition &obj);
+    RobotPosition & operator+(const RobotPosition &obj);
+    RobotPosition & operator-(const RobotPosition &obj);
+    RobotPosition & operator=(const RobotPosition &obj);
 
 private:
-        qint16 x;
-        qint16 y;
-        qint8 degree;
+    quint16 x;
+    quint16 y;
+    qint8 degree;
 };
 
 #endif /* ROBOTPOSITION_H_ */
