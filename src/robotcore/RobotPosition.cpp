@@ -15,12 +15,12 @@
 
 RobotPosition::RobotPosition()
 {
-    RobotPosition(0, 0, 0);
+    set(0, 0, 0);
 }
 
 RobotPosition::RobotPosition(const RobotPosition &obj)
 {
-    RobotPosition(obj.x, obj.y, obj.degree);
+    set(obj.x, obj.y, obj.degree);
 }
 
 RobotPosition::RobotPosition(quint16 _x, quint16 _y, qint8 _degree)
