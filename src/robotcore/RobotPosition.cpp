@@ -13,11 +13,6 @@
 
 #include "RobotPosition.h"
 
-RobotPosition::RobotPosition()
-{
-    set(0, 0, 0);
-}
-
 RobotPosition::RobotPosition(const RobotPosition &obj)
 {
     set(obj.x, obj.y, obj.degree);
@@ -38,27 +33,27 @@ void RobotPosition::set(const RobotPosition &obj)
     set(obj.x, obj.y, obj.degree);
 }
 
-void RobotPosition::set(quint16 x, quint16 y, qint8 degree)
+void RobotPosition::set(quint16 _x, quint16 _y, qint8 _degree)
 {
-    setX(x);
-    setY(y);
-    setDegree(degree);
+    setX(_x);
+    setY(_y);
+    setDegree(_degree);
 }
 
-void RobotPosition::setX(quint16 x)
+void RobotPosition::setX(quint16 _x)
 {
-    this->x = x;
+    x = x;
 }
 
-void RobotPosition::setY(quint16 y)
+void RobotPosition::setY(quint16 _y)
 {
-    this->y = y;
+    y = y;
 }
 
 /* Degree is in celcius */
-void RobotPosition::setDegree(qint8 degree)
+void RobotPosition::setDegree(qint8 _degree)
 {
-    this->degree = degree % 360;
+    degree = degree % 360;
 }
 
 quint16 RobotPosition::getX() const
