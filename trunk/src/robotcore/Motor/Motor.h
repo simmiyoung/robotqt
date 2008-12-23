@@ -1,5 +1,5 @@
 /*
- * Motor.cpp
+ * Motor.h
  * RobotQt - Robot Simulation
  *
  * Created by Felipe Tonello on 2008-12-10.
@@ -18,21 +18,21 @@
 
 class Motor {
 public:
-    enum MotorDirection {Forward, Backward};
+    enum Direction {Forward, Backward};
 
-    Motor(const QString _name, quint8 _id);
+    Motor(const QString _name, quint8 _id, Motor::Direction _direction=Forward);
     virtual ~Motor();
 
     quint8 getId() const;
     QString getName() const;
 
     virtual void setRpm(quint16 _rpm);
-    virtual void setDirection(Motor::MotorDirection _direction);
+    virtual void setDirection(Motor::Direction _direction);
 
     virtual void turnOn() = 0;
     virtual void turnOff() = 0;
 
-    static Motor::MotorDirection Direction;
+    static Motor::Direction direction;
 private:
     QString name;
     quint8 id;

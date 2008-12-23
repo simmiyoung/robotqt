@@ -1,5 +1,5 @@
 /*
- * Motor.h
+ * Motor.cpp
  * RobotQt - Robot Simulation
  *
  * Created by Felipe Tonello on 2008-12-10.
@@ -13,7 +13,7 @@
 
 #include "Motor.h"
 
-Motor::Motor(const QString _name, uint8 _id, MotorDirection _direction)
+Motor::Motor(const QString _name, uint8 _id, Motor::Direction _direction)
     : id(_id), name(_name), Motor::Direction(_direction)
 {
 
