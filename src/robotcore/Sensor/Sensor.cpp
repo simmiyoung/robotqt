@@ -1,5 +1,5 @@
 /*
- * Sensor.h
+ * Sensor.cpp
  * RobotQt - Robot Simulation
  *
  * Created by Felipe Tonello on 2008-12-10.

@@ -58,7 +58,7 @@ void Robot::set(Sensor *newSensor)
 
 Motor * Robot::getMotor(quint8 _id) const
 {
-    for (int i = 0; i < motorList.size(); i++) {
+    for (int i = 0; i < motorList.size(); ++i) {
         if (motorList[i]->getId() == _id) {
             return motorList[i];
         }
@@ -68,7 +68,7 @@ Motor * Robot::getMotor(quint8 _id) const
 
 Sensor * Robot::getSensor(quint8 _id) const
 {
-    for (int i = 0; i < sensorList.size(); i++) {
+    for (int i = 0; i < sensorList.size(); ++i) {
         if (sensorList[i]->getId() == _id) {
             return sensorList[i];
         }
