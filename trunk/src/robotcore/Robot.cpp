@@ -12,9 +12,10 @@
  */
 
 #include "Robot.h"
+#include "Motor/Motor.h"
+#include "Sensor/Sensor.h"
 
-
-Robot::Robot(QString _name, quint8 _id) :
+Robot::Robot(const QString _name, quint8 _id) :
     name(_name), id(_id)
 {
     setWheelSize(100); // 100 cm = 1 m
@@ -35,14 +36,14 @@ quint8 Robot::getId() const
     return id;
 }
 
-quint8 Robot::getWheelSize() const
-{
-    return wheelSize;
-}
-
 void Robot::setWheelSize(quint8 cm)
 {
     wheelSize = cm;
+}
+
+quint8 Robot::getWheelSize() const
+{
+    return wheelSize;
 }
 
 void Robot::set(Motor *newMotor)
@@ -58,7 +59,7 @@ void Robot::set(Sensor *newSensor)
 Motor * Robot::getMotor(quint8 _id) const
 {
     for (int i = 0; i < motorList.size(); i++) {
-        if (motorList[i].getId() == _id) {
+        if (motorList[i]->getId() == _id) {
             return motorList[i];
         }
     }
@@ -68,7 +69,7 @@ Motor * Robot::getMotor(quint8 _id) const
 Sensor * Robot::getSensor(quint8 _id) const
 {
     for (int i = 0; i < sensorList.size(); i++) {
-        if (sensorList[i].getId() == _id) {
+        if (sensorList[i]->getId() == _id) {
             return sensorList[i];
         }
     }

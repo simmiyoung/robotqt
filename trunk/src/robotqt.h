@@ -12,7 +12,7 @@ public:
     ~RobotQt();
 
 private:
-    //Ui::RobotQtClass ui;
+
 };
 
 #endif // ROBOTQT_H
