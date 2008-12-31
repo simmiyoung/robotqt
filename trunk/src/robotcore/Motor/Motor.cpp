@@ -13,8 +13,8 @@
 
 #include "Motor.h"
 
-Motor::Motor(const QString _name, uint8 _id, Motor::Direction _direction)
-    : id(_id), name(_name), Motor::Direction(_direction)
+Motor::Motor(const QString _name, quint8 _id, Motor::Direction _direction) :
+    id(_id), name(_name), direction(_direction)
 {
 
 }
@@ -34,12 +34,22 @@ QString Motor::getName() const
     return name;
 }
 
+quint16 Motor::getRpm() const
+{
+    return rpm;
+}
+
 void Motor::setRpm(quint16 _rpm)
 {
     rpm = _rpm;
 }
 
-void setDirection(Motor::MotorDirection _direction)
+Motor::Direction Motor::getDirection() const
 {
-    Motor::Direction = _direction;
+    return direction;
+}
+
+void Motor::setDirection(Motor::Direction _direction)
+{
+    direction = _direction;
 }

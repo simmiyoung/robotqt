@@ -17,10 +17,10 @@
 #include <QString>
 #include <QList>
 
+#include "Motor/Motor.h"
+#include "Sensor/Sensor.h"
 #include "RobotPosition.h"
 
-class Motor;
-class Sensor;
 
 class Robot {
 public:
