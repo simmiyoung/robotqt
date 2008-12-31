@@ -18,7 +18,7 @@ RobotPosition::RobotPosition(const RobotPosition &obj)
     set(obj.x, obj.y, obj.degree);
 }
 
-RobotPosition::RobotPosition(quint16 _x, quint16 _y, qint8 _degree)
+RobotPosition::RobotPosition(quint32 _x, quint32 _y, quint16 _degree)
 {
     set(_x, _y, _degree);
 }
@@ -33,54 +33,54 @@ void RobotPosition::set(const RobotPosition &obj)
     set(obj.x, obj.y, obj.degree);
 }
 
-void RobotPosition::set(quint16 _x, quint16 _y, qint8 _degree)
+void RobotPosition::set(quint32 _x, quint32 _y, quint16 _degree)
 {
     setX(_x);
     setY(_y);
     setDegree(_degree);
 }
 
-void RobotPosition::setX(quint16 _x)
+void RobotPosition::setX(quint32 _x)
 {
-    x = x;
+    x = _x;
 }
 
-void RobotPosition::setY(quint16 _y)
+void RobotPosition::setY(quint32 _y)
 {
-    y = y;
+    y = _y;
 }
 
 /* Degree is in celcius */
-void RobotPosition::setDegree(qint8 _degree)
+void RobotPosition::setDegree(quint16 _degree)
 {
-    degree = degree % 360;
+    degree = _degree % 360;
 }
 
-quint16 RobotPosition::getX() const
+quint32 RobotPosition::getX() const
 {
     return x;
 }
 
-quint16 RobotPosition::getY() const
+quint32 RobotPosition::getY() const
 {
     return y;
 }
 
-qint8 RobotPosition::getDegree() const
+quint16 RobotPosition::getDegree() const
 {
     return degree;
 }
 
 RobotPosition & RobotPosition::operator+(const RobotPosition &obj)
 {
-    Position *n_pos = new RobotPosition;
+    RobotPosition *n_pos = new RobotPosition;
     n_pos->set((x + obj.x), (y + obj.y), (degree + obj.degree));
     return *n_pos;
 }
 
 RobotPosition & RobotPosition::operator-(const RobotPosition &obj)
 {
-    Position *n_pos = new RobotPosition;
+    RobotPosition *n_pos = new RobotPosition;
     n_pos->set((x - obj.x), (y - obj.y), (degree - obj.degree));
     return *n_pos;
 }

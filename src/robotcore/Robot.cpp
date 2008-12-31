@@ -12,8 +12,6 @@
  */
 
 #include "Robot.h"
-#include "Motor/Motor.h"
-#include "Sensor/Sensor.h"
 
 Robot::Robot(const QString _name, quint8 _id) :
     name(_name), id(_id)

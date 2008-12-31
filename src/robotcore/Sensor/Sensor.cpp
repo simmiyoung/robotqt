@@ -13,8 +13,8 @@
 
 #include "Sensor.h"
 
-Sensor::Sensor(const QString _name, uint8 _id)
-    : id(_id), name(_name)
+Sensor::Sensor(const QString _name, quint8 _id)
+    : name(_name), id(_id)
 {
 
 }

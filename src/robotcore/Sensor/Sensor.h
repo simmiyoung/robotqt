@@ -27,6 +27,6 @@ public:
 private:
     QString name;
     quint8 id;
-}
+};
 
 #endif // SENSOR_H
