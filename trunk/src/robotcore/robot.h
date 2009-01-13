@@ -14,6 +14,8 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include "core.h"
+
 #include <QString>
 #include <QList>
 
@@ -29,13 +31,16 @@ public:
     Robot(const QString &_name, quint8 _id);
     virtual ~Robot();
 
-    virtual void setWheelSize(quint8 cm);
-    quint8 getWheelSize() const;
+    virtual void setWheelSize(quint32 cm);
+    quint32 getWheelSize() const;
 
     void setMotor(Motor *newMotor);
     void setSensor(Sensor *newSensor);
     Motor * getMotor(quint8 _id) const;
     Sensor * getSensor(quint8 _id) const;
+
+    bool init();
+    bool stop();
 
     virtual void turnOn() = 0;
     virtual void turnOff() = 0;
@@ -53,7 +58,7 @@ private:
     QList<Motor *> motorList;
     QList<Sensor *> sensorList;
 
-    RobotPosition currentPosition;
+    //RobotPosition currentPosition;
 };
 
 #endif /* ROBOT_H */

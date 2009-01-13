@@ -21,8 +21,7 @@ Sensor::Sensor(const QString &_name, quint8 _id)
 
 Sensor::~Sensor()
 {
-    if (status != OFF);
-        turnOff();
+    stop();
 }
 
 /*
@@ -32,5 +31,15 @@ bool Sensor::init()
 {
     status = ON;
     turnOn();
+    return true;
+}
+
+bool Sensor::stop()
+{
+    //turn off the robot after turning off all Sensors and Motors
+    if (status != OFF)
+        turnOff();
+    else
+        return false;
     return true;
 }

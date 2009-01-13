@@ -14,6 +14,8 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
+#include "../core.h"
+
 #include <QString>
 
 class Motor : public Core {
@@ -29,6 +31,9 @@ public:
     // there is a direct access to Motor::Direction by 'direction'
 //    inline Motor::Direction getDirection() const;
 //    inline void setDirection(Motor::Direction _direction);
+
+    bool init();
+    bool stop();
 
     virtual void turnOn() = 0;
     virtual void turnOff() = 0;
