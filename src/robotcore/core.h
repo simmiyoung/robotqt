@@ -1,5 +1,5 @@
 /*
- * Sensor.h
+ * core.cpp
  * RobotQt - Robot Simulation
  *
  * Created by Felipe Tonello on 2008-12-10.
@@ -11,22 +11,28 @@
  * Date: $Date$
  */
 
-#ifndef SENSOR_H
-#define SENSOR_H
+#ifndef CORE_H
+#define CORE_H
 
 #include <QString>
 
-class Sensor {
+/*
+ * Base class for all robotcore
+ */
+class Core
+{
 public:
-    Sensor(const QString _name, quint8 _id);
-    virtual ~Sensor();
+    Core(const QString &_name, quint8 _id);
+    virtual ~Core();
 
     quint8 getId() const;
     QString getName() const;
+
+    virtual bool init() = 0;
 
 private:
     QString name;
     quint8 id;
 };
 
-#endif // SENSOR_H
+#endif // CORE_H

@@ -1,5 +1,5 @@
 /*
- * Robot.cpp
+ * robot.cpp
  * RobotQt - Robot Simulation
  *
  * Created by Felipe Tonello on 2008-12-10.
@@ -17,33 +17,38 @@
 #include <QString>
 #include <QList>
 
-#include "Motor/Motor.h"
-#include "Sensor/Sensor.h"
-#include "RobotPosition.h"
+class Motor;
+class Sensor;
+class RobotPosition;
 
-
-class Robot {
+class Robot : public Core {
 public:
-    Robot(const QString _name, quint8 _id);
-    virtual ~Robot();
+    //not using, for now
+//    enum Periferic {Motor, Sensor};
 
-    QString getName() const;
-    quint8 getId() const;
+    Robot(const QString &_name, quint8 _id);
+    virtual ~Robot();
 
     virtual void setWheelSize(quint8 cm);
     quint8 getWheelSize() const;
 
-    virtual void set(Motor *newMotor);
-    virtual void set(Sensor *newSensor);
+    void setMotor(Motor *newMotor);
+    void setSensor(Sensor *newSensor);
     Motor * getMotor(quint8 _id) const;
     Sensor * getSensor(quint8 _id) const;
 
-    // TODO set position functions
+    virtual void turnOn() = 0;
+    virtual void turnOff() = 0;
+
+protected:
+    enum Status {ON, OFF}; //on and off, for now
+
+    Robot::Status status;
 
 private:
     QString name;
     quint8 id;
-    quint8 wheelSize;
+    quint32 wheelSize; // in centmeters
 
     QList<Motor *> motorList;
     QList<Sensor *> sensorList;

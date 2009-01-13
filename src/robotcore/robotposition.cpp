@@ -1,5 +1,5 @@
 /*
- * RobotPosition.cpp
+ * robotposition.cpp
  * RobotQt - Robot Simulation
  *
  * Created by Felipe Tonello on 2008-12-10.
@@ -11,7 +11,7 @@
  * Date: $Date$
  */
 
-#include "RobotPosition.h"
+#include "robotposition.h"
 
 RobotPosition::RobotPosition(const RobotPosition &obj)
 {

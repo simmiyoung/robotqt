@@ -1,5 +1,5 @@
 /*
- * Sensor.cpp
+ * core.cpp
  * RobotQt - Robot Simulation
  *
  * Created by Felipe Tonello on 2008-12-10.
@@ -11,25 +11,25 @@
  * Date: $Date$
  */
 
-#include "Sensor.h"
+#include "core.h"
 
-Sensor::Sensor(const QString _name, quint8 _id)
-    : name(_name), id(_id)
+Core::Core(const QString &_name, quint8 _id) :
+    name(_name), id(_id)
 {
 
 }
 
-Sensor::~Sensor()
+Core::~Core()
 {
 
 }
 
-quint8 Sensor::getId() const
+quint8 Motor::getId() const
 {
     return id;
 }
 
-QString Sensor::getName() const
+QString Motor::getName() const
 {
     return name;
 }
