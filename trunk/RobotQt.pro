@@ -2,16 +2,18 @@ TEMPLATE = app
 TARGET = RobotQt
 QT += core \
     gui
-HEADERS += src/robotcore/Robot.h \
-    src/robotcore/RobotPosition.h \
+HEADERS += src/robotcore/robot.h \
+    src/robotcore/robotposition.h \
     src/robotqt.h \
-    src/robotcore/Motor/Motor.h \
-    src/robotcore/Sensor/Sensor.h
-SOURCES += src/robotcore/Robot.cpp \
-    src/robotcore/RobotPosition.cpp \
+    src/robotcore/motor/motor.h \
+    src/robotcore/sensor/sensor.h \
+    src/robotcore/core.h
+SOURCES += src/robotcore/robot.cpp \
+    src/robotcore/robotposition.cpp \
     src/main.cpp \
     src/robotqt.cpp \
-    src/robotcore/Motor/Motor.cpp \
-    src/robotcore/Sensor/Sensor.cpp
+    src/robotcore/motor/motor.cpp \
+    src/robotcore/sensor/sensor.cpp \
+    src/robotcore/core.cpp
 FORMS += 
 RESOURCES += 

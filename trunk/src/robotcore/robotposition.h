@@ -1,5 +1,5 @@
 /*
- * RobotPosition.h
+ * robotposition.h
  * RobotQt - Robot Simulation
  *
  * Created by Felipe Tonello on 2008-12-10.
@@ -20,7 +20,7 @@ class RobotPosition {
 public:
     RobotPosition(const RobotPosition &obj);
     RobotPosition(quint32 _x=0, quint32 _y=0, quint16 _degree=0);
-    virtual ~RobotPosition();
+    ~RobotPosition();
 
     void set(const RobotPosition &obj);
     void set(quint32 _x, quint32 _y, quint16 _degree);
@@ -34,6 +34,8 @@ public:
     RobotPosition & operator+(const RobotPosition &obj);
     RobotPosition & operator-(const RobotPosition &obj);
     RobotPosition & operator=(const RobotPosition &obj);
+    //TODO commented
+//    RobotPosition & operator==(const RobotPosition &obj);
 
 private:
     quint32 x;
