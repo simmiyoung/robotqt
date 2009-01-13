@@ -24,12 +24,12 @@ Core::~Core()
 
 }
 
-quint8 Motor::getId() const
+quint8 Core::getId() const
 {
     return id;
 }
 
-QString Motor::getName() const
+QString Core::getName() const
 {
     return name;
 }

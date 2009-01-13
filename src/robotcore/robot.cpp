@@ -33,9 +33,7 @@ Robot::~Robot()
     qDeleteAll(sensorList.begin(), sensorList.end());
     sensorList.clear();
 
-    //turn off the robot after turning off all Sensors and Motors
-    if (status != OFF)
-        turnOff();
+    stop();
 }
 
 void Robot::setWheelSize(quint32 cm)
@@ -60,34 +58,22 @@ void Robot::setSensor(Sensor *newSensor)
 
 Motor * Robot::getMotor(quint8 _id) const
 {
-    QList<Motor *>::const_iterator i;
-    for(i = motorList.begin(); i != motorList.end(); ++i)
-        if (i->getId() == _id)
-            return *i;
+    for (int i = 0; i < motorList.size(); ++i) {
+        if (motorList.at(i)->getId() == _id) {
+            return motorList.at(i);
+        }
+    }
     return NULL;
-
-//    for (int i = 0; i < motorList.size(); ++i) {
-//        if (motorList[i]->getId() == _id) {
-//            return motorList[i];
-//        }
-//    }
-//    return NULL;
 }
 
 Sensor * Robot::getSensor(quint8 _id) const
 {
-    QList<Sensor *>::const_iterator i;
-    for(i = sensorList.begin(); i != sensorList.end(); ++i)
-        if (i->getId() == _id)
-            return *i;
+    for (int i = 0; i < sensorList.size(); ++i) {
+        if (sensorList.at(i)->getId() == _id) {
+            return sensorList.at(i);
+        }
+    }
     return NULL;
-
-//    for (int i = 0; i < sensorList.size(); ++i) {
-//        if (sensorList[i]->getId() == _id) {
-//            return sensorList[i];
-//        }
-//    }
-//    return NULL;
 }
 
 /*
@@ -97,5 +83,15 @@ bool Robot::init()
 {
     status = ON;
     turnOn();
+    return true;
+}
+
+bool Robot::stop()
+{
+    //turn off the robot after turning off all Sensors and Motors
+    if (status != OFF)
+        turnOff();
+    else
+        return false;
     return true;
 }

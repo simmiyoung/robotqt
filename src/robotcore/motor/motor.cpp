@@ -24,8 +24,7 @@ Motor::Motor(const QString &_name, quint8 _id, Motor::Direction _direction)
 
 Motor::~Motor()
 {
-    if (motorStatus != OFF)
-        turnOff();
+    stop();
 }
 
 quint32 Motor::getRpm() const
@@ -53,7 +52,17 @@ void Motor::setRpm(quint32 _rpm)
  */
 bool Motor::init()
 {
-    motorStatus = ON;
+    status = ON;
     turnOn();
+    return true;
+}
+
+bool Motor::stop()
+{
+    //turn off the robot after turning off all Sensors and Motors
+    if (status != OFF)
+        turnOff();
+    else
+        return false;
     return true;
 }

@@ -14,12 +14,17 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
+#include "../core.h"
+
 #include <QString>
 
 class Sensor : public Core {
 public:
     Sensor(const QString &_name, quint8 _id);
     virtual ~Sensor();
+
+    bool init();
+    bool stop();
 
     virtual void turnOn() = 0;
     virtual void turnOff() = 0;

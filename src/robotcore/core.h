@@ -29,6 +29,7 @@ public:
     QString getName() const;
 
     virtual bool init() = 0;
+    virtual bool stop() = 0;
 
 private:
     QString name;
