@@ -14,32 +14,32 @@
 #include "sensor.h"
 
 Sensor::Sensor(const QString &_name, quint8 _id)
-    : Core(_name, _id), status(OFF)
+    : Core(_name, _id)
 {
 
 }
 
 Sensor::~Sensor()
 {
-    stop();
+    turnOff();
 }
 
 /*
  * implementing pure virtual function Core::init()
  */
-bool Sensor::init()
+bool Sensor::turnOn()
 {
-    status = ON;
-    turnOn();
+    start();
+    status = Core::ON;
     return true;
 }
 
-bool Sensor::stop()
+bool Sensor::turnOff()
 {
-    //turn off the robot after turning off all Sensors and Motors
-    if (status != OFF)
-        turnOff();
-    else
+    if (status != Core::OFF) {
+        stop();
+        status = Core::OFF;
+        return true;
+    } else
         return false;
-    return true;
 }

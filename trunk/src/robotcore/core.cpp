@@ -14,22 +14,25 @@
 #include "core.h"
 
 Core::Core(const QString &_name, quint8 _id) :
-    name(_name), id(_id)
+    status(OFF), name(_name), id(_id)
 {
-
+    qDebug() << "Core() name(" << _name << "), id(" << _id << "), status("
+        << OFF << ")";
 }
 
 Core::~Core()
 {
-
+    qDebug() << "~Core()";
 }
 
 quint8 Core::getId() const
 {
+    qDebug() << "quint8 Core::getId() const returning (" << id << ")";
     return id;
 }
 
 QString Core::getName() const
 {
+    qDebug() << "QString Core::getName() const returning (" << name << ")";
     return name;
 }

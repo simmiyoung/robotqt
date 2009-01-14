@@ -18,10 +18,10 @@
 #include "robotposition.h"
 
 Robot::Robot(const QString &_name, quint8 _id)
-    : Core(_name, _id), status(OFF)
+    : Core(_name, _id)
 {
-    //we're not initialization lists because this function can be overwrited
-    setWheelSize(100); // 100 cm = 1 m
+    qDebug() << "Robot() Core (_name(" << _name << ") id(" << _id << "))"
+        << "status(" << OFF << ")";
 }
 
 Robot::~Robot()
@@ -33,27 +33,18 @@ Robot::~Robot()
     qDeleteAll(sensorList.begin(), sensorList.end());
     sensorList.clear();
 
-    stop();
-}
-
-void Robot::setWheelSize(quint32 cm)
-{
-    wheelSize = cm;
-}
-
-quint32 Robot::getWheelSize() const
-{
-    return wheelSize;
+    //turn off the robot after turning off all Sensors and Motors
+    turnOff();
 }
 
 void Robot::setMotor(Motor *newMotor)
 {
-    motorList.push_back(newMotor);
+    motorList.append(newMotor);
 }
 
 void Robot::setSensor(Sensor *newSensor)
 {
-    sensorList.push_back(newSensor);
+    sensorList.append(newSensor);
 }
 
 Motor * Robot::getMotor(quint8 _id) const
@@ -79,19 +70,19 @@ Sensor * Robot::getSensor(quint8 _id) const
 /*
  * implementing pure virtual function Core::init()
  */
-bool Robot::init()
+bool Robot::turnOn()
 {
-    status = ON;
-    turnOn();
+    start(); // starts Robot's child
+    status = Core::ON;
     return true;
 }
 
-bool Robot::stop()
+bool Robot::turnOff()
 {
-    //turn off the robot after turning off all Sensors and Motors
-    if (status != OFF)
-        turnOff();
-    else
+    if (status != Core::OFF) {
+        stop();
+        status = Core::OFF;
+        return true;
+    } else
         return false;
-    return true;
 }
