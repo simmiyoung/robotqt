@@ -11,6 +11,10 @@
  * Date: $Date$
  */
 
+/*
+ * TODO: Debugging using qDebug()
+ */
+
 #ifndef MOTOR_H
 #define MOTOR_H
 
@@ -32,18 +36,22 @@ public:
 //    inline Motor::Direction getDirection() const;
 //    inline void setDirection(Motor::Direction _direction);
 
-    bool init();
-    bool stop();
+    /*
+     * It turns on and off the object actions
+     *
+     * @bool If it worked properly
+     */
+    bool turnOn();
+    bool turnOff();
 
-    virtual void turnOn() = 0;
-    virtual void turnOff() = 0;
+    /*
+     * Abstract virtual functions that the child will inherit and do whatever
+     * they want to their functionality when the object will start and stop
+     */
+    virtual void start() = 0;
+    virtual void stop() = 0;
 
     Motor::Direction direction;
-
-protected:
-    enum Status {ON, OFF}; //on and off, for now
-
-    Motor::Status status;
 
 private:
     quint32 rpm;

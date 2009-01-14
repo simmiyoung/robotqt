@@ -1,5 +1,5 @@
 /*
- * core.cpp
+ * core.h
  * RobotQt - Robot Simulation
  *
  * Created by Felipe Tonello on 2008-12-10.
@@ -15,21 +15,47 @@
 #define CORE_H
 
 #include <QString>
+#include "../config.h"
 
 /*
  * Base class for all robotcore
  */
-class Core
-{
+class Core {
 public:
     Core(const QString &_name, quint8 _id);
     virtual ~Core();
 
+    /*
+     * Get identifier
+     *
+     * @return The object's identifier
+     */
     quint8 getId() const;
+
+    /*
+     * Get name
+     *
+     * @return The object's name
+     */
     QString getName() const;
 
-    virtual bool init() = 0;
-    virtual bool stop() = 0;
+    /*
+     * Abstract virtual functions that controls when the object will
+     * turnOn() or turnOff()
+     */
+    virtual bool turnOn() = 0;
+    virtual bool turnOff() = 0;
+
+    /*
+     * All the possible object states
+     * ON and OFF, for now
+     */
+    enum Status {ON, OFF};
+
+    /*
+     * Refers to enum Status
+     */
+    Status status;
 
 private:
     QString name;

@@ -14,17 +14,17 @@
 #include "motor.h"
 
 /*
- * It sets direction(default FORWARD) and sets status to OFF
+ * It sets direction(default FORWARD)
  */
 Motor::Motor(const QString &_name, quint8 _id, Motor::Direction _direction)
-    : Core(_name, _id), direction(_direction), status(OFF)
+    : Core(_name, _id), direction(_direction)
 {
 
 }
 
 Motor::~Motor()
 {
-    stop();
+    turnOff();
 }
 
 quint32 Motor::getRpm() const
@@ -50,19 +50,19 @@ void Motor::setRpm(quint32 _rpm)
 /*
  * implementing pure virtual function Core::init()
  */
-bool Motor::init()
+bool Motor::turnOn()
 {
-    status = ON;
-    turnOn();
+    start(); //starts Motor's child
+    status = Core::ON;
     return true;
 }
 
-bool Motor::stop()
+bool Motor::turnOff()
 {
-    //turn off the robot after turning off all Sensors and Motors
-    if (status != OFF)
-        turnOff();
-    else
+    if (status != Core::OFF) {
+        stop();
+        status = Core::OFF;
+        return true;
+    } else
         return false;
-    return true;
 }

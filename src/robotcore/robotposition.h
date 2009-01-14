@@ -11,6 +11,11 @@
  * Date: $Date$
  */
 
+/*
+ * TODO: Debugging using qDebug()
+ *       Operation overloading
+ */
+
 #ifndef ROBOTPOSITION_H
 #define ROBOTPOSITION_H
 
@@ -34,7 +39,6 @@ public:
     RobotPosition & operator+(const RobotPosition &obj);
     RobotPosition & operator-(const RobotPosition &obj);
     RobotPosition & operator=(const RobotPosition &obj);
-    //TODO commented
 //    RobotPosition & operator==(const RobotPosition &obj);
 
 private:

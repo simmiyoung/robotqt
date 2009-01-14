@@ -11,6 +11,11 @@
  * Date: $Date$
  */
 
+/*
+ * TODO: What do I need to change here?
+ *       Debugging using qDebug()
+ */
+
 #ifndef SENSOR_H
 #define SENSOR_H
 
@@ -23,20 +28,23 @@ public:
     Sensor(const QString &_name, quint8 _id);
     virtual ~Sensor();
 
-    bool init();
-    bool stop();
+    /*
+     * It turns on and off the object actions
+     *
+     * @bool If it worked properly
+     */
+    bool turnOn();
+    bool turnOff();
 
-    virtual void turnOn() = 0;
-    virtual void turnOff() = 0;
-
-protected:
-    enum Status {ON, OFF}; //on and off, for now
-
-    Sensor::Status status;
+    /*
+     * Abstract virtual functions that the child will inherit and do whatever
+     * they want to their functionality when the object will start and stop
+     */
+    virtual void start() = 0;
+    virtual void stop() = 0;
 
 private:
-    QString name;
-    quint8 id;
+
 };
 
 #endif // SENSOR_H

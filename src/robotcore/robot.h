@@ -11,6 +11,10 @@
  * Date: $Date$
  */
 
+/*
+ * TODO: Debugging using qDebug()
+ */
+
 #ifndef ROBOT_H
 #define ROBOT_H
 
@@ -31,34 +35,46 @@ public:
     Robot(const QString &_name, quint8 _id);
     virtual ~Robot();
 
-    virtual void setWheelSize(quint32 cm);
-    quint32 getWheelSize() const;
-
+    /*
+     * It Appends Motor's and Sensor's to their respective lists
+     *
+     * @param newMotor or new Sensor are pointers to respective objects
+     */
     void setMotor(Motor *newMotor);
     void setSensor(Sensor *newSensor);
+
+    /*
+     * It return the pointer to respective id
+     *
+     * @param _id Identifier int
+     * @return Pointer to respective object
+     */
     Motor * getMotor(quint8 _id) const;
     Sensor * getSensor(quint8 _id) const;
 
-    bool init();
-    bool stop();
+    /*
+     * It turns on and off the object actions
+     *
+     * @bool If it worked properly
+     */
+    bool turnOn();
+    bool turnOff();
 
-    virtual void turnOn() = 0;
-    virtual void turnOff() = 0;
-
-protected:
-    enum Status {ON, OFF}; //on and off, for now
-
-    Robot::Status status;
+    /*
+     * Abstract virtual functions that the child will inherit and do whatever
+     * they want to their functionality when the object will start and stop
+     */
+    virtual void start() = 0;
+    virtual void stop() = 0;
 
 private:
-    QString name;
-    quint8 id;
-    quint32 wheelSize; // in centmeters
-
+    /*
+     * Lists that contains pointers to object that belongs to the Robot
+     */
     QList<Motor *> motorList;
     QList<Sensor *> sensorList;
 
-    //RobotPosition currentPosition;
+//    RobotPosition currentPosition;
 };
 
 #endif /* ROBOT_H */
