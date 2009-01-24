@@ -25,7 +25,10 @@
 
 class Sensor : public Core {
 public:
-    Sensor(const QString &_name, quint8 _id);
+    enum FrequencyType {Hz, MHz, Ghz};
+
+    Sensor(const QString &_name, quint8 _id, quint32 _range, quint8 _accuracy,
+           quint32 frequency, Sensor::FrequencyType freqType=Hz);
     virtual ~Sensor();
 
     /*
@@ -44,7 +47,10 @@ public:
     virtual void stop() = 0;
 
 private:
-
+    quint32 range;
+    quint32 frequency;
+    quint8 accuracy;
+    Sensor::FrequencyType freqType;
 };
 
 #endif // SENSOR_H

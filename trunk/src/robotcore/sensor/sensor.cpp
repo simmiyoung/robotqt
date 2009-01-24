@@ -13,8 +13,10 @@
 
 #include "sensor.h"
 
-Sensor::Sensor(const QString &_name, quint8 _id)
-    : Core(_name, _id)
+Sensor::Sensor(const QString &_name, quint8 _id, quint32 _range, quint8 _accuracy,
+           quint32 _frequency, Sensor::FrequencyType _freqType)
+    : Core(_name, _id), range(_range), frequency(_frequency), accuracy(_accuracy),
+    freqType(_freqType)
 {
 
 }
