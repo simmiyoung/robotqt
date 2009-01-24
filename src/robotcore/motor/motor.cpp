@@ -16,8 +16,8 @@
 /*
  * It sets direction(default FORWARD)
  */
-Motor::Motor(const QString &_name, quint8 _id, Motor::Direction _direction)
-    : Core(_name, _id), direction(_direction)
+Motor::Motor(const QString &_name, quint8 _id, quint32 _rpm, Motor::Direction _direction)
+    : Core(_name, _id), rpm(_rpm), direction(_direction)
 {
 
 }
@@ -37,15 +37,15 @@ void Motor::setRpm(quint32 _rpm)
     rpm = _rpm;
 }
 
-//inline Motor::Direction Motor::getDirection() const
-//{
-//    return direction;
-//}
-//
-//inline void Motor::setDirection(Motor::Direction _direction)
-//{
-//    direction = _direction;
-//}
+Motor::Direction Motor::getDirection() const
+{
+    return direction;
+}
+
+void Motor::setDirection(Motor::Direction _direction)
+{
+    direction = _direction;
+}
 
 /*
  * implementing pure virtual function Core::init()

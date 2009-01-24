@@ -15,10 +15,16 @@
 #define CONFIG_H
 
 #include <QtDebug>
+#include <QDir>
+#include <QFile>
 
 class Config {
 public:
     Config();
+
+    QDir RobotQtDir;
+    QString RobotQtPath;
+    QFile logFile;
 };
 
 void handleRobotQtMessages(QtMsgType type, const char *msg);
