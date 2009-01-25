@@ -26,6 +26,46 @@ Sensor::~Sensor()
     turnOff();
 }
 
+quint32 getRange() const
+{
+    return range;
+}
+
+void setRange(quint32 _range)
+{
+    range = _range;
+}
+
+quint32 getFrequency() const
+{
+    return frequency;
+}
+
+void setFrequency(quint32 _frequency)
+{
+    frequency = _frequency;
+}
+
+quint8 gettAccuracy() const
+{
+    return accuracy;
+}
+
+void setAccuracy(quint8 _accuracy)
+{
+    accuracy = _accuracy;
+}
+
+Sensor::FrequencyType getFreqType() const
+{
+    return freqType;
+}
+
+void setFreqType(Sensor::FrequencyType _freqType)
+{
+    freqType = _freqType;
+}
+
 /*
  * implementing pure virtual function Core::init()
  */

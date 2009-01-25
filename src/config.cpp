@@ -18,22 +18,23 @@
 
 Config *Config::pConfig = 0; // initialize signleton
 
-/*
- * Initialize config variables.
- * This constructor is protected
- */
 Config::Config()
 {
+    /*
+     * If it's linux or unix, return $HOME/.robotqt
+     * else (if is windows) return where RobotQt is installed, probably
+     * HOMEDRIVE\robotqt
+     */
 #if defined(Q_OS_LINUX) || defined(Q_OS_UNIX)
         RobotQtDir = QDir::home();
-        if (!RobotQtDir.exists(RobotQtDir.absolutePath() + "/.robotqt"))
+        if (!RobotQtDir.exists(".robotqt"))
             RobotQtDir.mkdir(".robotqt");
         RobotQtDir.cd(".robotqt");
-        RobotQtPath = RobotQtDir.absolutePath() + "/.robotqt";
+        RobotQtPath = RobotQtDir.absolutePath();
 #elif defined(Q_OS_WIN32)
         RobotQtDir = QDir::current();
         RobotQtPath = RobotQtDir.absolutePath();
-#endif
+#endif // Q_OS_*
 }
 
 /*
@@ -58,12 +59,6 @@ QString Config::getPath() const
   End of Config class implementation
   -------------------------------------*/
 
-/*
- * Message handler.
- * It's a function that prints out debug messages, warnings,
- * critical and fatal error messages. If it is a fatal message, the application
- * aborts immediately.
- */
 void handleRobotQtMessages(QtMsgType type, const char *msg)
 {
     Config *config = Config::getInstance();
@@ -82,7 +77,8 @@ void handleRobotQtMessages(QtMsgType type, const char *msg)
             break;
             case QtFatalMsg:
                 logs << "Fatal: " << msg << endl;
-                QCoreApplication::exit(1); // ERROR
+                QCoreApplication::exit(1); // ERROR, ABORT THE PROGRAM
+            break;
         }
     }
 }

@@ -24,21 +24,41 @@
  */
 class Config {
 public:
+    /*
+     * Returns the, only available, instance of Config class
+     */
     static Config * getInstance();
 
+    /*
+     * Returns the QDir object to where RobotQt is located
+     */
     QDir getDir() const;
+
+    /*
+     * Same as getDir() but returns as a QString
+     */
     QString getPath() const;
 
-protected:
+private:
+    /*
+     * Initialize config variables.
+     * This constructor is private because it can't be initialize without the
+     * getInstance() method.
+     */
     Config();
 
-private:
     QDir RobotQtDir;
     QString RobotQtPath;
 
     static Config *pConfig;
 };
 
+/*
+ * Message handler.
+ * It's a function that prints out debug messages, warnings,
+ * critical and fatal error messages. If it is a fatal message, the application
+ * aborts immediately.
+ */
 void handleRobotQtMessages(QtMsgType type, const char *msg);
 
 #endif // CONFIG_H
