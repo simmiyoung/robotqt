@@ -18,13 +18,25 @@
 #include <QDir>
 #include <QFile>
 
+/*
+ * Config class
+ * It's a singleton class, use Config::getInstance() to instance it
+ */
 class Config {
 public:
+    static Config * getInstance();
+
+    QDir getDir() const;
+    QString getPath() const;
+
+protected:
     Config();
 
+private:
     QDir RobotQtDir;
     QString RobotQtPath;
-    QFile logFile;
+
+    static Config *pConfig;
 };
 
 void handleRobotQtMessages(QtMsgType type, const char *msg);
