@@ -26,16 +26,12 @@ public:
     virtual ~Core();
 
     /*
-     * Get identifier
-     *
-     * @return The object's identifier
+     * Get the object's identifier
      */
     quint8 getId() const;
 
     /*
-     * Get name
-     *
-     * @return The object's name
+     * Get the object's name
      */
     QString getName() const;
 

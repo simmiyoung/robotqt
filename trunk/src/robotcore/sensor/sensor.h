@@ -12,8 +12,7 @@
  */
 
 /*
- * TODO: What do I need to change here?
- *       Debugging using qDebug()
+ * TODO: Debugging using qDebug()
  */
 
 #ifndef SENSOR_H
@@ -34,10 +33,22 @@ public:
     /*
      * It turns on and off the object actions
      *
-     * @bool If it worked properly
+     * Returns true if it worked properly, false otherwise
      */
     bool turnOn();
     bool turnOff();
+
+    quint32 getRange() const;
+    void setRange(quint32 _range);
+
+    quint32 getFrequency() const;
+    void setFrequency(quint32 _frequency);
+
+    quint8 gettAccuracy() const;
+    void setAccuracy(quint8 _accuracy);
+
+    Sensor::FrequencyType getFreqType() const;
+    void setFreqType(Sensor::FrequencyType _freqType);
 
     /*
      * Abstract virtual functions that the child will inherit and do whatever

@@ -26,7 +26,11 @@ class Motor : public Core {
 public:
     enum Direction {FORWARD, BACKWARD};
 
-    Motor(const QString &_name, quint8 _id, quint32 _rpm, Motor::Direction _direction=FORWARD);
+    /*
+     * It creates a new motor with rpm and direction information
+     */
+    Motor(const QString &_name, quint8 _id, quint32 _rpm,
+          Motor::Direction _direction=FORWARD);
     virtual ~Motor();
 
     quint32 getRpm() const;
@@ -39,7 +43,7 @@ public:
     /*
      * It turns on and off the object actions
      *
-     * @bool If it worked properly
+     * Returns true if it worked properly, false otherwise
      */
     bool turnOn();
     bool turnOff();

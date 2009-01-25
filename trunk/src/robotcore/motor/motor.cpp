@@ -13,10 +13,8 @@
 
 #include "motor.h"
 
-/*
- * It sets direction(default FORWARD)
- */
-Motor::Motor(const QString &_name, quint8 _id, quint32 _rpm, Motor::Direction _direction)
+Motor::Motor(const QString &_name, quint8 _id, quint32 _rpm,
+             Motor::Direction _direction)
     : Core(_name, _id), rpm(_rpm), direction(_direction)
 {
 
