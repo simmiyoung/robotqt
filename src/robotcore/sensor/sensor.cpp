@@ -26,42 +26,42 @@ Sensor::~Sensor()
     turnOff();
 }
 
-quint32 getRange() const
+quint32 Sensor::getRange() const
 {
     return range;
 }
 
-void setRange(quint32 _range)
+void Sensor::setRange(quint32 _range)
 {
     range = _range;
 }
 
-quint32 getFrequency() const
+quint32 Sensor::getFrequency() const
 {
     return frequency;
 }
 
-void setFrequency(quint32 _frequency)
+void Sensor::setFrequency(quint32 _frequency)
 {
     frequency = _frequency;
 }
 
-quint8 gettAccuracy() const
+quint8 Sensor::gettAccuracy() const
 {
     return accuracy;
 }
 
-void setAccuracy(quint8 _accuracy)
+void Sensor::setAccuracy(quint8 _accuracy)
 {
     accuracy = _accuracy;
 }
 
-Sensor::FrequencyType getFreqType() const
+Sensor::FrequencyType Sensor::getFreqType() const
 {
     return freqType;
 }
 
-void setFreqType(Sensor::FrequencyType _freqType)
+void Sensor::setFreqType(Sensor::FrequencyType _freqType)
 {
     freqType = _freqType;
 }
