@@ -13,6 +13,7 @@
 
 #include <QtGlobal>
 #include <QCoreApplication>
+#include <QDateTime>
 
 #include "config.h"
 
@@ -65,18 +66,21 @@ void handleRobotQtMessages(QtMsgType type, const char *msg)
     QFile log(config->getPath() + "/debuglog.txt");
     if (log.open(QFile::WriteOnly | QFile::Append)) {
         QTextStream logs(&log);
+        logs.setCodec("UTF-8"); // force to use unicode
+        QDateTime currentTime = QDateTime::currentDateTime();
+        QString current = currentTime.toString(Qt::ISODate); //formato YYYY-MM-DDTHH:MM:SS
         switch (type) {
             case QtDebugMsg:
-                logs << "Debug: " << msg << endl;
+                logs << "(" << current << ") Debug: " << msg << endl;
             break;
             case QtWarningMsg:
-                logs << "Warning: " << msg << endl;
+                logs << "(" << current << ") Warning: " << msg << endl;
             break;
             case QtCriticalMsg:
-                logs << "Critical: " << msg << endl;
+                logs << "(" << current << ") Critical: " << msg << endl;
             break;
             case QtFatalMsg:
-                logs << "Fatal: " << msg << endl;
+                logs << "(" << current << ") Fatal: " << msg << endl;
                 QCoreApplication::exit(1); // ERROR, ABORT THE PROGRAM
             break;
         }
