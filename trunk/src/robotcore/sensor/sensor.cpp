@@ -13,9 +13,9 @@
 
 #include "sensor.h"
 
-Sensor::Sensor(const QString &_name, quint8 _id, quint32 _range, quint8 _accuracy,
+Sensor::Sensor(const QString &_name, quint32 _range, quint8 _accuracy,
            quint32 _frequency, Sensor::FrequencyType _freqType)
-    : Core(_name, _id), range(_range), frequency(_frequency), accuracy(_accuracy),
+    : RobotCore(_name), range(_range), frequency(_frequency), accuracy(_accuracy),
     freqType(_freqType)
 {
 
@@ -67,20 +67,20 @@ void Sensor::setFreqType(Sensor::FrequencyType _freqType)
 }
 
 /*
- * implementing pure virtual function Core::init()
+ * implementing pure virtual function RobotCore::init()
  */
 bool Sensor::turnOn()
 {
     start();
-    status = Core::ON;
+    status = RobotCore::ON;
     return true;
 }
 
 bool Sensor::turnOff()
 {
-    if (status != Core::OFF) {
+    if (status != RobotCore::OFF) {
         stop();
-        status = Core::OFF;
+        status = RobotCore::OFF;
         return true;
     } else
         return false;

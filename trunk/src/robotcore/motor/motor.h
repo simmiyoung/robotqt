@@ -18,18 +18,18 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
-#include "../core.h"
+#include "robotcore/robotcore.h"
 
 #include <QString>
 
-class Motor : public Core {
+class Motor : public RobotCore {
 public:
     enum Direction {FORWARD, BACKWARD};
 
     /*
      * It creates a new motor with rpm and direction information
      */
-    Motor(const QString &_name, quint8 _id, quint32 _rpm,
+    Motor(const QString &_name, quint32 _rpm,
           Motor::Direction _direction=FORWARD);
     virtual ~Motor();
 

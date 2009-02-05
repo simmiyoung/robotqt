@@ -64,11 +64,12 @@ void handleRobotQtMessages(QtMsgType type, const char *msg)
 {
     Config *config = Config::getInstance();
     QFile log(config->getPath() + "/debuglog.txt");
+    //TODO: Check if log file is too large
     if (log.open(QFile::WriteOnly | QFile::Append)) {
         QTextStream logs(&log);
         logs.setCodec("UTF-8"); // force to use unicode
         QDateTime currentTime = QDateTime::currentDateTime();
-        QString current = currentTime.toString(Qt::ISODate); //formato YYYY-MM-DDTHH:MM:SS
+        QString current = currentTime.toString(Qt::ISODate); //YYYY-MM-DDTHH:MM:SS
         switch (type) {
             case QtDebugMsg:
                 logs << "(" << current << ") Debug: " << msg << endl;

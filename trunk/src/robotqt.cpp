@@ -5,14 +5,14 @@
 
 RobotQt::RobotQt()
 {
-    QTabWidget *leftTab = new QTabWidget();
-    QListWidget *listStatus = new QListWidget();
-    QTextEdit *editSource = new QTextEdit();
+    QTabWidget *leftTab = new QTabWidget;
+    QListWidget *listStatus = new QListWidget;
+    QTextEdit *editSource = new QTextEdit;
 
     leftTab->addTab(listStatus, tr("&Status"));
     leftTab->addTab(editSource, tr("S&ource"));
 
-    right2DGraph = new QWidget();
+    right2DGraph = new QWidget;
 
     mainSplitter = new QSplitter(Qt::Horizontal);
     mainSplitter->addWidget(leftTab);

@@ -18,7 +18,7 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
-#include "core.h"
+#include "robotcore/robotcore.h"
 
 #include <QString>
 #include <QList>
@@ -27,7 +27,7 @@ class Motor;
 class Sensor;
 class RobotPosition;
 
-class Robot : public Core {
+class Robot : public RobotCore {
 public:
     //not using, for now
 //    enum Periferic {Motor, Sensor};
@@ -35,7 +35,7 @@ public:
     /*
      * Creates a new Robot
      */
-    Robot(const QString &_name, quint8 _id);
+    Robot(const QString &_name);
     virtual ~Robot();
 
     /*
@@ -47,8 +47,8 @@ public:
     /*
      * It returns a pointer to the respective object
      */
-    Motor * getMotor(quint8 _id) const;
-    Sensor * getSensor(quint8 _id) const;
+    Motor * getMotor(QString &_name) const;
+    Sensor * getSensor(QString &_name) const;
 
     /*
      * It turns on and off the object actions
