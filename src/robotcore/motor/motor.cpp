@@ -13,9 +13,9 @@
 
 #include "motor.h"
 
-Motor::Motor(const QString &_name, quint8 _id, quint32 _rpm,
+Motor::Motor(const QString &_name, quint32 _rpm,
              Motor::Direction _direction)
-    : Core(_name, _id), rpm(_rpm), direction(_direction)
+    : RobotCore(_name), rpm(_rpm), direction(_direction)
 {
 
 }
@@ -46,20 +46,20 @@ void Motor::setDirection(Motor::Direction _direction)
 }
 
 /*
- * implementing pure virtual function Core::init()
+ * implementing pure virtual function RobotCore::init()
  */
 bool Motor::turnOn()
 {
     start(); //starts Motor's child
-    status = Core::ON;
+    status = RobotCore::ON;
     return true;
 }
 
 bool Motor::turnOff()
 {
-    if (status != Core::OFF) {
+    if (status != RobotCore::OFF) {
         stop();
-        status = Core::OFF;
+        status = RobotCore::OFF;
         return true;
     } else
         return false;

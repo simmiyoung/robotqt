@@ -18,15 +18,15 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
-#include "../core.h"
+#include "robotcore/robotcore.h"
 
 #include <QString>
 
-class Sensor : public Core {
+class Sensor : public RobotCore {
 public:
     enum FrequencyType {Hz, MHz, Ghz};
 
-    Sensor(const QString &_name, quint8 _id, quint32 _range, quint8 _accuracy,
+    Sensor(const QString &_name, quint32 _range, quint8 _accuracy,
            quint32 frequency, Sensor::FrequencyType freqType=Hz);
     virtual ~Sensor();
 

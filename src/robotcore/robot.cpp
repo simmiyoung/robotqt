@@ -17,10 +17,10 @@
 #include "sensor/sensor.h"
 #include "robotposition.h"
 
-Robot::Robot(const QString &_name, quint8 _id)
-    : Core(_name, _id)
+Robot::Robot(const QString &_name)
+    : RobotCore(_name)
 {
-    qDebug() << "Robot() Core (_name(" << _name << ") id(" << _id << "))"
+    qDebug() << "Robot() RobotCore (_name(" << _name << "))"
         << "status(" << OFF << ")";
 }
 
@@ -47,20 +47,20 @@ void Robot::setSensor(Sensor *newSensor)
     sensorList.append(newSensor);
 }
 
-Motor * Robot::getMotor(quint8 _id) const
+Motor * Robot::getMotor(QString &_name) const
 {
     for (int i = 0; i < motorList.size(); ++i) {
-        if (motorList.at(i)->getId() == _id) {
+        if (motorList.at(i)->getName() == _name) {
             return motorList.at(i);
         }
     }
     return NULL;
 }
 
-Sensor * Robot::getSensor(quint8 _id) const
+Sensor * Robot::getSensor(QString &_name) const
 {
     for (int i = 0; i < sensorList.size(); ++i) {
-        if (sensorList.at(i)->getId() == _id) {
+        if (sensorList.at(i)->getName() == _name) {
             return sensorList.at(i);
         }
     }
@@ -68,20 +68,20 @@ Sensor * Robot::getSensor(quint8 _id) const
 }
 
 /*
- * implementing pure virtual function Core::init()
+ * implementing pure virtual function RobotCore::init()
  */
 bool Robot::turnOn()
 {
     start(); // starts Robot's child
-    status = Core::ON;
+    status = RobotCore::ON;
     return true;
 }
 
 bool Robot::turnOff()
 {
-    if (status != Core::OFF) {
+    if (status != RobotCore::OFF) {
         stop();
-        status = Core::OFF;
+        status = RobotCore::OFF;
         return true;
     } else
         return false;
