@@ -6,6 +6,7 @@ CONFIG += debug_and_release # Support debug and release mode
 CONFIG += warn_on # Show me warning please =)
 CONFIG += thread # This is a multi-thread app
 CONFIG += x11 # yes, we use X11 if available
+CONFIG += opengl
 
 # Qt modules to load
 QT += core gui opengl
@@ -56,11 +57,15 @@ INCLUDEPATH += src #For neat #include syntax
 
 # If opengl module is available
 CONFIG(opengl) {
-    message(Building with OpenGL support.)
+    message("")
+    message("=============================")
+    message("Building with OpenGL support.")
+    message("=============================")
+    message("")
 } else {
-#    error(OpenGL support is not available.)
+    error("OpenGL support is not available.")
 }
 
-message(Congratulations! You are ready to build RobotQt.)
-message(Type, to build: make)
-message(Then type, to install\(as root user\): make install)
+message("Congratulations! You are ready to build RobotQt.")
+message("Type, to build: make")
+message("Then type, to install\(as root user\): make install")
