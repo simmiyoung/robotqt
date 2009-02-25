@@ -1,25 +1,12 @@
 #include <QtGui>
 
-#include "robotqt.h"
+#include "ui_robotqt.h"
 #include "config.h" // for debugging
 
-RobotQt::RobotQt()
+Ui_RobotQt::Ui_RobotQt()
 {
-    QTabWidget *leftTab = new QTabWidget;
-    QListWidget *listStatus = new QListWidget;
-    QTextEdit *editSource = new QTextEdit;
-
-    leftTab->addTab(listStatus, tr("&Status"));
-    leftTab->addTab(editSource, tr("S&ource"));
-
-    right2DGraph = new QWidget;
-
-    mainSplitter = new QSplitter(Qt::Horizontal);
-    mainSplitter->addWidget(leftTab);
-    mainSplitter->addWidget(right2DGraph);
-    mainSplitter->setStretchFactor(1,1);
-
-    setCentralWidget(mainSplitter);
+    Ui::RobotQt::setupUi()
+    splitter->setStretchFactor(1,1);
 
     qDebug() << "RobotQt Main Window created";
 
