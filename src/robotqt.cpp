@@ -1,14 +1,41 @@
-#include <QtGui>
+/*
+ * robotqt.cpp
+ * RobotQt - Robot Simulation
+ *
+ * Created by Felipe Tonello on 2008-12-10.
+ * Copyright 2008 Felipe Ferreri Tonello. All rights reserved.
+ * http://robotqt.googlecode.com/
+ *
+ * Revision: $Rev$
+ * Author: $Author$
+ * Date: $Date$
+ */
 
-#include "ui_robotqt.h"
+#include "robotqt.h"
 #include "config.h" // for debugging
 
-Ui_RobotQt::Ui_RobotQt()
+// GUI's
+#include "sourceeditor.h"
+
+#include <QSettings>
+
+RobotQt::RobotQt(QWidget *parent) :
+    QMainWindow(parent)
 {
-    Ui::RobotQt::setupUi()
+    qDebug() << "Setting up the MainWindow";
+    setupUi(this);
     splitter->setStretchFactor(1,1);
 
-    qDebug() << "RobotQt Main Window created";
+    qDebug() << "Creating Actions and Connections";
+
+    connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
+//    connect(actionSourceEditor, SIGNAL(triggered()), this, SLOT(openSourceEdit()));
+    connect(sourceButton, SIGNAL(clicked()), this, SLOT(openSourceEdit()));
+
+    // FIXME: It's not working
+    sourceButton->addAction(actionSourceEditor);
+
+    qDebug() << "Done! RobotQt Main Window created";
 
     readSettings();
 }
@@ -18,13 +45,22 @@ RobotQt::~RobotQt()
 
 }
 
+void RobotQt::openSourceEdit(bool open)
+{
+    if (!open) {
+        sourceEditor = new SourceEditor;
+        sourceEditor->show();
+    }
+}
+
+//TODO: read settings
 void RobotQt::readSettings()
 {
     QSettings settings("RobotQt.org", "RobotQt");
 
-    qDebug() << "Reading settings for RobotQt Main Window";
+//    qDebug() << "Reading settings for RobotQt Main Window";
 
-    settings.beginGroup("RobotQtWindow");
-    //do stuff
+    settings.beginGroup("RobotQtMainWindow");
+    // do stuff
     settings.endGroup();
 }
