@@ -42,12 +42,21 @@
            <item>
             <widget class="QPushButton" name="configureButton" >
              <property name="text" >
-              <string>Configure</string>
+              <string>&amp;Configure</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QPushButton" name="sourceButton" >
+             <property name="toolTip" >
+              <string>Open Source Editor</string>
+             </property>
+             <property name="statusTip" >
+              <string>Open Source Editor</string>
+             </property>
+             <property name="whatsThis" >
+              <string>Open Source Editor</string>
+             </property>
              <property name="text" >
               <string>S&amp;ource Editor</string>
              </property>

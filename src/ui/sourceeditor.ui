@@ -35,15 +35,27 @@
        </item>
        <item>
         <widget class="QPushButton" name="saveButton" >
+         <property name="toolTip" >
+          <string>Save (Ctrl+S)</string>
+         </property>
          <property name="text" >
-          <string>Save</string>
+          <string>&amp;Save</string>
+         </property>
+         <property name="shortcut" >
+          <string>Ctrl+S</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="closeButton" >
+         <property name="toolTip" >
+          <string>Close editor (Ctrl+W)</string>
+         </property>
          <property name="text" >
           <string>Close</string>
+         </property>
+         <property name="shortcut" >
+          <string>Ctrl+W</string>
          </property>
         </widget>
        </item>

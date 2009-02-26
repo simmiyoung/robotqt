@@ -25,15 +25,13 @@ RobotQt::RobotQt(QWidget *parent) :
     qDebug() << "Setting up the MainWindow";
     setupUi(this);
     splitter->setStretchFactor(1,1);
+    sourceEditor = NULL;
 
     qDebug() << "Creating Actions and Connections";
 
     connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
-//    connect(actionSourceEditor, SIGNAL(triggered()), this, SLOT(openSourceEdit()));
+    connect(actionSourceEditor, SIGNAL(triggered()), this, SLOT(openSourceEdit()));
     connect(sourceButton, SIGNAL(clicked()), this, SLOT(openSourceEdit()));
-
-    // FIXME: It's not working
-    sourceButton->addAction(actionSourceEditor);
 
     qDebug() << "Done! RobotQt Main Window created";
 
@@ -47,9 +45,13 @@ RobotQt::~RobotQt()
 
 void RobotQt::openSourceEdit(bool open)
 {
-    if (!open) {
+    if (sourceEditor == NULL) {
         sourceEditor = new SourceEditor;
         sourceEditor->show();
+    } else {
+        sourceEditor->hide();
+        delete sourceEditor;
+        sourceEditor = NULL;
     }
 }
 
