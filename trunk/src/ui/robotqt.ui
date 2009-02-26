@@ -19,7 +19,7 @@
       <property name="orientation" >
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="" >
+      <widget class="QWidget" name="layoutWidget" >
        <layout class="QVBoxLayout" name="verticalLayout" >
         <item>
          <widget class="QGroupBox" name="groupBox" >
@@ -40,16 +40,19 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout" >
            <item>
-            <widget class="QPushButton" name="btnConfigure" >
+            <widget class="QPushButton" name="configureButton" >
              <property name="text" >
               <string>Configure</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btnSource" >
+            <widget class="QPushButton" name="sourceButton" >
              <property name="text" >
-              <string>Source</string>
+              <string>S&amp;ource Editor</string>
+             </property>
+             <property name="shortcut" >
+              <string>Ctrl+Shift+O</string>
              </property>
             </widget>
            </item>
@@ -87,16 +90,54 @@
    <property name="text" >
     <string>&amp;Quit</string>
    </property>
+   <property name="toolTip" >
+    <string>Quit RobotQt</string>
+   </property>
+   <property name="statusTip" >
+    <string>Quit RobotQt</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Quit RobotQt</string>
+   </property>
    <property name="shortcut" >
     <string>Ctrl+Q</string>
+   </property>
+   <property name="menuRole" >
+    <enum>QAction::QuitRole</enum>
    </property>
   </action>
   <action name="actionOpen" >
    <property name="text" >
     <string>&amp;Open</string>
    </property>
+   <property name="toolTip" >
+    <string>Open a new file</string>
+   </property>
+   <property name="statusTip" >
+    <string>Open a new file</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Open a new file</string>
+   </property>
    <property name="shortcut" >
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSourceEditor" >
+   <property name="text" >
+    <string>S&amp;ource Editor</string>
+   </property>
+   <property name="toolTip" >
+    <string>Open the source editor</string>
+   </property>
+   <property name="statusTip" >
+    <string>Open the source editor</string>
+   </property>
+   <property name="whatsThis" >
+    <string>Open the source editor</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Shift+O</string>
    </property>
   </action>
  </widget>

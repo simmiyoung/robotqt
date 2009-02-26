@@ -41,6 +41,7 @@ INSTALLS += target headers
 HEADERS += src/robotcore/robot.h \
     src/robotcore/robotposition.h \
     src/robotqt.h \
+    src/sourceeditor.h \
     src/robotcore/motor/motor.h \
     src/robotcore/sensor/sensor.h \
     src/robotcore/robotcore.h \
@@ -49,11 +50,16 @@ SOURCES += src/robotcore/robot.cpp \
     src/robotcore/robotposition.cpp \
     src/main.cpp \
     src/robotqt.cpp \
+    src/sourceeditor.cpp \
     src/robotcore/motor/motor.cpp \
     src/robotcore/sensor/sensor.cpp \
     src/robotcore/robotcore.cpp \
     src/config.cpp
-INCLUDEPATH += src #For neat #include syntax
+FORMS += src/ui/robotqt.ui
+FORMS += src/ui/sourceeditor.ui
+
+#For neat #include syntax
+INCLUDEPATH += src
 
 # If opengl module is available
 CONFIG(opengl) {
