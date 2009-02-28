@@ -46,7 +46,7 @@ public:
     /*
      * Refers to enum Status
      */
-    Status status;
+    static Status status;
 
 private:
     QString name;

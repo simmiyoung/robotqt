@@ -18,6 +18,8 @@
 #include <QDir>
 #include <QFile>
 
+#define ROBOTQT_VERSION "0.1"
+
 /*
  * Config class
  * It's a singleton class, use Config::getInstance() to instance it

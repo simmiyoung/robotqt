@@ -11,6 +11,11 @@
  * Date: $Date$
  */
 
+
+//TODO: method loadRobot()
+//      method save()
+//      read settings at readSettings()
+
 #ifndef ROBOTQT_H
 #define ROBOTQT_H
 
@@ -32,9 +37,34 @@ public:
     void readSettings();
 
 private slots:
-    void openSourceEdit(bool open = false);
+    /*
+     * Opens the source editor widget
+     */
+    void openSourceEdit();
+    /*
+     * Open a new robot for simulation
+     */
+    void newFile();
+    /*
+     * Open about page
+     */
+    void openAbout();
 
 private:
+    /*
+     * Modify and create actions, and create connections
+     */
+    void createActions();
+    /*
+     * Check if it's ok to continue
+     */
+    bool okToContinue();
+    /*
+     * return if current robot was modified
+     * Ex.: Added new sensor
+     */
+    bool isRobotModified() const;
+
     SourceEditor *sourceEditor;
 };
 

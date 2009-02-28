@@ -18,6 +18,8 @@ SourceEditor::SourceEditor(QWidget *parent)
 {
     setupUi(this);
 
+    closeButton->setShortcut(QKeySequence::Close);
+
     connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 }
 
