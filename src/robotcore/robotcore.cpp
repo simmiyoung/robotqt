@@ -13,10 +13,13 @@
 
 #include "robotcore.h"
 
+// Initialize status as OFF
+RobotCore::Status RobotCore::status = OFF;
+
 RobotCore::RobotCore(const QString &_name) :
-    status(OFF), name(_name)
+    name(_name)
 {
-    qDebug() << "RobotCore() name(" << _name << "), status(" << OFF << ")";
+    qDebug() << "RobotCore(): name(" << _name << ")";
 }
 
 RobotCore::~RobotCore()
