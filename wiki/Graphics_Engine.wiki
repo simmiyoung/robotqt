@@ -1,0 +1,8 @@
+#summary About 2D Graphics Engine implementation
+#labels Phase-Implementation
+
+= Introduction =
+
+Perhaps the most challenging part. The 2D Graphics Engine needs to simulate all the commands(from the Python or Lua interpreter) for a given C++ robot.
+
+*Not implemented yet!*
