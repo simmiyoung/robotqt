@@ -29,7 +29,7 @@ There are few steps:
   # Compile it: `make` (or `make install` to install the headers for plugin development)
   # Run !RobotQt binary!
 
-You should have [http://www.qtsoftware.com Qt 4.3], or newer, development packages.
+You should have [http://qt.nokia.com Qt 4.3], or newer, development packages.
 
 = Commiting =
 
