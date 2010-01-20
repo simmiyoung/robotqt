@@ -1,0 +1,30 @@
+#summary Documentation for developers
+#labels Phase-Implementation
+
+= Introduction =
+
+RobotQt it's *really* big project. That's why _we need you_!
+We mainly use C++ with Qt framework for its development. But there is also Lua and Python implementations.
+So, if you want to learn and contribute for a promiser project, read more!
+
+= How To Contribute? =
+
+It's easy!
+Just send us an e-mail to felipe.tonello@gmail.com and tell your interests. Than we will add you as a project member.
+
+= How It Works? =
+
+RobotQt internals is basically three distinct parts.
+  # 2D graphics engine *strong C++ knowledge*
+  # Robot Core (that make possible to create robots extensions and sensors and motors as well) *light C++ knowledge*
+  # Python and Lua interpreter *medium interpreter knowledge and Lua and Python implementations*
+
+The 2nd part is almost done. We just need a plugin support for C++ coded robots.
+
+= Checking the code out =
+
+Here: http://code.google.com/p/robotqt/source/checkout
+
+= Commiting =
+
+Google's project hosting uses Subversion.
