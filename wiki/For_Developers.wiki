@@ -25,7 +25,7 @@ The 2nd part is almost done. We just need a plugin support for C++ coded robots.
 = Building From the Source =
 There are few steps:
   # [http://code.google.com/p/robotqt/source/checkout checkout the code]
-  # From its main directory: qmake !RobotQt.pro
+  # From its main directory: `qmake !RobotQt.pro`
   # Compile it: `make` (or `make install` to install the headers for plugin development)
   # Run !RobotQt binary!
 
