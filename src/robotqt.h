@@ -22,7 +22,10 @@
 #include "ui_robotqt.h"
 
 class QWidget;
+class QTimer;
+class QGraphicsScene;
 class SourceEditor;
+class RobotInterface;
 
 class RobotQt : public QMainWindow, private Ui::RobotQt {
     Q_OBJECT
@@ -44,11 +47,12 @@ private slots:
     /*
      * Open a new robot for simulation
      */
-    void newFile();
+    void openFile();
     /*
      * Open about page
      */
     void openAbout();
+    void startOrStopSimulation();
 
 private:
     /*
@@ -65,7 +69,15 @@ private:
      */
     bool isRobotModified() const;
 
+    /*
+     * return true if the robot plugin is ok.
+     */
+    bool loadRobot(const QString &fileName);
+
+    RobotInterface * currentRobot;
     SourceEditor *sourceEditor;
+    QGraphicsScene *scene;
+    QTimer *timer;
 };
 
 #endif // ROBOTQT_H

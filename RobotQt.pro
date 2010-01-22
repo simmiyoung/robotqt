@@ -5,73 +5,55 @@ CONFIG += qt # Support for Qt applications is enabled
 CONFIG += debug_and_release # Support debug and release mode
 CONFIG += warn_on # Show me warning please =)
 CONFIG += thread # This is a multi-thread app
-CONFIG += x11 # yes, we use X11 if available
-CONFIG += opengl
+CONFIG += x11 # use X11 if available
 
 # Qt modules to load
-QT += core gui opengl
+QT += core \
+    gui
 
 # Customize the names of the build targets depending on the target platform
-CONFIG(debug, debug|release) {
-    win32: TARGET = $$join(TARGET,,d) # Should return dRobotQt
-    else: TARGET = $$join(TARGET,,,_debug) #Shoud return RobotQt_debug
+CONFIG(debug, debug|release) { 
+    win32:TARGET = $$join(TARGET,,d) # Should return dRobotQt
+    else:TARGET = $$join(TARGET,,,_debug) # Shoud return RobotQt_debug
 }
 
-# Where to install RobotQt
+# Where to install RobotQt and headers
 win32 {
-    target.path = \RobotQt\
+    target.path = \\RobotQt\\
+    headers.path = \\RobotQt\\include
 }
-macx {
+macx { 
     target.path = /Applications/
+    headers.path = /usr/local/include/robotqt
 }
-unix {
+unix { 
     target.path = /usr/bin/
+    headers.path = /usr/local/include/robotqt
 }
 
 # Add RobotCore headers to plugin developers
-headers.path = /usr/local/include/robotqt
-headers.files = src/robotcore/robotcore.h \
-    src/robotcore/robot.h \
-    src/robotcore/robotposition.h \
-    src/robotcore/motor/motor.h \
-    src/robotcore/sensor/sensor.h
+headers.files = src/robotcore/robotinterface.h \
+    src/robotcore/sensorinterface.h
 
-INSTALLS += target headers
-
-HEADERS += src/robotcore/robot.h \
-    src/robotcore/robotposition.h \
-    src/robotqt.h \
+INSTALLS += target \
+    headers
+HEADERS += src/robotqt.h \
     src/sourceeditor.h \
-    src/robotcore/motor/motor.h \
-    src/robotcore/sensor/sensor.h \
-    src/robotcore/robotcore.h \
-    src/config.h
-SOURCES += src/robotcore/robot.cpp \
-    src/robotcore/robotposition.cpp \
-    src/main.cpp \
+    src/robotcore/robotinterface.h \
+    src/robotcore/sensorinterface.h \
+    src/config.h \
+    src/statusitem.h
+SOURCES += src/main.cpp \
     src/robotqt.cpp \
     src/sourceeditor.cpp \
-    src/robotcore/motor/motor.cpp \
-    src/robotcore/sensor/sensor.cpp \
-    src/robotcore/robotcore.cpp \
-    src/config.cpp
-FORMS += src/ui/robotqt.ui
-FORMS += src/ui/sourceeditor.ui
+    src/config.cpp \
+    src/statusitem.cpp
+FORMS += src/ui/robotqt.ui \
+    src/ui/sourceeditor.ui
 
-#For neat #include syntax
+# For neat #include syntax
 INCLUDEPATH += src
 
-# If opengl module is available
-CONFIG(opengl) {
-    message("")
-    message("=============================")
-    message("Building with OpenGL support.")
-    message("=============================")
-    message("")
-} else {
-    error("OpenGL support is not available.")
-}
-
 message("Congratulations! You are ready to build RobotQt.")
-message("Type, to build: make")
-message("Then type, to install\(as root user\): make install")
+message("To build, type 'make'")
+message("Then to install\(as super user\), type 'make install'")
