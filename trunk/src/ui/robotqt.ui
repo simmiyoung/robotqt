@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>RobotQt</class>
- <widget class="QMainWindow" name="RobotQt" >
-  <property name="geometry" >
+ <widget class="QMainWindow" name="RobotQt">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,70 +10,81 @@
     <height>600</height>
    </rect>
   </property>
-  <property name="windowTitle" >
-   <string>RobotQt</string>
+  <property name="windowTitle">
+   <string>RobotQt - Robot Simulation</string>
   </property>
-  <widget class="QWidget" name="centralwidget" >
-   <layout class="QGridLayout" name="gridLayout_2" >
-    <item row="0" column="0" >
-     <widget class="QSplitter" name="splitter" >
-      <property name="orientation" >
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="layoutWidget" >
-       <layout class="QVBoxLayout" name="verticalLayout" >
+      <widget class="QWidget" name="layoutWidget">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QGroupBox" name="groupBox" >
-          <property name="title" >
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
            <string>Status</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout" >
-           <item row="0" column="0" >
-            <widget class="QListWidget" name="listWidget" />
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <widget class="QTableWidget" name="tableWidget">
+             <property name="columnCount">
+              <number>1</number>
+             </property>
+             <attribute name="horizontalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="horizontalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <column/>
+            </widget>
            </item>
           </layout>
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox_2" >
-          <property name="title" >
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
            <string>Configuration</string>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout" >
+          <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QPushButton" name="configureButton" >
-             <property name="toolTip" >
+            <widget class="QPushButton" name="configureButton">
+             <property name="toolTip">
               <string>Configure current robot (Ctrl+Shift+C)</string>
              </property>
-             <property name="statusTip" >
+             <property name="statusTip">
               <string>Configure current robot</string>
              </property>
-             <property name="whatsThis" >
+             <property name="whatsThis">
               <string>Configure current robot</string>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>&amp;Configure</string>
              </property>
-             <property name="shortcut" >
+             <property name="shortcut">
               <string>Ctrl+Shift+C</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="sourceButton" >
-             <property name="toolTip" >
+            <widget class="QPushButton" name="sourceButton">
+             <property name="toolTip">
               <string>Open Source Editor (Ctrl+Shift+O)</string>
              </property>
-             <property name="statusTip" >
+             <property name="statusTip">
               <string>Open Source Editor</string>
              </property>
-             <property name="whatsThis" >
+             <property name="whatsThis">
               <string>Open Source Editor</string>
              </property>
-             <property name="text" >
+             <property name="text">
               <string>S&amp;ource Editor</string>
              </property>
-             <property name="shortcut" >
+             <property name="shortcut">
               <string>Ctrl+Shift+O</string>
              </property>
             </widget>
@@ -82,208 +94,175 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" native="1" name="simulationWidget" />
+      <widget class="QGraphicsView" name="simulatorGraphicsView"/>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar" >
-   <property name="geometry" >
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile" >
-    <property name="title" >
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionNew" />
-    <addaction name="actionOpen" />
-    <addaction name="separator" />
-    <addaction name="actionSave" />
-    <addaction name="actionSaveAs" />
-    <addaction name="separator" />
-    <addaction name="actionQuit" />
+    <addaction name="actionOpen"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSaveAs"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
    </widget>
-   <widget class="QMenu" name="menuEdit" >
-    <property name="title" >
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
      <string>&amp;Edit</string>
     </property>
-    <addaction name="actionSourceEditor" />
-    <addaction name="actionConfigureRobot" />
+    <addaction name="actionSourceEditor"/>
+    <addaction name="actionConfigureRobot"/>
    </widget>
-   <widget class="QMenu" name="menu_Tools" >
-    <property name="title" >
+   <widget class="QMenu" name="menu_Tools">
+    <property name="title">
      <string>&amp;Tools</string>
     </property>
-    <addaction name="actionPreferences" />
+    <addaction name="actionPreferences"/>
    </widget>
-   <widget class="QMenu" name="menu_Help" >
-    <property name="title" >
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
      <string>&amp;Help</string>
     </property>
-    <addaction name="actionAboutRobotQt" />
+    <addaction name="actionAboutRobotQt"/>
    </widget>
-   <addaction name="menuFile" />
-   <addaction name="menuEdit" />
-   <addaction name="menu_Tools" />
-   <addaction name="menu_Help" />
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menu_Tools"/>
+   <addaction name="menu_Help"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar" />
-  <action name="actionQuit" >
-   <property name="text" >
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionQuit">
+   <property name="text">
     <string>&amp;Quit</string>
    </property>
-   <property name="toolTip" >
+   <property name="toolTip">
     <string>Quit RobotQt</string>
    </property>
-   <property name="statusTip" >
+   <property name="statusTip">
     <string>Quit RobotQt</string>
    </property>
-   <property name="whatsThis" >
+   <property name="whatsThis">
     <string>Quit RobotQt</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Ctrl+Q</string>
    </property>
-   <property name="menuRole" >
+   <property name="menuRole">
     <enum>QAction::QuitRole</enum>
    </property>
   </action>
-  <action name="actionOpen" >
-   <property name="text" >
-    <string>&amp;Open</string>
+  <action name="actionOpen">
+   <property name="text">
+    <string>&amp;Open a Robot</string>
    </property>
-   <property name="toolTip" >
+   <property name="toolTip">
     <string>Open a new RobotQt file</string>
    </property>
-   <property name="statusTip" >
+   <property name="statusTip">
     <string>Open a new RobotQt file</string>
    </property>
-   <property name="whatsThis" >
+   <property name="whatsThis">
     <string>Open a new RobotQt file</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionSave" >
-   <property name="text" >
+  <action name="actionSave">
+   <property name="text">
     <string>&amp;Save</string>
    </property>
-   <property name="iconText" >
+   <property name="iconText">
     <string>Save</string>
    </property>
-   <property name="toolTip" >
+   <property name="toolTip">
     <string>Save the current file</string>
    </property>
-   <property name="statusTip" >
+   <property name="statusTip">
     <string>Save the current file</string>
    </property>
-   <property name="whatsThis" >
+   <property name="whatsThis">
     <string>Save the current file</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionSaveAs" >
-   <property name="text" >
+  <action name="actionSaveAs">
+   <property name="text">
     <string>Save &amp;As</string>
    </property>
-   <property name="toolTip" >
+   <property name="toolTip">
     <string>Save as a new file</string>
    </property>
-   <property name="statusTip" >
+   <property name="statusTip">
     <string>Save as a new file</string>
    </property>
-   <property name="whatsThis" >
+   <property name="whatsThis">
     <string>Save as a new file</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
-  <action name="actionNew" >
-   <property name="text" >
-    <string>&amp;New</string>
-   </property>
-   <property name="toolTip" >
-    <string>Create a new file</string>
-   </property>
-   <property name="statusTip" >
-    <string>Create a new file</string>
-   </property>
-   <property name="whatsThis" >
-    <string>Create a new file</string>
-   </property>
-   <property name="shortcut" >
-    <string>Ctrl+N</string>
-   </property>
-  </action>
-  <action name="actionConfigureRobot" >
-   <property name="text" >
+  <action name="actionConfigureRobot">
+   <property name="text">
     <string>&amp;Configure Robot...</string>
    </property>
-   <property name="toolTip" >
+   <property name="toolTip">
     <string>Configure current robot</string>
    </property>
-   <property name="statusTip" >
+   <property name="statusTip">
     <string>Configure current robot</string>
    </property>
-   <property name="whatsThis" >
+   <property name="whatsThis">
     <string>Configure current robot</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Ctrl+Shift+C</string>
    </property>
   </action>
-  <action name="actionAboutRobotQt" >
-   <property name="text" >
+  <action name="actionAboutRobotQt">
+   <property name="text">
     <string>&amp;About RobotQt</string>
    </property>
   </action>
-  <action name="actionPreferences" >
-   <property name="text" >
+  <action name="actionPreferences">
+   <property name="text">
     <string>&amp;Preferences...</string>
    </property>
-   <property name="menuRole" >
+   <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>
    </property>
   </action>
-  <action name="actionSourceEditor" >
-   <property name="text" >
+  <action name="actionSourceEditor">
+   <property name="text">
     <string>&amp;Source</string>
    </property>
-   <property name="toolTip" >
+   <property name="toolTip">
     <string>Open source editor</string>
    </property>
-   <property name="statusTip" >
+   <property name="statusTip">
     <string>Open source editor</string>
    </property>
-   <property name="whatsThis" >
+   <property name="whatsThis">
     <string>Open source editor</string>
    </property>
-   <property name="shortcut" >
+   <property name="shortcut">
     <string>Ctrl+Shift+O</string>
-   </property>
-  </action>
-  <action name="actionImport_Sensor" >
-   <property name="text" >
-    <string>Import Sensor</string>
-   </property>
-  </action>
-  <action name="actionImportSensor" >
-   <property name="text" >
-    <string>Import &amp;Sensor</string>
-   </property>
-  </action>
-  <action name="actionImportMotor" >
-   <property name="text" >
-    <string>Import &amp;Motor</string>
    </property>
   </action>
  </widget>

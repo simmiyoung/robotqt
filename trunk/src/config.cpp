@@ -63,7 +63,7 @@ QString Config::getPath() const
 void handleRobotQtMessages(QtMsgType type, const char *msg)
 {
     Config *config = Config::getInstance();
-    QFile log(config->getPath() + "/debuglog.txt");
+    QFile log(config->getPath() + "/robotqt_log.txt");
     //TODO: Check if log file is too large
     if (log.open(QFile::WriteOnly | QFile::Append)) {
         QTextStream logs(&log);
