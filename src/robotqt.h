@@ -74,7 +74,7 @@ private:
      */
     bool loadRobot(const QString &fileName);
 
-    RobotInterface * currentRobot;
+    RobotInterface *currentRobot;
     SourceEditor *sourceEditor;
     QGraphicsScene *scene;
     QTimer *timer;

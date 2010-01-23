@@ -17,7 +17,7 @@
 #include "ui_sourceeditor.h"
 
 class SourceEditor : public QWidget, private Ui::SourceEditor {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     SourceEditor(QWidget *parent = 0);

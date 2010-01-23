@@ -3,10 +3,17 @@
 
 #include <QTableWidgetItem>
 
+class PluginBase;
+
+/*
+ * Subclassing QTableWidgetItem to costumized Item.
+ */
 class StatusItem : public QTableWidgetItem
 {
 public:
-    StatusItem();
+    StatusItem(PluginBase *interface);
+
+    QTableWidgetItem * clone() const;
 };
 
 #endif // STATUSITEM_H

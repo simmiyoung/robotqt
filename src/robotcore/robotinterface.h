@@ -20,11 +20,9 @@
 
 #include <QtPlugin>
 #include <QGraphicsItem>
+#include "pluginbase.h"
 
-class QString;
-class QColor;
-
-class RobotInterface : public QGraphicsItem {
+class RobotInterface : public QGraphicsItem, public PluginBase {
 public:
     /*
      * virtual destructor to silence the compiler, which might
@@ -51,17 +49,8 @@ public:
 //     */
 //    virtual void run(qint16 degree) = 0;
 
-    /*
-     * All the possible object states
-     * ON and OFF, for now
-     */
-    enum Status {ON, OFF};
-
-    RobotInterface::Status status;
-    QString name;
     qreal angle;
     qreal speed;
-    QColor color;
 };
 
 Q_DECLARE_INTERFACE(RobotInterface, "org.robotqt.RobotQt.RobotInterface/0.1")

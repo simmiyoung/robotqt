@@ -33,26 +33,32 @@ unix {
 
 # Add RobotCore headers to plugin developers
 headers.files = src/robotcore/robotinterface.h \
-    src/robotcore/sensorinterface.h
+    src/robotcore/sensorinterface.h \
+    src/robotcore/pluginbase.h
 
 INSTALLS += target \
     headers
+
 HEADERS += src/robotqt.h \
     src/sourceeditor.h \
     src/robotcore/robotinterface.h \
     src/robotcore/sensorinterface.h \
     src/config.h \
-    src/statusitem.h
+    src/statusitem.h \
+    src/robotcore/pluginbase.h
 SOURCES += src/main.cpp \
     src/robotqt.cpp \
     src/sourceeditor.cpp \
     src/config.cpp \
-    src/statusitem.cpp
+    src/statusitem.cpp \
+    src/robotcore/pluginbase.cpp
 FORMS += src/ui/robotqt.ui \
     src/ui/sourceeditor.ui
 
 # For neat #include syntax
 INCLUDEPATH += src
+
+RESOURCES += images/robotqt_imgs.qrc
 
 message("Congratulations! You are ready to build RobotQt.")
 message("To build, type 'make'")
