@@ -15,8 +15,8 @@ Just send us an e-mail to felipe.tonello@gmail.com and tell your interests. Than
 
 = How It Works? =
 
-RobotQt internals is basically three distinct parts.
-  # 2D_Graphics_Engine - *strong C++ knowledge*
+!RobotQt internals is basically three distinct parts.
+  # Graphics_Engine - *strong C++ knowledge*
   # Robot_Core (that make possible to create robots extensions and sensors and motors as well) - *light C++ knowledge*
   # Python_And_Lua_Interpreter - *medium interpreter knowledge and Lua and Python implementations*
 
