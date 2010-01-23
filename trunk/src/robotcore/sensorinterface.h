@@ -18,9 +18,11 @@
 #ifndef SENSORINTERFACE_H
 #define SENSORINTERFACE_H
 
-#include <QString>
+#include <QtPlugin>
+#include <QGraphicsItem>
+#include "pluginbase.h"
 
-class SensorInterface {
+class SensorInterface : public QGraphicsItem, public PluginBase {
 public:
     /*
      * virtual destructor to silence the compiler, which might
@@ -44,8 +46,6 @@ public:
     enum Status {ON, OFF};
 
     SensorInterface::Status status;
-    QString name;
-    quint32 range;
 };
 
 Q_DECLARE_INTERFACE(SensorInterface, "org.robotqt.RobotQt.SensorInterface/0.1")

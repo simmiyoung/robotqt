@@ -13,11 +13,14 @@
 
 #include "robotqt.h"
 #include "config.h" // for debugging
+#include "robotcore/pluginbase.h"
 #include "robotcore/robotinterface.h"
 #include "robotcore/sensorinterface.h"
 
 // GUI's
 #include "sourceeditor.h"
+
+#include "statusitem.h"
 
 #include <QtGui>
 #include <QSettings>
@@ -90,10 +93,20 @@ void RobotQt::openAbout()
 
 void RobotQt::startOrStopSimulation()
 {
-    if (timer->isActive()) {
-        timer->stop();
-    } else {
-        timer->start(1000 / 33);
+    if (currentRobot != NULL) {
+        if (timer->isActive()) {
+            timer->stop();
+            simulatorButton->setText(tr("&Turn On"));
+            simulatorButton->setToolTip(tr("Turn On the simulator"));
+            simulatorButton->setStatusTip(tr("Turn On the simulator"));
+            simulatorButton->setWhatsThis(tr("Turn On the simulator"));
+        } else {
+            timer->start(1000 / 33);
+            simulatorButton->setText(tr("&Turn Off"));
+            simulatorButton->setToolTip(tr("Turn Off the simulator"));
+            simulatorButton->setStatusTip(tr("Turn Off the simulator"));
+            simulatorButton->setWhatsThis(tr("Turn Off the simulator"));
+        }
     }
 }
 
@@ -111,8 +124,8 @@ void RobotQt::createActions()
     connect(actionAboutRobotQt, SIGNAL(triggered()), this, SLOT(openAbout()));
     connect(actionSourceEditor, SIGNAL(triggered()), this, SLOT(openSourceEdit()));
     connect(sourceButton, SIGNAL(clicked()), this, SLOT(openSourceEdit()));
-    connect(configureButton, SIGNAL(clicked()), this, SLOT(startOrStopSimulation()));
-    connect(timer, SIGNAL(timeout()), scene, SLOT(advance()));
+    connect(simulatorButton, SIGNAL(clicked()), this, SLOT(startOrStopSimulation()));
+    connect(timer, SIGNAL(timeout()), scene, SLOT(advance())); // for simulation
 }
 
 bool RobotQt::okToContinue()
@@ -151,20 +164,33 @@ void RobotQt::readSettings()
 bool RobotQt::loadRobot(const QString &fileName) {
     if (fileName.endsWith(".robot", Qt::CaseInsensitive)) {
         QPluginLoader loader(fileName);
-        if (RobotInterface *interface = qobject_cast<RobotInterface *>(loader.instance())){
-            //TODO create a new instance each time.
-            currentRobot = interface;
-            currentRobot->setPos(200.0, 200.0);
-
+        if (RobotInterface *plugin = qobject_cast<RobotInterface *>(loader.instance())) {
             int r = QMessageBox::warning(this, tr("RobotQt"),
-                        tr("Are you sure do you want to open the robot called \"%1\"?").arg(currentRobot->name),
-                        QMessageBox::Yes | QMessageBox::No);
-
+                                         tr("Are you sure do you want to open the robot called \"%1\"?").arg(plugin->getName()),
+                                         QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
             if (r == QMessageBox::Yes) {
+
+//                QTableWidgetItem *item = new QTableWidgetItem(tr("ADFASDFASDFASD"));
+
+                // FIXME: QTableWidgetItem it's not been displayed in tableWidget
+                QTableWidgetItem *item = new StatusItem(plugin);
+                if (tableWidget->rowCount() == 0)
+                    tableWidget->setRowCount(1);
+                tableWidget->setItem(1, 1, item);
+
+                // If a past robot was open, deletes it
+                if (currentRobot == NULL)
+                    delete currentRobot;
+                currentRobot = plugin;
+                currentRobot->setPos(200.0, 200.0);
                 scene->addItem(currentRobot);
+                simulatorButton->setEnabled(true);
                 return true;
             }
+            delete plugin;
         }
     }
+    QMessageBox::warning(this, tr("RobotQt"),
+                         tr("Ocurred an Error: it seems that the file %1 is corrupted.").arg(fileName));
     return false;
 }
