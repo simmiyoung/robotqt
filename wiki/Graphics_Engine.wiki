@@ -11,6 +11,6 @@ All the robots, sensors and everything else are  [http://doc.trolltech.com/qgrap
 
 = Current status =
 
-It's 50% done. The biggest challenge is to make each !RobotInterface::advance()* `*` * visible and editable from the interpreter (Python or Lua scripts).
+It's 50% done. The biggest challenge is to make each !RobotInterface::advance() `*` visible and editable from the interpreter (Python or Lua scripts).
 
 `*` !RobotInterface inherits this method from QGraphicsItem
