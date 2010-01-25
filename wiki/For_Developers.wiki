@@ -3,7 +3,7 @@
 
 = Introduction =
 
-!RobotQt it's *really* big project. That's why _we need you_!
+!RobotQt it's a *really* big project. That's why _we need you_!
 We mainly use C++ with Qt framework for its development. But there is also Lua and Python implementations.
 So, if you want to learn and contribute for a promiser project, read more!
 
@@ -13,14 +13,12 @@ So, if you want to learn and contribute for a promiser project, read more!
 It's easy!
 Just send us an e-mail to felipe.tonello@gmail.com and tell your interests. Than we will add you as a project member.
 
-= How It Works? =
+= Basics of the Projects =
 
 !RobotQt internals is basically three distinct parts.
   # Graphics_Engine - *strong C++ knowledge*
   # Robot_Core (that make possible to create robots extensions and sensors and motors as well) - *light C++ knowledge*
   # Python_And_Lua_Interpreter - *medium interpreter knowledge and Lua and Python implementations*
-
-The 2nd part is almost done. We just need a plugin support for C++ coded robots.
 
 = Building From the Source =
 There are few steps:
@@ -33,4 +31,6 @@ You should have [http://qt.nokia.com Qt 4.3], or newer, development packages.
 
 = Commiting =
 
-Google's project hosting uses Subversion.
+You can use your preferable user client for Subversion, or always use the command line version:
+  # `svn stat` to make sure that all your modifications and implementations are correct.
+  # `svn ci -m "your comments"` to commit.
