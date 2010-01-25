@@ -3,7 +3,7 @@
 
 = Introduction =
 
-!RobotQt it's a *really* big project. That's why _we need you_!
+!RobotQt it's a big project. That's why _we need you_!
 We mainly use C++ with Qt framework for its development. But there is also Lua and Python implementations.
 So, if you want to learn and contribute for a promiser project, read more!
 
