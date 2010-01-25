@@ -3,9 +3,9 @@
 
 = Introduction =
 
-RobotQt is a robot simulator for academic proposes. It objective is to help people from all areas of knowledge to learn robotics in a easy and realistic way.
+!RobotQt is a robot simulator for academic proposes. It objective is to help people from all areas of knowledge to learn robotics in a easy and realistic way.
 It's open-source to make easy to create and develop new features for the simulator and plugins.
 
-= Be part of the project =
+= Join the Team =
 
 For_Developers
