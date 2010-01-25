@@ -1,0 +1,20 @@
+#summary Robot Core is the bases of  plugin and  extensions support
+#labels Phase-Implementation
+
+= Introduction =
+
+Robot Core basically consists on a plugin system. There is *!RobotInterface*, *!SensorInterface* and *!MapInterface* interfaces that inherits a _!BasePlugin_ class.
+
+= Current Status =
+
+*!RobotInterface*, *!SensorInterface* and _!BasePlugin_ are implemented but there is room for changes, fixes and features.
+
+= Implementation =
+
+*!MapInterface* needs to have these characteristic:
+  * Inherits QGraphicsItem and _!BasePlugin_, in order
+  * Proprieties:
+    * QRectF with x, y, width and height values
+    * ...
+  * Implement `void QGraphicsItem::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0)` method to draw all map items
+  * Implement `QPainterPath QGraphicsItem::shape()` method to return a more accurate shape for fine-grained collision detection.
