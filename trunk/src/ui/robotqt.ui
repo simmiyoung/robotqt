@@ -33,56 +33,6 @@
            <string>Status</string>
           </property>
           <layout class="QGridLayout" name="gridLayout">
-           <item row="0" column="0" colspan="3">
-            <widget class="QTableWidget" name="tableWidget">
-             <property name="showDropIndicator" stdset="0">
-              <bool>true</bool>
-             </property>
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>36</width>
-               <height>36</height>
-              </size>
-             </property>
-             <property name="showGrid">
-              <bool>false</bool>
-             </property>
-             <property name="gridStyle">
-              <enum>Qt::NoPen</enum>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-             <property name="cornerButtonEnabled">
-              <bool>false</bool>
-             </property>
-             <property name="columnCount">
-              <number>1</number>
-             </property>
-             <attribute name="horizontalHeaderVisible">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="horizontalHeaderMinimumSectionSize">
-              <number>100</number>
-             </attribute>
-             <attribute name="verticalHeaderVisible">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="verticalHeaderVisible">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="horizontalHeaderVisible">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="horizontalHeaderMinimumSectionSize">
-              <number>100</number>
-             </attribute>
-             <column/>
-            </widget>
-           </item>
            <item row="1" column="1">
             <widget class="QPushButton" name="configureButton_2">
              <property name="toolTip">
@@ -114,6 +64,62 @@
               </size>
              </property>
             </spacer>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QTableWidget" name="tableWidget">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>48</width>
+               <height>48</height>
+              </size>
+             </property>
+             <property name="showGrid">
+              <bool>false</bool>
+             </property>
+             <property name="columnCount">
+              <number>1</number>
+             </property>
+             <attribute name="horizontalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>245</number>
+             </attribute>
+             <attribute name="horizontalHeaderMinimumSectionSize">
+              <number>100</number>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="verticalHeaderDefaultSectionSize">
+              <number>48</number>
+             </attribute>
+             <attribute name="verticalHeaderMinimumSectionSize">
+              <number>48</number>
+             </attribute>
+             <attribute name="verticalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="verticalHeaderDefaultSectionSize">
+              <number>48</number>
+             </attribute>
+             <attribute name="horizontalHeaderVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="horizontalHeaderMinimumSectionSize">
+              <number>100</number>
+             </attribute>
+             <attribute name="verticalHeaderMinimumSectionSize">
+              <number>48</number>
+             </attribute>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>245</number>
+             </attribute>
+             <column/>
+            </widget>
            </item>
           </layout>
          </widget>

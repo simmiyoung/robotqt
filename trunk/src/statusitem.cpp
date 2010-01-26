@@ -2,20 +2,29 @@
 
 #include "statusitem.h"
 
-StatusItem::StatusItem(PluginBase *interface) :
-        QTableWidgetItem(QTableWidgetItem::UserType)
+StatusItem::StatusItem()
 {
-    if (interface->getType() == PluginBase::Robot) {
+
+}
+
+StatusItem::StatusItem(PluginBase *plugin)
+{
+    setPlugin(plugin);
+}
+
+void StatusItem::setPlugin(PluginBase *plugin)
+{
+    if (plugin->getType() == PluginBase::Robot) {
         setIcon(QIcon(QPixmap(":/images/robot_item.png")));
-        setText(QObject::tr("Robot: %1").arg(interface->getName()));
+        setText(QObject::tr("Robot: %1").arg(plugin->getName()));
     }
-//    else if (SensorInterface *i = dynamic_cast<SensorInterface *>(interface)) {
-//        setIcon(QIcon(":/images/sensor_item.gif"));
-//        setText(tr("Sensor: %1").arg(i->name));
-//    }
-    setTextAlignment(Qt::AlignVCenter);
-    setFlags(Qt::NoItemFlags);
-    setBackground(QBrush(Qt::gray));
+    else if (plugin->getType() == PluginBase::Sensor) {
+        setIcon(QIcon(QPixmap(":/images/sensor_item.png")));
+        setText(QObject::tr("Sensor: %1").arg(plugin->getName()));
+    }
+    setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+    setBackground(QBrush(Qt::white));
 }
 
 QTableWidgetItem * StatusItem::clone() const

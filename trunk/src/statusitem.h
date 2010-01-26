@@ -11,7 +11,10 @@ class PluginBase;
 class StatusItem : public QTableWidgetItem
 {
 public:
-    StatusItem(PluginBase *interface);
+    StatusItem();
+    StatusItem(PluginBase *plugin);
+
+    void setPlugin(PluginBase *plugin);
 
     QTableWidgetItem * clone() const;
 };

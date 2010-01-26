@@ -22,7 +22,9 @@
 
 #include "statusitem.h"
 
-#include <QtGui>
+#include <QtGui/QMessageBox>
+#include <QtGui/QFileDialog>
+#include <QTimer>
 #include <QSettings>
 #include <QPluginLoader>
 
@@ -37,7 +39,9 @@ RobotQt::RobotQt(QWidget *parent) :
     timer = new QTimer(this);
 
     splitter->setStretchFactor(1,1);
+    tableWidget->setItemPrototype(new StatusItem);
 
+    // 2D graphics propeties
     scene = new QGraphicsScene(-200, -250, 400, 500);
     scene->setItemIndexMethod(QGraphicsScene::NoIndex);
 
@@ -46,7 +50,7 @@ RobotQt::RobotQt(QWidget *parent) :
     simulatorGraphicsView->setCacheMode(QGraphicsView::CacheBackground);
     simulatorGraphicsView->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     simulatorGraphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
-
+    // End of 2D graphics propeties
 
     qDebug() << "Creating Actions and Connections";
 
@@ -55,6 +59,9 @@ RobotQt::RobotQt(QWidget *parent) :
     qDebug() << "Done! RobotQt Main Window created";
 
     readSettings();
+
+    // setting NULL to easy manipulate various opennings of plugins
+    currentRobot = NULL;
 }
 
 RobotQt::~RobotQt()
@@ -73,13 +80,11 @@ void RobotQt::openSourceEdit()
 
 void RobotQt::openFile()
 {
-    if (okToContinue()) {
-        QString fileName = QFileDialog::getOpenFileName(this,
-                                tr("Open a Robot source code"), ".",
-                                tr("Robot source files (*.robot)"));
-       if (!fileName.isEmpty()) {
-           loadRobot(fileName);
-        }
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open a Robot source code"), ".",
+                                                    tr("Robot source files (*.robot)"));
+    if (!fileName.isEmpty()) {
+        loadRobot(fileName);
     }
 }
 
@@ -87,12 +92,13 @@ void RobotQt::openAbout()
 {
     QMessageBox::about(this, tr("About RobotQt"),
         tr("<h2>RobotQt %1</h2>"
-        "<p>Copyright &copy; 2008-2009 Felipe Ferreri Tonello</p>"
-        "<p>RobotQt is a robot simulator for academic proposes.</p>").arg(ROBOTQT_VERSION));
+        "<p>Copyright &copy; 2008-2010 Felipe Ferreri Tonello</p>"
+        "<p>RobotQt is a robot simulator for academic proposes.</p>").arg(String_Version));
 }
 
 void RobotQt::startOrStopSimulation()
 {
+    // do not change the status if there is no loaded Robot
     if (currentRobot != NULL) {
         if (timer->isActive()) {
             timer->stop();
@@ -128,28 +134,6 @@ void RobotQt::createActions()
     connect(timer, SIGNAL(timeout()), scene, SLOT(advance())); // for simulation
 }
 
-bool RobotQt::okToContinue()
-{
-    if (isRobotModified()) {
-        int r = QMessageBox::warning(this, tr("RobotQt"),
-                    tr("This robot has been modified.\n"
-                    "Do you want to save your changes?"),
-                    QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-        if (r == QMessageBox::Yes) {
-//            save();
-            return true;
-        } else if (r == QMessageBox::Cancel) {
-            return false;
-        }
-    }
-    return true;
-}
-
-bool RobotQt::isRobotModified() const
-{
-    return false;
-}
-
 void RobotQt::readSettings()
 {
     QSettings settings("RobotQt.org", "RobotQt");
@@ -169,25 +153,25 @@ bool RobotQt::loadRobot(const QString &fileName) {
                                          tr("Are you sure do you want to open the robot called \"%1\"?").arg(plugin->getName()),
                                          QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
             if (r == QMessageBox::Yes) {
-
-//                QTableWidgetItem *item = new QTableWidgetItem(tr("ADFASDFASDFASD"));
-
-                // FIXME: QTableWidgetItem it's not been displayed in tableWidget
-                QTableWidgetItem *item = new StatusItem(plugin);
                 if (tableWidget->rowCount() == 0)
-                    tableWidget->setRowCount(1);
-                tableWidget->setItem(1, 1, item);
+                    tableWidget->setRowCount(1); // just remembering that columnCount() == 1 from the Designer
+                // robot will be always displayed as the first row
+                tableWidget->setItem(0, 0, new StatusItem(plugin));
 
                 // If a past robot was open, deletes it
-                if (currentRobot == NULL)
+                if (currentRobot != NULL) {
                     delete currentRobot;
+                    currentRobot = NULL;
+                }
                 currentRobot = plugin;
-                currentRobot->setPos(200.0, 200.0);
+                currentRobot->setPos(currentRobot->startingPoint);
                 scene->addItem(currentRobot);
                 simulatorButton->setEnabled(true);
+
+                plugin = NULL;
+
                 return true;
             }
-            delete plugin;
         }
     }
     QMessageBox::warning(this, tr("RobotQt"),
