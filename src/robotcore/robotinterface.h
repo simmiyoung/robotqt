@@ -31,14 +31,6 @@ public:
      */
     virtual ~RobotInterface() {}
 
-    /*
-     * It turns on and off the object actions
-     *
-     * Returns true if it worked properly, false otherwise
-     */
-//    virtual bool turnOn() = 0;
-//    virtual bool turnOff() = 0;
-//
 //    /*
 //     * turns the robot in a -32768 to 32767 range of Celsius degrees.
 //     */
@@ -49,8 +41,19 @@ public:
 //     */
 //    virtual void run(qint16 degree) = 0;
 
+
+    /*
+     * Current robot angle. Refering to the scene.
+     */
     qreal angle;
+    /*
+     * Current robot speed. It basecly "walk" more pixels when it's faster.
+     */
     qreal speed;
+    /*
+     * The point that the robot will start in the current map.
+     */
+    QPointF startingPoint;
 };
 
 Q_DECLARE_INTERFACE(RobotInterface, "org.robotqt.RobotQt.RobotInterface/0.1")

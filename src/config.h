@@ -18,7 +18,7 @@
 #include <QDir>
 #include <QFile>
 
-#define ROBOTQT_VERSION "0.1"
+static const QString String_Version = "0.1";
 
 /*
  * Config class

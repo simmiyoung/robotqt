@@ -40,17 +40,8 @@ public:
     void readSettings();
 
 private slots:
-    /*
-     * Opens the source editor widget
-     */
     void openSourceEdit();
-    /*
-     * Open a new robot for simulation
-     */
-    void openFile();
-    /*
-     * Open about page
-     */
+    void openFile(); // Opens a new robot for simulation
     void openAbout();
     void startOrStopSimulation();
 
@@ -59,15 +50,6 @@ private:
      * Modify and create actions, and create connections
      */
     void createActions();
-    /*
-     * Check if it's ok to continue
-     */
-    bool okToContinue();
-    /*
-     * return if current robot was modified
-     * Ex.: Added new sensor
-     */
-    bool isRobotModified() const;
 
     /*
      * return true if the robot plugin is ok.
