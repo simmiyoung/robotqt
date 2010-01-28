@@ -9,6 +9,8 @@ class Test : public QObject, public RobotInterface
 {
     Q_OBJECT
     Q_INTERFACES(RobotInterface)
+    Q_PROPERTY(QPointF pos READ pos WRITE setPos)
+    Q_PROPERTY(qreal rotation READ rotation WRITE setRotation)
 
 public:
     Test();
@@ -17,8 +19,14 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget);
 
-protected:
-    void advance(int step);
+//    QPointF pos() const;
+//    void setPos(const QPointF &pos);
+//    qreal rotation() const;
+//    void setRotation(qreal angle);
+
+//
+//protected:
+//    void advance(int step);
 
 private:
     QColor color;

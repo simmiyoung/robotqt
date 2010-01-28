@@ -12,11 +12,16 @@ class StatusItem : public QTableWidgetItem
 {
 public:
     StatusItem();
-    StatusItem(PluginBase *plugin);
+    StatusItem(PluginBase *_plugin);
 
-    void setPlugin(PluginBase *plugin);
+    ~StatusItem();
+
+    void setPlugin(PluginBase *_plugin);
 
     QTableWidgetItem * clone() const;
+
+private:
+    PluginBase * plugin;
 };
 
 #endif // STATUSITEM_H

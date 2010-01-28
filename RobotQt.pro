@@ -27,13 +27,14 @@ macx {
     headers.path = /usr/local/include/robotqt
 }
 unix { 
-    target.path = /usr/bin/
+    target.path = /usr/local/bin/
     headers.path = /usr/local/include/robotqt
 }
 
 # Add RobotCore headers to plugin developers
 headers.files = src/robotcore/robotinterface.h \
     src/robotcore/sensorinterface.h \
+    src/robotcore/scenariointerface.h \
     src/robotcore/pluginbase.h
 
 INSTALLS += target \
@@ -43,6 +44,7 @@ HEADERS += src/robotqt.h \
     src/sourceeditor.h \
     src/robotcore/robotinterface.h \
     src/robotcore/sensorinterface.h \
+    src/robotcore/scenariointerface.h \
     src/config.h \
     src/statusitem.h \
     src/robotcore/pluginbase.h

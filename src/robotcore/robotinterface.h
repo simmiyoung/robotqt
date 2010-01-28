@@ -1,5 +1,5 @@
 /*
- * robotinterface.cpp
+ * robotinterface.h
  * RobotQt - Robot Simulation
  *
  * Created by Felipe Tonello on 2010-21-01.
@@ -9,10 +9,6 @@
  * Revision: $Rev$
  * Author: $Author$
  * Date: $Date$
- */
-
-/*
- * TODO: Debugging using qDebug()
  */
 
 #ifndef ROBOTINTERFACE_H
@@ -31,25 +27,35 @@ public:
      */
     virtual ~RobotInterface() {}
 
-//    /*
-//     * turns the robot in a -32768 to 32767 range of Celsius degrees.
-//     */
-//    virtual void turn(qint16 degree) = 0;
-//
-//    /*
-//     * turns the robot in a -32768 to 32767 range of Celsius degrees.
-//     */
-//    virtual void run(qint16 degree) = 0;
-
+    /*
+     * This pure virtual function defines the outer bounds of the
+     * item as a rectangle; all painting must be restricted to inside
+     * an item's bounding rect. QGraphicsView uses this to determine
+     * whether the item requires redrawing.
+     */
+    virtual QRectF boundingRect() const = 0;
 
     /*
-     * Current robot angle. Refering to the scene.
+     * Returns the shape of this item as a QPainterPath in local coordinates.
+     * The shape is used for many things, including collision detection,
+     * hit tests, and for the QGraphicsScene::items() functions.
      */
-    qreal angle;
+    virtual QPainterPath shape() const = 0;
+
     /*
-     * Current robot speed. It basecly "walk" more pixels when it's faster.
+     * This pure virtual function, which is usually called by QGraphicsView,
+     * paints the contents of an item in local coordinates.
      */
-    qreal speed;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+               QWidget *widget) = 0;
+
+
+
+//    virtual QPointF pos() const = 0;
+//    virtual void setPos(const QPointF &pos) = 0;
+//    virtual qreal rotation() const = 0;
+//    virtual void setRotation(qreal angle) = 0;
+
     /*
      * The point that the robot will start in the current map.
      */

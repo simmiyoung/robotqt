@@ -33,8 +33,11 @@
            <string>Status</string>
           </property>
           <layout class="QGridLayout" name="gridLayout">
-           <item row="1" column="1">
-            <widget class="QPushButton" name="configureButton_2">
+           <item row="1" column="2">
+            <widget class="QPushButton" name="configureButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="toolTip">
               <string>Configure current object</string>
              </property>
@@ -65,7 +68,7 @@
              </property>
             </spacer>
            </item>
-           <item row="0" column="0" colspan="2">
+           <item row="0" column="0" colspan="3">
             <widget class="QTableWidget" name="tableWidget">
              <property name="editTriggers">
               <set>QAbstractItemView::NoEditTriggers</set>
@@ -121,6 +124,25 @@
              <column/>
             </widget>
            </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="sensorAddButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="toolTip">
+              <string>Add a new Sensor</string>
+             </property>
+             <property name="statusTip">
+              <string>Add a new Sensor</string>
+             </property>
+             <property name="whatsThis">
+              <string>Add a new Sensor</string>
+             </property>
+             <property name="text">
+              <string>Add Sensor</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
@@ -131,7 +153,7 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QPushButton" name="simulatorButton">
+            <widget class="QPushButton" name="simulatorOnOffButton">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -155,7 +177,7 @@
            <item>
             <widget class="QPushButton" name="sourceButton">
              <property name="toolTip">
-              <string>Open Source Editor (Ctrl+Shift+O)</string>
+              <string>Open Source Editor</string>
              </property>
              <property name="statusTip">
               <string>Open Source Editor</string>
@@ -208,12 +230,6 @@
     <addaction name="actionSourceEditor"/>
     <addaction name="actionConfigureRobot"/>
    </widget>
-   <widget class="QMenu" name="menu_Tools">
-    <property name="title">
-     <string>&amp;Tools</string>
-    </property>
-    <addaction name="actionPreferences"/>
-   </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
      <string>&amp;Help</string>
@@ -222,7 +238,6 @@
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
-   <addaction name="menu_Tools"/>
    <addaction name="menu_Help"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -248,7 +263,7 @@
   </action>
   <action name="actionOpen">
    <property name="text">
-    <string>&amp;Open a Robot</string>
+    <string>&amp;Open Scenario or Robot</string>
    </property>
    <property name="toolTip">
     <string>Open a new RobotQt file</string>
@@ -320,6 +335,9 @@
   <action name="actionAboutRobotQt">
    <property name="text">
     <string>&amp;About RobotQt</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::AboutRole</enum>
    </property>
   </action>
   <action name="actionPreferences">
