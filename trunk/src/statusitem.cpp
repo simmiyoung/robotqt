@@ -7,20 +7,29 @@ StatusItem::StatusItem()
 
 }
 
-StatusItem::StatusItem(PluginBase *plugin)
+StatusItem::StatusItem(PluginBase *_plugin)
 {
-    setPlugin(plugin);
+    setPlugin(_plugin);
 }
 
-void StatusItem::setPlugin(PluginBase *plugin)
+StatusItem::~StatusItem()
 {
+    delete plugin;
+}
+
+void StatusItem::setPlugin(PluginBase *_plugin)
+{
+    plugin = _plugin;
+
     if (plugin->getType() == PluginBase::Robot) {
-        setIcon(QIcon(QPixmap(":/images/robot_item.png")));
+        setIcon(QIcon(":/images/robot_item.png"));
         setText(QObject::tr("Robot: %1").arg(plugin->getName()));
-    }
-    else if (plugin->getType() == PluginBase::Sensor) {
-        setIcon(QIcon(QPixmap(":/images/sensor_item.png")));
+    } else if (plugin->getType() == PluginBase::Sensor) {
+        setIcon(QIcon(":/images/sensor_item.png"));
         setText(QObject::tr("Sensor: %1").arg(plugin->getName()));
+    } else if (plugin->getType() == PluginBase::Scenario) {
+        setIcon(QIcon(":/images/scenario_item.png"));
+        setText(QObject::tr("Scenario: %1").arg(plugin->getName()));
     }
     setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
     setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);

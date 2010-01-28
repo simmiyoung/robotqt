@@ -20,17 +20,17 @@ static qreal normalizeAngle(qreal angle) {
 Test::Test()
 {
     // setting PluginBase attributes
-    setName("Robot Teste!");
+    setName(tr("Outro robôo teste"));
     setType(PluginBase::Robot);
 
     // we need to reset RobotInterface attributes
-    angle = 0;
-    speed = 0;
     startingPoint.setX(200.0);
     startingPoint.setY(200.0);
 
+    // random robot color
     color = QColor(qrand() % 256, qrand() % 256, qrand() % 256);
 
+    // setting rotation just for fun
     setRotation(qrand() % (360 * 16));
 }
 
@@ -42,22 +42,28 @@ QRectF Test::boundingRect() const {
 
 void Test::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     painter->drawRect(-10, -10, 20, 20);
-//    // wheels
-//    painter->drawEllipse(-11.5, -8, 4, 6); // top-left
-//    painter->drawEllipse(10, -8, 4, 6); // top-right
-//    painter->drawEllipse(-11.5, 8, 4, 6); // bottom-left
-//    painter->drawEllipse(11.5, 8, 4, 6); // bottom-right
-//
-//    // to paint the wheels
-//    QPainterPath path;
-//    path.addEllipse(-11.5, -8, 4, 6); // top-left
-//    path.addEllipse(10, -8, 4, 6); // top-right
-//    path.addEllipse(-11.5, 8, 4, 6); // bottom-left
-//    path.addEllipse(11.5, 8, 4, 6); // bottom-right
-
     painter->fillRect(-10, -10, 20, 20, color);
-//    painter->fillPath(path, QBrush(Qt::black));
 }
+//
+//QPointF pos() const
+//{
+//    return QGraphicsItem::pos();
+//}
+//
+//void setPos(const QPointF &pos)
+//{
+//    QGraphicsItem::setPos(pos);
+//}
+//
+//qreal rotation() const
+//{
+//    return QGraphicsItem::rotation();
+//}
+//
+//void setRotation(qreal angle)
+//{
+//    QGraphicsItem::setRotation(angle);
+//}
 
 void Test::advance(int step)
  {

@@ -1,14 +1,29 @@
+/*
+ * pluginbase.h
+ * RobotQt - Robot Simulation
+ *
+ * Created by Felipe Tonello on 2010-21-01.
+ * Copyright 2010 Felipe Ferreri Tonello. All rights reserved.
+ * http://robotqt.googlecode.com/
+ *
+ * Revision: $Rev$
+ * Author: $Author$
+ * Date: $Date$
+ */
+
 #ifndef PLUGINBASE_H
 #define PLUGINBASE_H
 
-#include <QGraphicsItem>
+#include <QString>
 
-class QString;
-
+/*
+ * The base of all plugins.
+ * There is just common characteristics like name and type.
+ */
 class PluginBase
 {
 public:
-    enum Type { Robot, Sensor };
+    enum Type { Robot, Sensor, Scenario };
 
     virtual ~PluginBase() {}
 
