@@ -1,8 +1,8 @@
 TEMPLATE = lib
 CONFIG += plugin
-HEADERS = test.h
-SOURCES = test.cpp \
+HEADERS = scenariotest.h
+SOURCES = scenariotest.cpp \
     ../../../src/robotcore/pluginbase.cpp
 # IMPORTANT: Remeber to change the extension name to .robot
-TARGET = test.robot
-TARGET_EXT = robot
+TARGET = scenariotest.sensor
+TARGET_EXT = sensor
