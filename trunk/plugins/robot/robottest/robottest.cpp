@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QStyleOption>
 
-#include <math.h>
+//#include <math.h>
 
 //static const double Pi = 3.14159265358979323846264338327950288419717;
 //static double TwoPi = 2.0 * Pi;
@@ -20,7 +20,7 @@
 RobotTest::RobotTest()
 {
     // setting PluginBase attributes
-    setName(tr("Outro robô teste"));
+    setName(tr("Outro robo teste"));
     setType(PluginBase::Robot);
 
     // we need to reset RobotInterface attributes

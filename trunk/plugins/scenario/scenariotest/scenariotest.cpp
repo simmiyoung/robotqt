@@ -4,35 +4,53 @@
 #include <QPainter>
 #include <QStyleOption>
 
-#include <math.h>
-
-static const double Pi = 3.14159265358979323846264338327950288419717;
-static double TwoPi = 2.0 * Pi;
-
 ScenarioTest::ScenarioTest()
 {
     // setting PluginBase attributes
-    setName(tr("Cenário Teste!"));
+    setName(tr("Cenario Teste!"));
     setType(PluginBase::Scenario);
 
+    // setting ScenarioInterface attributes
+    scenarioRect = QRectF(-300.0, -300.0, 600.0, 600.0);
+
+    /*
+     * Size representation of the scenario
+     */
+    enum sizeType { Centimeter, Meter, Kilometer };
+    type = ScenarioInterface::Meter;
+    scenarioSize = QSizeF(600.0, 600.0);
+
+    color = QColor(qrand() % 256, qrand() % 256, qrand() % 256);
 }
 
-QRectF ScenarioTest::boundingRect() const {
-//    qreal adjust = 4;
-//    return QRectF(-10 - adjust, -10 - adjust,
-//                  20 + adjust, 20 + adjust);
+QRectF ScenarioTest::boundingRect() const
+{
+    return scenarioRect;
+}
+
+QPainterPath ScenarioTest::shape() const
+{
+    QPainterPath path;
+    path.addRect(QRectF(0.0, 0.0, 60.0, 60.0));
+    path.addRect(QRectF(-300.0, -280.0, 60.0, 60.0));
+    path.addRect(QRectF(200.0, 50.0, 30.0, 15.0));
+    return path;
 }
 
 void ScenarioTest::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    QRectF rect(0.0, 0.0, 60.0, 60.0);
-    painter->setRenderHint(QPainter::Antialiasing, true);
-    painter->drawEllipse(rect);
-    painter->fillRect(rect);
-}
+    QVector<QRectF> v(4);
+    QRectF block1(0.0, 0.0, 60.0, 60.0);
+    QRectF block2(-300.0, -280.0, 60.0, 60.0);
+    QRectF block3(200.0, 50.0, 30.0, 15.0);
+    QRectF border(-300.0, -300.0, 600.0, 600.0);
 
-void Test::turnOff()
-{
-    status = SensorInterface::OFF;
+    v << block1 << block2 << block3 << border;
+
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->drawRects(v);
+    painter->fillRect(block1, color);
+    painter->fillRect(block2, color);
+    painter->fillRect(block3, color);
 }
 
 Q_EXPORT_PLUGIN2(scenariotest, ScenarioTest)
