@@ -3,7 +3,7 @@
  * RobotQt - Robot Simulation
  *
  * Created by Felipe Tonello on 2008-12-10.
- * Copyright 2008-2009 Felipe Ferreri Tonello. All rights reserved.
+ * Copyright 2008-2010 Felipe Ferreri Tonello. All rights reserved.
  * http://robotqt.googlecode.com/
  *
  * Revision: $Rev$
@@ -16,9 +16,6 @@
 #include <QtGui/QGraphicsScene>
 #include <QSettings>
 #include <QPluginLoader>
-#include <QSequentialAnimationGroup>
-#include <QParallelAnimationGroup>
-#include <QPropertyAnimation>
 
 #include "robotqt.h"
 #include "config.h" // for debugging
@@ -26,6 +23,7 @@
 #include "robotcore/robotinterface.h"
 #include "robotcore/sensorinterface.h"
 #include "robotcore/scenariointerface.h"
+#include "robotcore/simulatorengine.h"
 
 // GUI's
 #include "sourceeditor.h"
@@ -99,8 +97,18 @@ RobotQt::~RobotQt()
 {
     // we know that it will not have any effect,
     // but still a good practice
-    delete currentRobot;
-    currentRobot = NULL;
+    if (isRobotLoaded()) {
+        delete currentRobot;
+        currentRobot = NULL;
+    }
+    if (isScenarioLoaded()) {
+        delete currentScenario;
+        currentScenario = NULL;
+    }
+
+    // FIXME: still having issues with memory management
+    qDeleteAll(sensorsList.begin(), sensorsList.end());
+    sensorsList.clear();
 }
 
 /*-----------------------------------------------------------------------------
@@ -143,19 +151,17 @@ void RobotQt::startOrStopSimulation()
 {
     // do not change the status if there is no loaded Robot
     if (isRobotLoaded() && isScenarioLoaded()) {
-
-        // TODO: class that handle the animation engine with threads
-
-
-
-        currentRobot->setPos();
+        if (timer.isActive()) {
+            timer.stop();
+        } else {
+            timer.start(ThreadTime);
+        }
     } else {
         QMessageBox::warning(this, tr("RobotQt"),
                              tr("You need to load a robot <strong>and</strong> "
                                 "a scenario to run the simulation"));
     }
 }
-
 
 /*-----------------------------------------------------------------------------
  *  Private Methods
@@ -172,7 +178,7 @@ void RobotQt::createActions()
     connect(sourceButton, SIGNAL(clicked()), this, SLOT(openSourceEdit()));
     connect(simulatorOnOffButton, SIGNAL(clicked()), this, SLOT(startOrStopSimulation()));
     connect(sensorAddButton, SIGNAL(clicked()), this, SLOT(openFile()));
-//    connect(&timer, SIGNAL(timeout()), &scene, SLOT(advance())); // for simulation
+    connect(&timer, SIGNAL(timeout()), &simulatorControl, SLOT(doStep())); // for simulation
 }
 
 void RobotQt::readSettings()
@@ -192,7 +198,8 @@ bool RobotQt::loadRobot(const QString &fileName) {
         // If a past robot was open, deletes it
         if (currentRobot != NULL) {
             // StatusItem destructor deletes currentRobot
-            delete tableWidget->takeItem(1, 0);
+            tableWidget->removeCellWidget(1, 0);
+            delete currentRobot;
             currentRobot = NULL;
         }
         // if this statement fails, it means that probably there is no map loaded
@@ -204,6 +211,8 @@ bool RobotQt::loadRobot(const QString &fileName) {
         tableWidget->setItem(1, 0, new StatusItem(plugin));
 
         plugin->setPos(plugin->startingPoint);
+        // TODO: only loads a robot if a scenario is already loaded
+        plugin->setParentItem(currentScenario);
         scene.addItem(plugin);
 
         currentRobot = plugin;
@@ -211,6 +220,7 @@ bool RobotQt::loadRobot(const QString &fileName) {
         // now it's possible to run the simulator
         simulatorOnOffButton->setEnabled(true);
         simulatorStateMachine.start();
+        simulatorControl.append(new SimulatorEngine(currentRobot));
 
         return true;
     } else {
@@ -244,7 +254,8 @@ bool RobotQt::loadScenario(const QString &fileName) {
     if (ScenarioInterface *plugin = qobject_cast<ScenarioInterface *>(loader.instance())) {
         if (isScenarioLoaded()) {
             // StatusItem destructor deletes currentScenario
-            delete tableWidget->takeItem(0, 0);
+            tableWidget->takeItem(0, 0);
+            delete currentScenario;
             currentScenario = NULL;
         }
 

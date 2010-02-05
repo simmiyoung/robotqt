@@ -12,7 +12,7 @@ QT += core \
     gui
 
 # Customize the names of the build targets depending on the target platform
-CONFIG(debug, debug|release) { 
+CONFIG(debug, debug|release) {
     win32:TARGET = $$join(TARGET,,d) # Should return dRobotQt
     else:TARGET = $$join(TARGET,,,_debug) # Shoud return RobotQt_debug
 }
@@ -22,11 +22,11 @@ win32 {
     target.path = \\RobotQt\\
     headers.path = \\RobotQt\\include
 }
-macx { 
+macx {
     target.path = /Applications/
     headers.path = /usr/local/include/robotqt
 }
-unix { 
+unix {
     target.path = /usr/local/bin/
     headers.path = /usr/local/include/robotqt
 }
@@ -47,13 +47,17 @@ HEADERS += src/robotqt.h \
     src/robotcore/scenariointerface.h \
     src/config.h \
     src/statusitem.h \
-    src/robotcore/pluginbase.h
+    src/robotcore/pluginbase.h \
+    src/robotcore/simulatorcontrol.h \
+    src/robotcore/simulatorengine.h
 SOURCES += src/main.cpp \
     src/robotqt.cpp \
     src/sourceeditor.cpp \
     src/config.cpp \
     src/statusitem.cpp \
-    src/robotcore/pluginbase.cpp
+    src/robotcore/pluginbase.cpp \
+    src/robotcore/simulatorcontrol.cpp \
+    src/robotcore/simulatorengine.cpp
 FORMS += src/ui/robotqt.ui \
     src/ui/sourceeditor.ui
 
@@ -61,6 +65,7 @@ FORMS += src/ui/robotqt.ui \
 INCLUDEPATH += src
 
 RESOURCES += images/robotqt_imgs.qrc
+ICON = images/robotqt.icns
 
 message("Congratulations! You are ready to build RobotQt.")
 message("To build, type 'make'")

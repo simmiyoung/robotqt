@@ -62,6 +62,7 @@ public:
      * The point that the robot will start in the current map.
      */
     QPointF startingPoint;
+    qreal startAngle;
 };
 
 Q_DECLARE_INTERFACE(RobotInterface, "org.robotqt.RobotQt.RobotInterface/0.1")

@@ -14,7 +14,7 @@ StatusItem::StatusItem(PluginBase *_plugin)
 
 StatusItem::~StatusItem()
 {
-    delete plugin;
+    // do delete plugin?
 }
 
 void StatusItem::setPlugin(PluginBase *_plugin)

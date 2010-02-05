@@ -4,5 +4,7 @@
         <file>robot_item.png</file>
         <file>sensor_item.png</file>
         <file>scenario_item.png</file>
+        <file>icon.png</file>
+        <file>robotqt.svg</file>
     </qresource>
 </RCC>
