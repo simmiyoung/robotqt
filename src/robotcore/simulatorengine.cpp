@@ -69,6 +69,9 @@ void SimulatorEngine::turn(const QTime &time)
 
 void SimulatorEngine::doStep()// const
 {
+
+    // This is just a work-around to show how it works
+
     QLineF lineToCenter(QPointF(0, 0), robot->mapFromScene(0, 0));
     if (lineToCenter.length() > 150) {
         qreal angleToCenter = ::acos(lineToCenter.dx() / lineToCenter.length());
