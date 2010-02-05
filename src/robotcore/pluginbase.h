@@ -38,4 +38,22 @@ private:
     PluginBase::Type type;
 };
 
+// struct to set a linked list of properties to animate
+template<class PropertyClass>
+struct AnimationProperties
+{
+    AnimationProperties(const QString &_property, const PropertyClass &_value, quint32 _duration = 1000)
+    {
+        property = _property;
+        duration = _duration;
+        value = _value;
+        next = NULL;
+    }
+
+    QString             property;
+    quint32             duration; // it only uses if next != NULL
+    PropertyClass       value;
+    AnimationProperties *next;
+};
+
 #endif // PLUGINBASE_H

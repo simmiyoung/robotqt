@@ -16,6 +16,9 @@
 #include <QtGui/QGraphicsScene>
 #include <QSettings>
 #include <QPluginLoader>
+#include <QSequentialAnimationGroup>
+#include <QParallelAnimationGroup>
+#include <QPropertyAnimation>
 
 #include "robotqt.h"
 #include "config.h" // for debugging
@@ -199,6 +202,21 @@ bool RobotQt::loadRobot(const QString &fileName) {
         simulatorOnOffButton->setEnabled(true);
         simulatorStateMachine.start();
 
+
+        // ARRUMAR ANIMACAOOOOO
+
+        // Adding animations
+//        QSequentialAnimationGroup group;
+//        QList<AnimationProperties<QPointF> *>::const_iterator i;
+//        for (i = plugin->animationProperties().constBegin(); i != plugin->animationProperties().constEnd(); ++i) {
+//            QPropertyAnimation anim(currentRobot, (*i)->property);
+//            anim.setDuration((*i)->duration);
+//            anim.setStartValue((*i)->value);
+//            anim.setEndValue((*i)->next->value);
+//            group.addAnimation(&anim);
+//        }
+//        parallelAnimationGroup.addAnimation(&group);
+
         return true;
     } else {
         QMessageBox::warning(this, tr("RobotQt"),
@@ -243,7 +261,7 @@ bool RobotQt::loadScenario(const QString &fileName) {
 
         // centralize it
         plugin->setPos(0.0, 0.0);
-        scene.setSceneRect(plugin->scenarioSize);
+        scene.setSceneRect(plugin->scenarioRect);
         scene.addItem(plugin);
 
         currentScenario = plugin;

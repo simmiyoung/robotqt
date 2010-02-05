@@ -49,12 +49,14 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget) = 0;
 
-
-
-//    virtual QPointF pos() const = 0;
-//    virtual void setPos(const QPointF &pos) = 0;
-//    virtual qreal rotation() const = 0;
-//    virtual void setRotation(qreal angle) = 0;
+    /*
+     * This virtual function is called twice for all items by the
+     * QGraphicsScene::advance() slot. In the first phase, all items are called
+     * with phase == 0, indicating that items on the scene are about to advance,
+     * and then all items are called with phase == 1. Reimplement this function to
+     * update your item if you need simple scene-controlled animation.
+     */
+//    virtual void advance(int phase) = 0;
 
     /*
      * The point that the robot will start in the current map.

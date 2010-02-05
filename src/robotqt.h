@@ -23,6 +23,7 @@
 
 #include <QList>
 #include <QStateMachine>
+#include <QParallelAnimationGroup>
 
 class QWidget;
 class QGraphicsScene;
@@ -95,6 +96,8 @@ private:
      * State Machine for the simulator
      */
     QStateMachine simulatorStateMachine;
+
+    QParallelAnimationGroup parallelAnimationGroup;
 };
 
 #endif // ROBOTQT_H
