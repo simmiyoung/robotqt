@@ -55,10 +55,8 @@ public:
      *
      * Returns true if it worked properly, false otherwise
      */
-    virtual bool turnOn() = 0;
-    virtual bool turnOff() = 0;
-
-//    virtual QMap animationProperties() = 0;
+    virtual void turnOn() = 0;
+    virtual void turnOff() = 0;
 
     /*
      * All the possible object states
@@ -67,7 +65,6 @@ public:
     enum Status {ON, OFF};
 
     SensorInterface::Status status;
-    bool isAnimated;
 };
 
 Q_DECLARE_INTERFACE(SensorInterface, "org.robotqt.RobotQt.SensorInterface/0.1")

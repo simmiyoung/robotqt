@@ -33,14 +33,25 @@ QPainterPath SensorTest::shape() const
 }
 
 void SensorTest::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    painter->setRenderHint(QPainter::Antialiasing, true);
+//    painter->setRenderHint(QPainter::Antialiasing, true);
 
     QPainterPath path;
     path.addEllipse(QRectF(-50.0, -50.0, 100.0, 100.0));
 
     painter->drawPath(path);
-    painter->fillPath(path, QBrush(color, (scene()->collidingItems(this).isEmpty()) ?
-                                   Qt::Dense6Pattern : Qt::Dense2Pattern));
+
+    // checking if any item collides with the sensor range.
+    // If some, instead of its own parent, it changes the brush style to
+    // someting more dark and intense
+    QBrush brush(color, Qt::Dense6Pattern);
+    foreach (QGraphicsItem *item, scene()->collidingItems(this)) {
+        if (item != parentItem()) {
+            brush.setStyle(Qt::Dense2Pattern);
+            break;
+        }
+    }
+
+    painter->fillPath(path, brush);
 }
 
 void SensorTest::turnOff()

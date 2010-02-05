@@ -23,7 +23,9 @@
 
 #include <QList>
 #include <QStateMachine>
-#include <QParallelAnimationGroup>
+#include <QTimer>
+
+#include "robotcore/simulatorcontrol.h"
 
 class QWidget;
 class QGraphicsScene;
@@ -93,11 +95,11 @@ private:
     QGraphicsScene scene;
 
     /*
-     * State Machine for the simulator
+     * Simulator configs
      */
     QStateMachine simulatorStateMachine;
-
-    QParallelAnimationGroup parallelAnimationGroup;
+    QTimer timer;
+    SimulatorControl simulatorControl;
 };
 
 #endif // ROBOTQT_H
