@@ -27,6 +27,15 @@ public:
      */
     virtual ~ScenarioInterface() {}
 
+
+    /*
+     * This pure virtual function defines the outer bounds of the
+     * item as a rectangle; all painting must be restricted to inside
+     * an item's bounding rect. QGraphicsView uses this to determine
+     * whether the item requires redrawing.
+     */
+    virtual QRectF boundingRect() const = 0;
+
     /*
      * Returns the shape of this item as a QPainterPath in local coordinates.
      * The shape is used for many things, including collision detection,
@@ -39,7 +48,7 @@ public:
      * paints the contents of an item in local coordinates.
      */
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-               QWidget *widget) = 0;
+                       QWidget *widget) = 0;
 
     QRectF scenarioRect;
 
@@ -47,6 +56,7 @@ public:
      * Size representation of the scenario
      */
     enum sizeType { Centimeter, Meter, Kilometer };
+    ScenarioInterface::sizeType type;
     QSizeF scenarioSize;
 };
 

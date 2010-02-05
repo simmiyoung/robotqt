@@ -41,6 +41,7 @@ RobotQt::RobotQt(QWidget *parent) :
 
     // setting NULL to easy manipulate various plugins opening
     currentRobot = NULL;
+    currentScenario = NULL;
 
     sourceEditor = new SourceEditor;
 
@@ -116,7 +117,7 @@ void RobotQt::openFile()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open a RobotQt plugin file"), ".",
-                                                    tr("RobotQt source files (*.robot, *.sensor, *.scenario)"));
+                                                    tr("RobotQt (*.robot *.sensor *.scenario)"));
     if (fileName.isEmpty()) {
         QMessageBox::warning(this, tr("RobotQt"),
                              tr("Ocurred an Error: you didn't selected any file.").arg(fileName));
@@ -143,6 +144,15 @@ void RobotQt::startOrStopSimulation()
     // do not change the status if there is no loaded Robot
     if (isRobotLoaded() && isScenarioLoaded()) {
 
+        // TODO: class that handle the animation engine with threads
+
+
+
+        currentRobot->setPos();
+    } else {
+        QMessageBox::warning(this, tr("RobotQt"),
+                             tr("You need to load a robot <strong>and</strong> "
+                                "a scenario to run the simulation"));
     }
 }
 
@@ -193,7 +203,7 @@ bool RobotQt::loadRobot(const QString &fileName) {
         // robot will be always displayed as the second row
         tableWidget->setItem(1, 0, new StatusItem(plugin));
 
-        currentRobot->setPos(plugin->startingPoint);
+        plugin->setPos(plugin->startingPoint);
         scene.addItem(plugin);
 
         currentRobot = plugin;
@@ -201,21 +211,6 @@ bool RobotQt::loadRobot(const QString &fileName) {
         // now it's possible to run the simulator
         simulatorOnOffButton->setEnabled(true);
         simulatorStateMachine.start();
-
-
-        // ARRUMAR ANIMACAOOOOO
-
-        // Adding animations
-//        QSequentialAnimationGroup group;
-//        QList<AnimationProperties<QPointF> *>::const_iterator i;
-//        for (i = plugin->animationProperties().constBegin(); i != plugin->animationProperties().constEnd(); ++i) {
-//            QPropertyAnimation anim(currentRobot, (*i)->property);
-//            anim.setDuration((*i)->duration);
-//            anim.setStartValue((*i)->value);
-//            anim.setEndValue((*i)->next->value);
-//            group.addAnimation(&anim);
-//        }
-//        parallelAnimationGroup.addAnimation(&group);
 
         return true;
     } else {
