@@ -58,6 +58,8 @@ public:
     virtual bool turnOn() = 0;
     virtual bool turnOff() = 0;
 
+//    virtual QMap animationProperties() = 0;
+
     /*
      * All the possible object states
      * ON and OFF, for now
@@ -65,6 +67,7 @@ public:
     enum Status {ON, OFF};
 
     SensorInterface::Status status;
+    bool isAnimated;
 };
 
 Q_DECLARE_INTERFACE(SensorInterface, "org.robotqt.RobotQt.SensorInterface/0.1")
