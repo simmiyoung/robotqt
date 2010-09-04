@@ -22,5 +22,7 @@
         <file>edit-select-all.svg</file>
         <file>edit-undo.svg</file>
         <file>format-justify-fill.svg</file>
+        <file>text-x-script.svg</file>
+        <file>list-add.svg</file>
     </qresource>
 </RCC>

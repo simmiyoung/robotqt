@@ -31,24 +31,21 @@
  * Date: $Date$
  */
 
+// Core
+
+
+// GUI
+#include <QtGui/QAction>
 #include <QtGui/QMessageBox>
 
 #include "sourceeditor.h"
 
-SourceEditor::SourceEditor(QWidget *parent)
-	: QWidget(parent)
+SourceEditor::SourceEditor( QWidget *parent )
+	: QMainWindow( parent )
 {
-	setupUi(this);
+	setupUi( this );
 
-	openButton->setShortcut(QKeySequence::Open);
-	saveButton->setShortcut(QKeySequence::Save);
-	saveAsButton->setShortcut(QKeySequence::SaveAs);
-	closeButton->setShortcut(QKeySequence::Close);
-
-	connect(openButton, SIGNAL(clicked()), this, SLOT(openFile()));
-	connect(saveButton, SIGNAL(clicked()), this, SLOT(save()));
-	connect(saveButton, SIGNAL(clicked()), this, SLOT(saveAs()));
-	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
+	setupActions();
 }
 
 SourceEditor::~SourceEditor()
@@ -56,15 +53,19 @@ SourceEditor::~SourceEditor()
 
 }
 
-QString SourceEditor::sourceName() const
+QString SourceEditor::fileName() const
 {
-	return currentSourceName;
+	return currentFileName;
 }
 
-void SourceEditor::setSourceName(const QString &_name)
+void SourceEditor::setFileName( const QString &_name )
 {
-	currentSourceName = _name;
+	currentFileName = _name;
 }
+
+/**
+ * Private Slots
+ */
 
 void SourceEditor::openFile()
 {
@@ -81,24 +82,55 @@ void SourceEditor::saveAs()
 
 }
 
+/**
+ * Private Methods
+ */
+
+void SourceEditor::setupActions()
+{
+	QAction *actionSeparator = new QAction( this );
+	actionSeparator->setSeparator( true );
+	
+	actionOpen->setShortcut( QKeySequence::Open );
+	actionSave->setShortcut( QKeySequence::Save );
+	actionSaveAs->setShortcut( QKeySequence::SaveAs );
+	actionClose->setShortcut( QKeySequence::Close );
+	
+	toolBar->addAction( actionOpen );
+	toolBar->addAction( actionSave );
+	toolBar->addAction( actionSaveAs );
+	
+	editor->addAction( actionOpen );
+	editor->addAction( actionSave );
+	editor->addAction( actionSaveAs );
+	editor->addAction( actionSeparator );
+	editor->addAction( actionClose );
+	editor->setContextMenuPolicy(Qt::ActionsContextMenu);
+	
+	connect( actionOpen, SIGNAL(triggered()), this, SLOT(openFile()) );
+	connect( actionSave, SIGNAL(triggered()), this, SLOT(save()) );
+	connect( actionSaveAs, SIGNAL(triggered()), this, SLOT(saveAs()) );
+	connect( actionClose, SIGNAL(triggered()), this, SLOT(close()) );
+}
+
 bool SourceEditor::okToContinue()
 {
-	if (isSourceModified()) {
-		int r = QMessageBox::warning(this, tr("RobotQt"),
-					tr("This source code has been modified.\n"
-					"Do you want to save your changes?"),
-					QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-		if (r == QMessageBox::Yes) {
+	if ( isFileModified() ) {
+		int r = QMessageBox::warning( this, tr( "RobotQt" ),
+					tr( "This source code has been modified.\n"
+					"Do you want to save your changes?" ),
+					QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+		if ( r == QMessageBox::Yes ) {
 			save();
 			return true;
-		} else if (r == QMessageBox::Cancel) {
+		} else if ( r == QMessageBox::Cancel ) {
 			return false;
 		}
 	}
 	return true;
 }
 
-bool SourceEditor::isSourceModified() const
+bool SourceEditor::isFileModified() const
 {
 	return false;
 }

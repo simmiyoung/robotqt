@@ -42,13 +42,15 @@
 #include <QtGui/QMessageBox>
 #include <QtGui/QKeySequence>
 
-// UI's
+// UI
 #include "sourceeditor.h"
 
-RobotQt::RobotQt(QWidget *parent) :
-	QMainWindow(parent)
+RobotQt::RobotQt( QWidget *parent ) :
+	QMainWindow( parent )
 {
-	setupUi(this);
+	setupUi( this );
+
+	sourceEditor = new SourceEditor( this );
 
 	setupActions();
 	readSettings();
@@ -59,9 +61,9 @@ RobotQt::~RobotQt()
 
 }
 
-/*-----------------------------------------------------------------------------
- *  Private slots
- *-----------------------------------------------------------------------------*/
+/**
+ * Private Slots
+ */
 
 void RobotQt::openAbout()
 {
@@ -71,39 +73,45 @@ void RobotQt::openAbout()
 		"<p>RobotQt is a open source 2D robot simulator for academic purpose.</p>").arg(String_Version));
 }
 
-/*-----------------------------------------------------------------------------
- *  Private Methods
- *-----------------------------------------------------------------------------*/
+void RobotQt::openFile()
+{
+
+}
+
+/**
+ * Private Methods
+ */
 
 void RobotQt::setupActions()
 {
-	actionPreferences->setShortcut(QKeySequence::Preferences);
+	actionPreferences->setShortcut( QKeySequence::Preferences );
+	actionNew->setShortcut( QKeySequence::New );
+	actionQuit->setShortcut( QKeySequence::Quit );
 
+	fileToolBar->addAction( actionNew );
+	fileToolBar->addAction( actionAddPlugin );
+	controlToolBar->addAction( actionPlay );
+	controlToolBar->addAction( actionPause );
+	controlToolBar->addAction( actionStop );
 
-	fileToolBar->addAction(actionNew);
-	fileToolBar->addAction(actionOpen);
-	controlToolBar->addAction(actionPlay);
-	controlToolBar->addAction(actionPause);
-	controlToolBar->addAction(actionStop);
+	graphicsView->addAction( actionPlay );
+	graphicsView->addAction( actionPause );
+	graphicsView->addAction( actionStop );
+	graphicsView->setContextMenuPolicy( Qt::ActionsContextMenu );
 
-	graphicsView->addAction(actionPlay);
-	graphicsView->addAction(actionPause);
-	graphicsView->addAction(actionStop);
-	graphicsView->setContextMenuPolicy(Qt::ActionsContextMenu);
-
-
-	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
-//	connect(actionOpen, SIGNAL(triggered()), this, SLOT(openFile()));
-	connect(actionAboutRobotQt, SIGNAL(triggered()), this, SLOT(openAbout()));
+	connect( actionQuit, SIGNAL(triggered()), this, SLOT(close()) );
+	connect( actionAddPlugin, SIGNAL(triggered()), this, SLOT(openFile()) );
+	connect( actionAboutRobotQt, SIGNAL(triggered()), this, SLOT(openAbout()) );
+	connect( actionSourceEditor, SIGNAL(triggered()), sourceEditor, SLOT(show()) );
 }
 
 void RobotQt::readSettings()
 {
-	QSettings settings("RobotQt.org", "RobotQt");
+	QSettings settings( "RobotQt.org", "RobotQt" );
 
 	qDebug() << "Reading settings for RobotQt Main Window";
 
-	settings.beginGroup("RobotQtMainWindow");
+	settings.beginGroup( "RobotQtMainWindow" );
 	// do stuff
 	settings.endGroup();
 }
