@@ -36,21 +36,25 @@
 
 #include "ui_robotqt.h"
 
+class SourceEditor;
 
 class RobotQt : public QMainWindow, private Ui::RobotQt
 {
 	Q_OBJECT
 
 public:
-	RobotQt(QWidget *parent = 0);
+	RobotQt( QWidget *parent = 0 );
 	~RobotQt();
 
 private slots:
 	void openAbout();
+	void openFile();
 
 private:
 	void setupActions();
 	void readSettings();
+	
+	SourceEditor *sourceEditor;
 };
 
 #endif // ROBOTQT_H

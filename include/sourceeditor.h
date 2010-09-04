@@ -36,35 +36,31 @@
 
 #include "ui_sourceeditor.h"
 
-// TODO open, save and save as functions
+/**
+	TODO open, save and save as functions 
+*/
 
-class SourceEditor : public QWidget, private Ui::SourceEditor {
+class SourceEditor : public QMainWindow, private Ui::SourceEditor {
 	Q_OBJECT
 
 public:
-	SourceEditor(QWidget *parent = 0);
+	SourceEditor( QWidget *parent = 0 );
 	~SourceEditor();
 
-	QString sourceName() const;
-	void setSourceName(const QString &_name);
+	QString fileName() const;
+	void setFileName( const QString &_name );
 
 private slots:
-	void openFile(); // Opens a source code file
-	void save(); // Save the current source code file
-	void saveAs(); // Save the current source code file
+	void openFile();
+	void save();
+	void saveAs();
 
 private:
-	/*
-	 * Check if it's ok to continue
-	 */
+	void setupActions();
 	bool okToContinue();
-	/*
-	 * return if current robot was modified
-	 * Ex.: Added new sensor
-	 */
-	bool isSourceModified() const;
+	bool isFileModified() const;
 
-	QString currentSourceName;
+	QString currentFileName;
 
 };
 

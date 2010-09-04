@@ -9,12 +9,12 @@ CONFIG += x11 # use X11 if available
 
 # Qt modules to load
 QT += core \
-    gui
+	gui
 
 # Customize the names of the build targets depending on the target platform
 CONFIG(debug, debug|release) {
-    win32:TARGET = $$join(TARGET,,d) # Should return dRobotQt
-    else:TARGET = $$join(TARGET,,,_debug) # Shoud return RobotQt_debug
+	win32:TARGET = $$join(TARGET,,d) # Should return dRobotQt
+	else:TARGET = $$join(TARGET,,,_debug) # Shoud return RobotQt_debug
 }
 
 # Where to install RobotQt and headers
@@ -41,14 +41,14 @@ CONFIG(debug, debug|release) {
 #    headers
 
 HEADERS += include/robotqt.h \
-    include/sourceeditor.h \
-    include/config.h
+	include/sourceeditor.h \
+	include/config.h
 SOURCES += src/main.cpp \
-    src/robotqt.cpp \
-    src/sourceeditor.cpp \
-    src/config.cpp
-FORMS += src/ui/robotqt.ui \
-    src/ui/sourceeditor.ui
+	src/robotqt.cpp \
+	src/sourceeditor.cpp \
+	src/config.cpp
+FORMS += ui/robotqt.ui \
+	ui/sourceeditor.ui
 
 # For neat #include syntax
 INCLUDEPATH += include

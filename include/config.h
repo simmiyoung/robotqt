@@ -50,6 +50,7 @@ public:
 	 * Returns the, only available, instance of Config class
 	 */
 	static Config * getInstance();
+	~Config();
 
 	/*
 	 * Returns the QDir object to where RobotQt is located
@@ -81,6 +82,6 @@ private:
  * critical and fatal error messages. If it is a fatal message, the application
  * aborts immediately.
  */
-void handleRobotQtMessages(QtMsgType type, const char *msg);
+void handleRobotQtMessages( QtMsgType type, const char *msg );
 
 #endif // CONFIG_H
