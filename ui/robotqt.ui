@@ -6,18 +6,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>516</width>
-    <height>469</height>
+    <width>480</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>480</width>
-    <height>640</height>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../images/robotqt_imgs.qrc">
+    <normaloff>:/images/logo.png</normaloff>:/images/logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -31,7 +35,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>516</width>
+     <width>480</width>
      <height>22</height>
     </rect>
    </property>
