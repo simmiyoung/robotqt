@@ -19,7 +19,7 @@
  *
  * ----
  *
- * main.cpp
+ * robotqt.h
  * RobotQt - Robot Simulation
  * http://robotqt.org/
  *
@@ -31,27 +31,26 @@
  * Date: $Date$
  */
 
-#include <QApplication>
-#include <QTime>
+#ifndef ROBOTQT_H
+#define ROBOTQT_H
 
-#include "robotqt.h"
-#include "config.h"
+#include "ui_robotqt.h"
 
-// TODO: minimum Qt version requirement.
 
-#if QT_VERSION < 0x040600 // needs Qt 4.6.0 or better
-#error "Please use Qt 4.6 or a more recent version"
-#endif
-
-int main(int argc, char *argv[])
+class RobotQt : public QMainWindow, private Ui::RobotQt
 {
-	qInstallMsgHandler(handleRobotQtMessages);
-	QApplication a(argc, argv);
+	Q_OBJECT
 
-	// setting random values
-	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
+public:
+	RobotQt(QWidget *parent = 0);
+	~RobotQt();
 
-	RobotQt w;
-	w.show();
-	return a.exec();
-}
+private slots:
+	void openAbout();
+
+private:
+	void setupActions();
+	void readSettings();
+};
+
+#endif // ROBOTQT_H

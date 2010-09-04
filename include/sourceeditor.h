@@ -19,7 +19,7 @@
  *
  * ----
  *
- * main.cpp
+ * sourceeditor.h
  * RobotQt - Robot Simulation
  * http://robotqt.org/
  *
@@ -31,27 +31,41 @@
  * Date: $Date$
  */
 
-#include <QApplication>
-#include <QTime>
+#ifndef SOURCEEDITOR_H
+#define SOURCEEDITOR_H
 
-#include "robotqt.h"
-#include "config.h"
+#include "ui_sourceeditor.h"
 
-// TODO: minimum Qt version requirement.
+// TODO open, save and save as functions
 
-#if QT_VERSION < 0x040600 // needs Qt 4.6.0 or better
-#error "Please use Qt 4.6 or a more recent version"
+class SourceEditor : public QWidget, private Ui::SourceEditor {
+	Q_OBJECT
+
+public:
+	SourceEditor(QWidget *parent = 0);
+	~SourceEditor();
+
+	QString sourceName() const;
+	void setSourceName(const QString &_name);
+
+private slots:
+	void openFile(); // Opens a source code file
+	void save(); // Save the current source code file
+	void saveAs(); // Save the current source code file
+
+private:
+	/*
+	 * Check if it's ok to continue
+	 */
+	bool okToContinue();
+	/*
+	 * return if current robot was modified
+	 * Ex.: Added new sensor
+	 */
+	bool isSourceModified() const;
+
+	QString currentSourceName;
+
+};
+
 #endif
-
-int main(int argc, char *argv[])
-{
-	qInstallMsgHandler(handleRobotQtMessages);
-	QApplication a(argc, argv);
-
-	// setting random values
-	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-
-	RobotQt w;
-	w.show();
-	return a.exec();
-}
