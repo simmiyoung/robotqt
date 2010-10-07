@@ -40,9 +40,9 @@ CONFIG(debug, debug|release) {
 #INSTALLS += target \
 #    headers
 
-HEADERS += include/robotqt.h \
-	include/sourceeditor.h \
-	include/config.h
+HEADERS += src/robotqt.h \
+	src/sourceeditor.h \
+	src/config.h
 SOURCES += src/main.cpp \
 	src/robotqt.cpp \
 	src/sourceeditor.cpp \
