@@ -1,0 +1,58 @@
+#summary Scenario XML Pattern for RobotQt.
+#labels Phase-Design
+*Scenario XML Pattern for !RobotQt*
+
+Felipe Ferreri Tonello <felipe.tonello@felipetonello.com>
+
+_Last Update: 01-12-2010_
+
+
+= Scenario XML Pattern =
+
+== Declaration: ==
+
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+	<set name="" value="" />
+	<size width="" height="" />
+	<drawing>
+		<...>
+	</drawing>
+</scenario>
+}}}
+
+ * Set tag
+  * Attribute:
+   * name
+   * value
+
+ * Size tag
+  * Attribute:
+   * width
+   * height
+
+ * Drawing tag
+  * Drawing is ordered straight forward according to the list
+  * Elements:
+   * rect
+    * Attribute:
+     * x
+     * y
+     * width
+     * height
+     * color: RGB eg. #FF00BB
+   * line
+    * Attribute:
+     * x1
+     * y1
+     * x2
+     * y2
+     * color: RGB eg. #FF00BB
+   * ellipse
+    * Attribute:
+     * x
+     * y
+     * width
+     * height
+     * color: RGB eg. #FF00BB
