@@ -28,11 +28,13 @@ _Last Update: 01-12-2010_
    * value
 
  * Size tag
+  * Required
   * Attribute:
    * width
    * height
 
  * Drawing tag
+  * Required, but it can be blank
   * Drawing is ordered straight forward according to the list
   * Elements:
    * rect
