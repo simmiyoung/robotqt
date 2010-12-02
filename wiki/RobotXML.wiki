@@ -1,6 +1,6 @@
 #summary Robot XML Pattern for RobotQt.
 #labels Phase-Design
-*Robot XML Pattern for RobotQt*
+*Robot XML Pattern for !RobotQt*
 
 Felipe Ferreri Tonello <felipe.tonello@felipetonello.com>
 
