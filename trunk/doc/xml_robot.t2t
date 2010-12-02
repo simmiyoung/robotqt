@@ -1,0 +1,51 @@
+Robot XML Pattern for RobotQt
+Felipe Ferreri Tonello <felipe.tonello@felipetonello.com>
+Last Update: %%date(%d-%m-%Y)
+
+%! Target : gwiki
+%! Encoding: utf-8
+
+= Robot XML Pattern =
+
+== Declaration: ==
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<robot>
+	<set name="" value="" />
+	<drawing>
+		<...>
+	</drawing>
+</robot>
+```
+
+- Set tag
+ - Attribute:
+  - name
+  - value
+
+- Drawing tag
+ - Required
+ - Drawing is ordered straight forward according to the list
+ - Elements:
+  - rect
+   - Attribute:
+    - x
+    - y
+    - width
+    - height
+    - color: RGB eg. #FF00BB
+  - line
+   - Attribute:
+    - x1
+    - y1
+    - x2
+    - y2
+    - color: RGB eg. #FF00BB
+  - ellipse
+   - Attribute:
+    - x
+    - y
+    - width
+    - height
+    - color: RGB eg. #FF00BB

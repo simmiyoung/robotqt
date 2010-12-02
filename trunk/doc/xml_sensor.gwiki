@@ -1,0 +1,56 @@
+*Sensor XML Pattern for RobotQt*
+
+Felipe Ferreri Tonello <felipe.tonello@felipetonello.com>
+
+_Last Update: 01-12-2010_
+
+
+= Sensor XML Pattern =
+
+== Declaration: ==
+
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<sensor>
+	<set name="" value="" />
+	<drawing>
+		<...>
+	</drawing>
+</sensor>
+}}}
+
+ * Set tag
+  * Attribute:
+   * name
+   * value
+
+ * Drawing tag
+  * Required, but it can be blank
+  * Drawing is ordered straight forward according to the list
+  * Elements:
+   * rect
+    * Attribute:
+     * x
+     * y
+     * width
+     * height
+     * color: RGB eg. #FF00BB
+   * line
+    * Attribute:
+     * x1
+     * y1
+     * x2
+     * y2
+     * color: RGB eg. #FF00BB
+   * ellipse
+    * Attribute:
+     * x
+     * y
+     * width
+     * height
+     * color: RGB eg. #FF00BB
+
+
+
+
+
