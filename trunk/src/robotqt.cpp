@@ -115,4 +115,3 @@ void RobotQt::readSettings()
 	// do stuff
 	settings.endGroup();
 }
-

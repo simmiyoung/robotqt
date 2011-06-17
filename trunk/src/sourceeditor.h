@@ -37,7 +37,7 @@
 #include "ui_sourceeditor.h"
 
 /**
-	TODO open, save and save as functions 
+	TODO open, save and save as functions
 */
 
 class SourceEditor : public QMainWindow, private Ui::SourceEditor {

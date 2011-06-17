@@ -53,7 +53,7 @@ private slots:
 private:
 	void setupActions();
 	void readSettings();
-	
+
 	SourceEditor *sourceEditor;
 };
 
