@@ -90,23 +90,23 @@ void SourceEditor::setupActions()
 {
 	QAction *actionSeparator = new QAction( this );
 	actionSeparator->setSeparator( true );
-	
+
 	actionOpen->setShortcut( QKeySequence::Open );
 	actionSave->setShortcut( QKeySequence::Save );
 	actionSaveAs->setShortcut( QKeySequence::SaveAs );
 	actionClose->setShortcut( QKeySequence::Close );
-	
+
 	toolBar->addAction( actionOpen );
 	toolBar->addAction( actionSave );
 	toolBar->addAction( actionSaveAs );
-	
+
 	editor->addAction( actionOpen );
 	editor->addAction( actionSave );
 	editor->addAction( actionSaveAs );
 	editor->addAction( actionSeparator );
 	editor->addAction( actionClose );
 	editor->setContextMenuPolicy(Qt::ActionsContextMenu);
-	
+
 	connect( actionOpen, SIGNAL(triggered()), this, SLOT(openFile()) );
 	connect( actionSave, SIGNAL(triggered()), this, SLOT(save()) );
 	connect( actionSaveAs, SIGNAL(triggered()), this, SLOT(saveAs()) );
