@@ -20,7 +20,7 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../images/robotqt_imgs.qrc">
+   <iconset resource="../src/robotqt_imgs.qrc">
     <normaloff>:/images/logo.png</normaloff>:/images/logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -36,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>480</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -98,7 +98,7 @@
   </widget>
   <action name="actionNew">
    <property name="icon">
-    <iconset resource="../images/robotqt_imgs.qrc">
+    <iconset resource="../src/robotqt_imgs.qrc">
      <normaloff>:/images/document-new.svg</normaloff>:/images/document-new.svg</iconset>
    </property>
    <property name="text">
@@ -110,7 +110,7 @@
   </action>
   <action name="actionAddPlugin">
    <property name="icon">
-    <iconset resource="../images/robotqt_imgs.qrc">
+    <iconset resource="../src/robotqt_imgs.qrc">
      <normaloff>:/images/list-add.svg</normaloff>:/images/list-add.svg</iconset>
    </property>
    <property name="text">
@@ -136,7 +136,7 @@
   </action>
   <action name="actionSourceEditor">
    <property name="icon">
-    <iconset resource="../images/robotqt_imgs.qrc">
+    <iconset resource="../src/robotqt_imgs.qrc">
      <normaloff>:/images/text-x-script.svg</normaloff>:/images/text-x-script.svg</iconset>
    </property>
    <property name="text">
@@ -159,7 +159,7 @@
   </action>
   <action name="actionPlay">
    <property name="icon">
-    <iconset resource="../images/robotqt_imgs.qrc">
+    <iconset resource="../src/robotqt_imgs.qrc">
      <normaloff>:/images/media-playback-start.svg</normaloff>:/images/media-playback-start.svg</iconset>
    </property>
    <property name="text">
@@ -174,7 +174,7 @@
   </action>
   <action name="actionPause">
    <property name="icon">
-    <iconset resource="../images/robotqt_imgs.qrc">
+    <iconset resource="../src/robotqt_imgs.qrc">
      <normaloff>:/images/media-playback-pause.svg</normaloff>:/images/media-playback-pause.svg</iconset>
    </property>
    <property name="text">
@@ -189,7 +189,7 @@
   </action>
   <action name="actionStop">
    <property name="icon">
-    <iconset resource="../images/robotqt_imgs.qrc">
+    <iconset resource="../src/robotqt_imgs.qrc">
      <normaloff>:/images/media-playback-stop.svg</normaloff>:/images/media-playback-stop.svg</iconset>
    </property>
    <property name="text">
@@ -212,7 +212,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../images/robotqt_imgs.qrc"/>
+  <include location="../src/robotqt_imgs.qrc"/>
  </resources>
  <connections/>
 </ui>
