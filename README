@@ -1,0 +1,11 @@
+RobotQt
+Copyright (C) 2010-2011 Felipe Ferreri Tonello <eu@felipetonello.com>
+
+Installing RobotQt
+
+- Create a directory build, for example.
+- run 'cmake ..' inside the build directory.
+- run 'make' (*nix)
+- Open the robotqt.sln solution in Visual Studio (Windows)
+
+Obs: RobotQt requires the previous instasllation of the Qt Framework 4.6 or latest.

@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>../images/logo.png</file>
+        <file>../images/icon.png</file>
+        <file>../images/robotqt.svg</file>
+        <file>../images/media-playback-pause.svg</file>
+        <file>../images/media-playback-start.svg</file>
+        <file>../images/media-playback-stop.svg</file>
+        <file>../images/document-new.svg</file>
+        <file>../images/document-open.svg</file>
+        <file>../images/document-properties.svg</file>
+        <file>../images/document-save-as.svg</file>
+        <file>../images/document-save.svg</file>
+        <file>../images/edit-clear.svg</file>
+        <file>../images/edit-copy.svg</file>
+        <file>../images/edit-cut.svg</file>
+        <file>../images/edit-delete.svg</file>
+        <file>../images/edit-find-replace.svg</file>
+        <file>../images/edit-find.svg</file>
+        <file>../images/edit-paste.svg</file>
+        <file>../images/edit-redo.svg</file>
+        <file>../images/edit-select-all.svg</file>
+        <file>../images/edit-undo.svg</file>
+        <file>../images/format-justify-fill.svg</file>
+        <file>../images/text-x-script.svg</file>
+        <file>../images/list-add.svg</file>
+    </qresource>
+</RCC>
