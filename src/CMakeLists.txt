@@ -1,7 +1,7 @@
 # RobotQt
 # Copyright (C) 2011 Felipe Ferreri Tonello <eu@felipetonello.com>
 
-set(ROBOTQT_TARGET robotqt)
+set(ROBOTQT_TARGET RobotQt)
 
 set(SOURCES_CPP
 	main.cpp
@@ -47,7 +47,7 @@ include_directories(
 	${CMAKE_CURRENT_BINARY_DIR} # for ui_*.h headers
 )
 
-add_executable(${ROBOTQT_TARGET}
+add_executable(${ROBOTQT_TARGET} WIN32 MACOSX_BUNDLE
 	${SOURCES_CPP}
 	${SOURCES_HEADERS}
 	${GEN_SOURCES_MOC}
