@@ -5,9 +5,11 @@ Last Update: %%date(%d-%m-%Y)
 %! Target : gwiki
 %! Encoding: utf-8
 
-= For Developers =
+= Developers Documentation =
 
 == Introduction ==
+
+//This document is under development//
 
 RobotQt it's a big and promiser project. That's why we need you! We mainly use C++ with Qt framework for its development. But there is also Lua and Python implementations.
 
@@ -20,7 +22,7 @@ It's easy! Just checkout the code, fix a bug or add a feature and send it to us.
 === Requirements ===
 
 - Qt Framwork >= 4.6 with QtSvg module enabled;
-- CMake >= 2.8..
+- CMake >= 2.8.
 
 === Building ===
 
