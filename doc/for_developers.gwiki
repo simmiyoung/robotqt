@@ -29,7 +29,9 @@ It's easy! Just checkout the code, fix a bug or add a feature and send it to us.
 
  # [http://code.google.com/p/robotqt/source/checkout Checkout the code];
  # Inside trunk, create a directory called 'build' for example;
- # Run 'cmake ..' from build directory.
+ # 'cmake ..' from build directory.
+   * make (*nix)
+   * open the robotqt.sln in visual studio (Windows)
 
 
 
