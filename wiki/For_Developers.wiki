@@ -1,3 +1,5 @@
+#summary Developers Documentation
+#labels Phase-Implementation
 *Developers Documentation*
 
 Felipe Ferreri Tonello <eu@felipetonello.com>
@@ -11,7 +13,7 @@ _Last Update: 19-06-2011_
 
 _This document is under development_
 
-RobotQt it's a big and promiser project. That's why we need you! We mainly use C++ with Qt framework for its development. But there is also Lua and Python implementations.
+!RobotQt it's a big and promiser project. That's why we need you! We mainly use C++ with Qt framework for its development. But there is also Lua and Python implementations.
 
 == How To Contribute? ==
 
@@ -21,7 +23,7 @@ It's easy! Just checkout the code, fix a bug or add a feature and send it to us.
 
 === Requirements ===
 
- * Qt Framwork >= 4.6 with QtSvg module enabled;
+ * Qt Framwork >= 4.6 with !QtSvg module enabled;
  * CMake >= 2.8.
 
 === Building ===
@@ -32,8 +34,3 @@ It's easy! Just checkout the code, fix a bug or add a feature and send it to us.
  # 'cmake ..' from build directory.
    * make (*nix)
    * open the robotqt.sln in visual studio (Windows)
-
-
-
-
-
