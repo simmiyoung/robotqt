@@ -33,4 +33,4 @@ It's easy! Just checkout the code, fix a bug or add a feature and send it to us.
  # Inside trunk, create a directory called 'build' for example;
  # '`cmake ..`' from build directory.
    * '`make`' (unix-like)
-   * open the robotqt.sln in visual studio (Windows)
+   * open robotqt.sln in visual studio (Windows)
