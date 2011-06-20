@@ -32,33 +32,43 @@
  */
 
 
-#include "robotqt.h"
-#include "config.h"
-
 // Core
-#include <QtCore/QSettings>
+#include <QSettings>
+#include <QString>
+#include <QFile>
 
 // GUI
-#include <QtGui/QMessageBox>
-#include <QtGui/QKeySequence>
+#include <QMessageBox>
+#include <QKeySequence>
+#include <QFileDialog>
+
+// XML
+#include <QXmlSimpleReader>
+#include <QXmlInputSource>
 
 // UI
 #include "sourceeditor.h"
 
-RobotQt::RobotQt( QWidget *parent ) :
-	QMainWindow( parent )
-{
-	setupUi( this );
+// General
+#include "robotqt.h"
+#include "config.h"
+#include "pluginhandler.h"
 
-	sourceEditor = new SourceEditor( this );
+/** 
+ * TODO: - Implement settings configurations
+ *       - 
+ */
+
+RobotQt::RobotQt(QWidget *parent)
+	:	QMainWindow(parent)
+{
+	setupUi(this);
+
+	// TODO: use smart pointer
+	sourceEditor = new SourceEditor(this);
 
 	setupActions();
 	readSettings();
-}
-
-RobotQt::~RobotQt()
-{
-
 }
 
 /**
@@ -75,7 +85,32 @@ void RobotQt::openAbout()
 
 void RobotQt::openFile()
 {
+	// RobotQt Plugins files should terminate with .rqt?
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open A Plugin File"),
+	                                                QDir::currentPath(),
+	                                                tr("RobotQt Plugin (*.rqt)"));
+	if (fileName.isEmpty())
+		return;
 
+	// setup SAX XML Parser
+	PluginHandler handler(graphicsView);
+	QXmlSimpleReader reader;
+	reader.setContentHandler(&handler);
+	reader.setErrorHandler(&handler);
+
+	QFile file(fileName);
+	if (!file.open(QFile::ReadOnly | QFile::Text)) {
+		QMessageBox::warning(this, tr("RobotQt"),
+		                     tr("Cannot read file %1:\n%2.")
+		                     .arg(fileName)
+		                     .arg(file.errorString()));
+		return;
+	}
+	
+	// The parser is calling PluginHandler callbacks methods
+	QXmlInputSource xmlInputSource(&file);
+	if (reader.parse(xmlInputSource))
+		statusBar()->showMessage(tr("Plugin loaded"), 2000);
 }
 
 /**
@@ -84,34 +119,34 @@ void RobotQt::openFile()
 
 void RobotQt::setupActions()
 {
-	actionPreferences->setShortcut( QKeySequence::Preferences );
-	actionNew->setShortcut( QKeySequence::New );
-	actionQuit->setShortcut( QKeySequence::Quit );
+	actionPreferences->setShortcut(QKeySequence::Preferences);
+	actionNew->setShortcut(QKeySequence::New);
+	actionQuit->setShortcut(QKeySequence::Quit);
 
-	fileToolBar->addAction( actionNew );
-	fileToolBar->addAction( actionAddPlugin );
-	controlToolBar->addAction( actionPlay );
-	controlToolBar->addAction( actionPause );
-	controlToolBar->addAction( actionStop );
+	fileToolBar->addAction(actionNew);
+	fileToolBar->addAction(actionAddPlugin);
+	controlToolBar->addAction(actionPlay);
+	controlToolBar->addAction(actionPause);
+	controlToolBar->addAction(actionStop);
 
-	graphicsView->addAction( actionPlay );
-	graphicsView->addAction( actionPause );
-	graphicsView->addAction( actionStop );
-	graphicsView->setContextMenuPolicy( Qt::ActionsContextMenu );
+	graphicsView->addAction(actionPlay);
+	graphicsView->addAction(actionPause);
+	graphicsView->addAction(actionStop);
+	graphicsView->setContextMenuPolicy(Qt::ActionsContextMenu);
 
-	connect( actionQuit, SIGNAL(triggered()), this, SLOT(close()) );
-	connect( actionAddPlugin, SIGNAL(triggered()), this, SLOT(openFile()) );
-	connect( actionAboutRobotQt, SIGNAL(triggered()), this, SLOT(openAbout()) );
-	connect( actionSourceEditor, SIGNAL(triggered()), sourceEditor, SLOT(show()) );
+	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
+	connect(actionAddPlugin, SIGNAL(triggered()), this, SLOT(openFile()));
+	connect(actionAboutRobotQt, SIGNAL(triggered()), this, SLOT(openAbout()));
+	connect(actionSourceEditor, SIGNAL(triggered()), sourceEditor, SLOT(show()));
 }
 
 void RobotQt::readSettings()
 {
-	QSettings settings( "RobotQt.org", "RobotQt" );
+	QSettings settings("RobotQt.org", "RobotQt");
 
 	qDebug() << "Reading settings for RobotQt Main Window";
 
-	settings.beginGroup( "RobotQtMainWindow" );
+	settings.beginGroup("RobotQtMainWindow");
 	// do stuff
 	settings.endGroup();
 }

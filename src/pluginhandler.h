@@ -19,11 +19,11 @@
  *
  * ----
  *
- * robotqt.h
+ * pluginhandler.cpp
  * RobotQt - Robot Simulation
  * http://robotqt.org/
  *
- * Created by Felipe Tonello on 2010-09-04.
+ * Created by Felipe Tonello on 2011-06-20.
  *
  *
  * Revision: $Rev$
@@ -31,32 +31,34 @@
  * Date: $Date$
  */
 
-#ifndef ROBOTQT_H
-#define ROBOTQT_H
+#ifndef PLUGINHANDLER_H
+#define PLUGINHANDLER_H
 
-#include "ui_robotqt.h"
+#include <QXmlDefaultHandler>
+#include <QString>
 
-class SourceEditor;
+class QGraphicsView;
 
 /**
- * This is the main class that represents the main window  
+ * This class implements a simple SAX XML parser handler
  */
 
-class RobotQt : public QMainWindow, private Ui::RobotQt {
-	Q_OBJECT
-
+class PluginHandler : public QXmlDefaultHandler {
 public:
-	RobotQt(QWidget *parent = 0);
+	PluginHandler(QGraphicsView *graphicsView);
 
-private slots:
-	void openAbout();
-	void openFile();
+	bool startDocument();
+	bool endDocument();
+	bool startElement(const QString &namespaceURI, const QString &localName,
+	                  const QString &qName, const QXmlAttributes &atts);
+	bool endElement(const QString &namespaceURI, const QString &localName,
+	                const QString &qName);
+	bool characters(const QString &ch);
+	bool fatalError(const QXmlParseException &exception);
+	QString errorString() const;
 
 private:
-	void setupActions();
-	void readSettings();
-
-	SourceEditor *sourceEditor;
+	QGraphicsView *m_graphicsView;
 };
 
-#endif // ROBOTQT_H
+#endif // PLUGINHANDLER_H
