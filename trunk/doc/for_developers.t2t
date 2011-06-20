@@ -17,6 +17,8 @@ RobotQt it's a big and promiser project. That's why we need you! We mainly use C
 
 It's easy! Just checkout the code, fix a bug or add a feature and send it to us. So, if  you want to join the project, it's a big start.
 
+Checkout TODO file to find out what is expected to be implemented or designed.
+
 == Building From the Source ==
 
 === Requirements ===
@@ -29,5 +31,5 @@ It's easy! Just checkout the code, fix a bug or add a feature and send it to us.
 + [Checkout the code http://code.google.com/p/robotqt/source/checkout];
 + Inside trunk, create a directory called 'build' for example;
 + 'cmake ..' from build directory.
-  - make (*nix)
-  - open the robotqt.sln in visual studio (Windows)
+  - make (unix-like)
+  - open robotqt.sln in visual studio (Windows)

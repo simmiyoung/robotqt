@@ -8,6 +8,7 @@ set(SOURCES_CPP
 	robotqt.cpp
 	sourceeditor.cpp
 	config.cpp
+  pluginhandler.cpp
 )
 
 set(SOURCES_HEADERS_MOC
@@ -17,6 +18,7 @@ set(SOURCES_HEADERS_MOC
 
 set(SOURCES_HEADERS
 	config.h
+  pluginhandler.h
 	${SOURCES_HEADERS_MOC}
 )
 
