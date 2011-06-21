@@ -3,11 +3,11 @@
 
 = Introduction =
 
-RobotQt is a free and open source sofware, and will be always like that. RobotQt developers works on their free time, so it will be a great motivation for us developers to keep working on it.
+!RobotQt is a free and open source sofware, and will be always like that. !RobotQt developers works on their free time, so it will be a great motivation for us developers to keep working on it.
 
 = How to Donate =
 
-== PayPal ==
+== !PayPal ==
 
 == Flattr ==
 
