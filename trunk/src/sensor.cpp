@@ -19,11 +19,11 @@
  *
  * ----
  *
- * main.cpp
+ * sensor.cpp
  * RobotQt - Robot Simulation
  * http://robotqt.org/
  *
- * Created by Felipe Tonello on 2010-09-04.
+ * Created by Felipe Tonello on 2011-06-20.
  *
  *
  * Revision: $Rev$
@@ -31,29 +31,4 @@
  * Date: $Date$
  */
 
-#include <QApplication>
-#include <QTime>
-
-#include "robotqt.h"
-#include "config.h"
-
-#if QT_VERSION < 0x040600 // needs Qt 4.6.0 or better
-#error "Please use Qt 4.6 or a more recent version"
-#endif
-
-int main(int argc, char *argv[])
-{
-	qInstallMsgHandler(handleRobotQtMessages);
-	QApplication a(argc, argv);
-
-	// setting random values
-	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-
-	RobotQt w;
-
-	QObject::connect(&a, SIGNAL(aboutToQuit()), &w, SLOT(beforeQuit()));
-
-	w.show();
-
-	return a.exec();
-}
+#include "sensor.h"

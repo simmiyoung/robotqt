@@ -54,9 +54,9 @@
 #include "config.h"
 #include "pluginhandler.h"
 
-/** 
+/**
  * TODO: - Implement settings configurations
- *       - 
+ *       -
  */
 
 RobotQt::RobotQt(QWidget *parent)
@@ -64,12 +64,26 @@ RobotQt::RobotQt(QWidget *parent)
 {
 	setupUi(this);
 
-	// TODO: use smart pointer
+	// There are no reason to use smart pointer, since Qt destroys all QWidgets
 	sourceEditor = new SourceEditor(this);
 
+	qDebug() << "Setting up Actions";
 	setupActions();
+
+	qDebug() << "Reading Settup";
 	readSettings();
 }
+
+/**
+ * Public Slots
+ */
+
+void RobotQt::beforeQuit()
+{	
+	QSharedPointer<Config> config = Config::getInstance();
+	config->closeLog();
+}
+
 
 /**
  * Private Slots
@@ -89,8 +103,13 @@ void RobotQt::openFile()
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open A Plugin File"),
 	                                                QDir::currentPath(),
 	                                                tr("RobotQt Plugin (*.rqt)"));
-	if (fileName.isEmpty())
+
+	if (fileName.isEmpty()) {
+		qWarning() << "File " << fileName << " is empty";
 		return;
+	}
+
+	qDebug() << "Setting up SAX XML Parser for " << fileName;
 
 	// setup SAX XML Parser
 	PluginHandler handler(graphicsView);
@@ -100,17 +119,24 @@ void RobotQt::openFile()
 
 	QFile file(fileName);
 	if (!file.open(QFile::ReadOnly | QFile::Text)) {
+		qWarning() << "Cannot read file " << fileName << ": " << file.errorString();
+
 		QMessageBox::warning(this, tr("RobotQt"),
-		                     tr("Cannot read file %1:\n%2.")
-		                     .arg(fileName)
-		                     .arg(file.errorString()));
+				     tr("Cannot read file %1:\n%2.")
+				     .arg(fileName)
+				     .arg(file.errorString()));
 		return;
 	}
-	
+
+	qDebug() << "Calling PluginHandler callbacks methods";
+
 	// The parser is calling PluginHandler callbacks methods
 	QXmlInputSource xmlInputSource(&file);
-	if (reader.parse(xmlInputSource))
+	if (reader.parse(xmlInputSource)) {
+		qDebug() << "Plugin Loaded";
+
 		statusBar()->showMessage(tr("Plugin loaded"), 2000);
+	}
 }
 
 /**

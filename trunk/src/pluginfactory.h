@@ -19,11 +19,11 @@
  *
  * ----
  *
- * main.cpp
+ * pluginfactory.h
  * RobotQt - Robot Simulation
  * http://robotqt.org/
  *
- * Created by Felipe Tonello on 2010-09-04.
+ * Created by Felipe Tonello on 2011-06-20.
  *
  *
  * Revision: $Rev$
@@ -31,29 +31,26 @@
  * Date: $Date$
  */
 
-#include <QApplication>
-#include <QTime>
+#ifndef PLUGINFACTORY_H
+#define PLUGINFACTORY_H
 
-#include "robotqt.h"
-#include "config.h"
+#include <QSharedPointer>
 
-#if QT_VERSION < 0x040600 // needs Qt 4.6.0 or better
-#error "Please use Qt 4.6 or a more recent version"
-#endif
+#include "pluginhandler.h"
+#include "plugin.h"
 
-int main(int argc, char *argv[])
-{
-	qInstallMsgHandler(handleRobotQtMessages);
-	QApplication a(argc, argv);
+/**
+ * This class creates all Plugins instances
+ */
 
-	// setting random values
-	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
+class PluginFactory {
+public:
+	static QSharedPointer<Plugin> getInstance(PluginHandler::PluginType pluginType);
 
-	RobotQt w;
+private:
+	PluginFactory();
 
-	QObject::connect(&a, SIGNAL(aboutToQuit()), &w, SLOT(beforeQuit()));
+	static QSharedPointer<Plugin> m_pScenario; // There will be only one Scenario
+};
 
-	w.show();
-
-	return a.exec();
-}
+#endif // PLUGINFACTORY_H

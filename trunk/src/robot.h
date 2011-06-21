@@ -19,11 +19,11 @@
  *
  * ----
  *
- * main.cpp
+ * robot.h
  * RobotQt - Robot Simulation
  * http://robotqt.org/
  *
- * Created by Felipe Tonello on 2010-09-04.
+ * Created by Felipe Tonello on 2011-06-21.
  *
  *
  * Revision: $Rev$
@@ -31,29 +31,13 @@
  * Date: $Date$
  */
 
-#include <QApplication>
-#include <QTime>
+#ifndef ROBOT_H
+#define ROBOT_H
 
-#include "robotqt.h"
-#include "config.h"
+#include "plugin.h"
 
-#if QT_VERSION < 0x040600 // needs Qt 4.6.0 or better
-#error "Please use Qt 4.6 or a more recent version"
-#endif
+class Robot : public Plugin {
 
-int main(int argc, char *argv[])
-{
-	qInstallMsgHandler(handleRobotQtMessages);
-	QApplication a(argc, argv);
+};
 
-	// setting random values
-	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-
-	RobotQt w;
-
-	QObject::connect(&a, SIGNAL(aboutToQuit()), &w, SLOT(beforeQuit()));
-
-	w.show();
-
-	return a.exec();
-}
+#endif // ROBOT_H

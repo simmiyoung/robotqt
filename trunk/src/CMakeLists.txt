@@ -9,6 +9,11 @@ set(SOURCES_CPP
 	sourceeditor.cpp
 	config.cpp
   pluginhandler.cpp
+  pluginfactory.cpp
+	plugin.cpp
+	sensor.cpp
+	scenario.cpp
+	robot.cpp
 )
 
 set(SOURCES_HEADERS_MOC
@@ -19,6 +24,11 @@ set(SOURCES_HEADERS_MOC
 set(SOURCES_HEADERS
 	config.h
   pluginhandler.h
+  pluginfactory.h
+	plugin.h
+	sensor.h
+	scenario.h
+	robot.h
 	${SOURCES_HEADERS_MOC}
 )
 

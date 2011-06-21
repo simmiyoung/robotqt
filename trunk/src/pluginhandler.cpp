@@ -32,8 +32,10 @@
  */
 
 #include <QGraphicsView>
+#include <QMessageBox>
 
 #include "pluginhandler.h"
+#include "pluginfactory.h"
 
 /**
  * TODO: - add debug log comments
@@ -42,7 +44,8 @@
  */
 
 PluginHandler::PluginHandler(QGraphicsView *graphicsView)
-	: m_graphicsView(graphicsView)
+	: m_graphicsView(graphicsView),
+	  m_metPluginTag(false)
 {
 
 }
@@ -62,6 +65,28 @@ bool PluginHandler::startElement(const QString &namespaceURI,
                                  const QString &qName,
                                  const QXmlAttributes &atts)
 {
+	if (!m_metPluginTag) {
+		if (qName == "scenario") {
+			m_pluginType = Scenario;
+
+		} else if (qName == "sensor") {
+			m_pluginType = Sensor;
+
+		} else if (qName == "robot") {
+			m_pluginType = Robot;
+
+		} else {
+			m_errorStr = QObject::tr("The file is not a RobotQt Plugin file.");
+			return false;
+		}
+
+		// if didn't returned an error, it initializes the current plugin
+		m_plugin = PluginFactory::getInstance(m_pluginType);
+		m_metPluginTag = true;
+
+	}
+
+
 	return true;
 }
 
@@ -69,20 +94,28 @@ bool PluginHandler::endElement(const QString &namespaceURI,
                                const QString &localName,
                                const QString &qName)
 {
+
 	return true;
 }
 
 bool PluginHandler::characters(const QString &ch)
 {
+
 	return true;
 }
 
 bool PluginHandler::fatalError(const QXmlParseException &exception)
 {
-	return true;
+	QMessageBox::information(m_graphicsView->window(),
+	                         QObject::tr("SAX Bookmarks"),
+	                         QObject::tr("Parse error at line %1, column %2:\n %3")
+	                         .arg(exception.lineNumber())
+	                         .arg(exception.columnNumber())
+	                         .arg(exception.message()));
+	return false;
 }
 
 QString PluginHandler::errorString() const
 {
-	return QString("It happened one error.");
+	return m_errorStr;
 }
