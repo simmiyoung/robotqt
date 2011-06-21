@@ -19,11 +19,11 @@
  *
  * ----
  *
- * main.cpp
+ * pluginfactory.cpp
  * RobotQt - Robot Simulation
  * http://robotqt.org/
  *
- * Created by Felipe Tonello on 2010-09-04.
+ * Created by Felipe Tonello on 2011-06-20.
  *
  *
  * Revision: $Rev$
@@ -31,29 +31,35 @@
  * Date: $Date$
  */
 
-#include <QApplication>
-#include <QTime>
+#include "pluginfactory.h"
+#include "scenario.h"
+#include "sensor.h"
+#include "robot.h"
 
-#include "robotqt.h"
-#include "config.h"
+QSharedPointer<Plugin> PluginFactory::m_pScenario = QSharedPointer<Plugin>(); // Scenario Singleton
 
-#if QT_VERSION < 0x040600 // needs Qt 4.6.0 or better
-#error "Please use Qt 4.6 or a more recent version"
-#endif
-
-int main(int argc, char *argv[])
+QSharedPointer<Plugin> PluginFactory::getInstance(PluginHandler::PluginType pluginType)
 {
-	qInstallMsgHandler(handleRobotQtMessages);
-	QApplication a(argc, argv);
+	switch (pluginType) {
+	case PluginHandler::Scenario:
 
-	// setting random values
-	qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
+		if (m_pScenario.isNull()) {
+			m_pScenario = QSharedPointer<Plugin>(new Scenario());
+		}
 
-	RobotQt w;
+		return m_pScenario;
+		break;
 
-	QObject::connect(&a, SIGNAL(aboutToQuit()), &w, SLOT(beforeQuit()));
+	case PluginHandler::Sensor:
+		
+		QSharedPointer<Plugin>(new Sensor());
+		break;
 
-	w.show();
+	case PluginHandler::Robot:
 
-	return a.exec();
+		QSharedPointer<Plugin>(new Robot());
+		break;
+	}
+
+	return QSharedPointer<Plugin>();
 }

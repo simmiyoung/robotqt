@@ -36,6 +36,9 @@
 
 #include <QXmlDefaultHandler>
 #include <QString>
+#include <QSharedPointer>
+
+#include "plugin.h"
 
 class QGraphicsView;
 
@@ -45,20 +48,41 @@ class QGraphicsView;
 
 class PluginHandler : public QXmlDefaultHandler {
 public:
+	enum PluginType {
+		Scenario,
+		Sensor,
+		Robot
+	};
+
 	PluginHandler(QGraphicsView *graphicsView);
 
-	bool startDocument();
-	bool endDocument();
-	bool startElement(const QString &namespaceURI, const QString &localName,
-	                  const QString &qName, const QXmlAttributes &atts);
-	bool endElement(const QString &namespaceURI, const QString &localName,
-	                const QString &qName);
-	bool characters(const QString &ch);
-	bool fatalError(const QXmlParseException &exception);
+	bool    startDocument();
+	bool    endDocument();
+
+	bool    startElement(const QString &namespaceURI,
+	                     const QString &localName,
+	                     const QString &qName,
+	                     const QXmlAttributes &atts);
+	bool    endElement(const QString &namespaceURI,
+	                   const QString &localName,
+	                   const QString &qName);
+
+	bool    characters(const QString &ch);
+
+	bool    fatalError(const QXmlParseException &exception);
+
 	QString errorString() const;
 
 private:
-	QGraphicsView *m_graphicsView;
+	QGraphicsView         *m_graphicsView;
+								        
+	QString                m_currentText;
+	QString                m_errorStr;
+								        
+	bool                   m_metPluginTag;
+	PluginType             m_pluginType;
+
+	QSharedPointer<Plugin> m_plugin;
 };
 
 #endif // PLUGINHANDLER_H

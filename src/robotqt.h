@@ -39,7 +39,7 @@
 class SourceEditor;
 
 /**
- * This is the main class that represents the main window  
+ * This is the main class that represents the main window
  */
 
 class RobotQt : public QMainWindow, private Ui::RobotQt {
@@ -47,6 +47,9 @@ class RobotQt : public QMainWindow, private Ui::RobotQt {
 
 public:
 	RobotQt(QWidget *parent = 0);
+
+public slots:
+	void beforeQuit();
 
 private slots:
 	void openAbout();
