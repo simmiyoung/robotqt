@@ -31,4 +31,16 @@
  * Date: $Date$
  */
 
+#include <QGraphicsView>
+
 #include "robot.h"
+
+bool Robot::setXMLCommand(const QString &cmd, const QXmlAttributes &atts)
+{
+	return true;
+}
+
+bool Robot::render(QGraphicsView *graphicsView)
+{
+	return true;
+}

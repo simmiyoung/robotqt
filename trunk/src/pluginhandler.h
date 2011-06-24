@@ -36,7 +36,7 @@
 
 #include <QXmlDefaultHandler>
 #include <QString>
-#include <QSharedPointer>
+#include <QMultiMap>
 
 #include "plugin.h"
 
@@ -54,7 +54,14 @@ public:
 		Robot
 	};
 
-	PluginHandler(QGraphicsView *graphicsView);
+	~PluginHandler();
+
+	/**
+	 * Returns the, only available, instance of PluginHandler class
+	 */
+	static PluginHandler * getInstance();
+
+	void    setGraphicsView(QGraphicsView *graphicsView);
 
 	bool    startDocument();
 	bool    endDocument();
@@ -74,15 +81,25 @@ public:
 	QString errorString() const;
 
 private:
-	QGraphicsView         *m_graphicsView;
-								        
-	QString                m_currentText;
-	QString                m_errorStr;
-								        
-	bool                   m_metPluginTag;
-	PluginType             m_pluginType;
+	typedef QMultiMap<PluginType, Plugin *> MMPlugin;
 
-	QSharedPointer<Plugin> m_plugin;
+	QGraphicsView *m_graphicsView;
+								
+	QString        m_currentText;
+	QString        m_errorStr;
+								
+	bool           m_metDrawingTag;
+	bool           m_metPluginTag;
+	PluginType     m_pluginType;
+								
+	Plugin        *m_curPlugin;
+	MMPlugin       m_MMPlugin;
+
+	// Singleton variable
+	static PluginHandler *m_pPluginHandler;
+
+	// private to protect the singleton pattern
+	PluginHandler();
 };
 
 #endif // PLUGINHANDLER_H

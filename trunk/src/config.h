@@ -37,7 +37,6 @@
 #include <QtDebug>
 #include <QDir>
 #include <QFile>
-#include <QSharedPointer>
 
 // TODO: use robotqt version from CMakeLists.txt
 static const QString String_Version = "0.1";
@@ -51,7 +50,9 @@ public:
 	/**
 	 * Returns the, only available, instance of Config class
 	 */
-	static QSharedPointer<Config> getInstance();
+	static Config * getInstance();
+
+	~Config();
 
 	/**
 	 * Called from RobotQt::beforeQuit() slot
@@ -72,21 +73,20 @@ private:
 	QDir RobotQtDir;
 	QString RobotQtPath;
 
-	static QSharedPointer<Config> m_pConfig;
+	// Singleton variable
+	static Config *m_pConfig;
 
 	/**
-	 * Initialize config variables.
-	 * This constructor is private because it can't be initialize without the
-	 * getInstance() method.
+	 * Initialize config variables. This constructor is private because
+	 * it can't be initialize without the getInstance() method.
 	 */
 	Config();
 };
 
 /**
- * Message handler.
- * It's a function that prints out debug messages, warnings,
- * critical and fatal error messages. If it is a fatal message, the application
- * aborts immediately.
+ * Message handler it's a function that prints out debug messages,
+ * warnings, critical and fatal error messages. If it is a fatal
+ * message, the application aborts immediately.
  */
 void handleRobotQtMessages(QtMsgType type, const char *msg);
 

@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
 	RobotQt w;
 
-	QObject::connect(&a, SIGNAL(aboutToQuit()), &w, SLOT(beforeQuit()));
+	// QObject::connect(&a, SIGNAL(aboutToQuit()), &w, SLOT(beforeQuit()));
 
 	w.show();
 

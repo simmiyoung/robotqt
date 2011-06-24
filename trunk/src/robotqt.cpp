@@ -67,6 +67,9 @@ RobotQt::RobotQt(QWidget *parent)
 	// There are no reason to use smart pointer, since Qt destroys all QWidgets
 	sourceEditor = new SourceEditor(this);
 
+	PluginHandler *handler = PluginHandler::getInstance();
+	handler->setGraphicsView(graphicsView);
+
 	qDebug() << "Setting up Actions";
 	setupActions();
 
@@ -74,16 +77,25 @@ RobotQt::RobotQt(QWidget *parent)
 	readSettings();
 }
 
+RobotQt::~RobotQt()
+{
+	Config *config = Config::getInstance();
+	delete config;
+
+	PluginHandler *handler = PluginHandler::getInstance();
+	delete handler;
+
+}
+
 /**
  * Public Slots
  */
 
-void RobotQt::beforeQuit()
-{	
-	QSharedPointer<Config> config = Config::getInstance();
-	config->closeLog();
-}
-
+// void RobotQt::beforeQuit()
+// {	
+// 	Config *config = Config::getInstance();
+// 	delete config;
+// }
 
 /**
  * Private Slots
@@ -92,9 +104,10 @@ void RobotQt::beforeQuit()
 void RobotQt::openAbout()
 {
 	QMessageBox::about(this, tr("About RobotQt"),
-		tr("<h2>RobotQt %1</h2>"
-		"<p>Copyright &copy; 2010 Felipe Ferreri Tonello</p>"
-		"<p>RobotQt is a open source 2D robot simulator for academic purpose.</p>").arg(String_Version));
+	                   tr("<h2>RobotQt %1</h2>"
+	                      "<p>Copyright &copy; 2010 Felipe Ferreri Tonello</p>"
+	                      "<p>RobotQt is a open source 2D robot simulator for academic"
+	                      "purpose.</p>").arg(String_Version));
 }
 
 void RobotQt::openFile()
@@ -112,19 +125,19 @@ void RobotQt::openFile()
 	qDebug() << "Setting up SAX XML Parser for " << fileName;
 
 	// setup SAX XML Parser
-	PluginHandler handler(graphicsView);
+	PluginHandler *handler = PluginHandler::getInstance();
 	QXmlSimpleReader reader;
-	reader.setContentHandler(&handler);
-	reader.setErrorHandler(&handler);
+	reader.setContentHandler(handler);
+	reader.setErrorHandler(handler);
 
 	QFile file(fileName);
 	if (!file.open(QFile::ReadOnly | QFile::Text)) {
 		qWarning() << "Cannot read file " << fileName << ": " << file.errorString();
 
 		QMessageBox::warning(this, tr("RobotQt"),
-				     tr("Cannot read file %1:\n%2.")
-				     .arg(fileName)
-				     .arg(file.errorString()));
+		                     tr("Cannot read file %1:\n%2.")
+		                     .arg(fileName)
+		                     .arg(file.errorString()));
 		return;
 	}
 
@@ -134,8 +147,6 @@ void RobotQt::openFile()
 	QXmlInputSource xmlInputSource(&file);
 	if (reader.parse(xmlInputSource)) {
 		qDebug() << "Plugin Loaded";
-
-		statusBar()->showMessage(tr("Plugin loaded"), 2000);
 	}
 }
 

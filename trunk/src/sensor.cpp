@@ -31,4 +31,16 @@
  * Date: $Date$
  */
 
+#include <QGraphicsView>
+
 #include "sensor.h"
+
+bool Sensor::setXMLCommand(const QString &cmd, const QXmlAttributes &atts)
+{
+	return true;
+}
+
+bool Sensor::render(QGraphicsView *graphicsView)
+{
+	return true;
+}
