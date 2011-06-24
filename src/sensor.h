@@ -37,7 +37,9 @@
 #include "plugin.h"
 
 class Sensor : public Plugin {
-
+public:
+	virtual bool setXMLCommand(const QString &cmd, const QXmlAttributes &atts);;
+	virtual bool render(QGraphicsView *graphicsView);
 };
 
 #endif // SENSOR_H

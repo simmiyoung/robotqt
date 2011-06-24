@@ -37,7 +37,8 @@
 
 #include "config.h"
 
-QSharedPointer<Config> Config::m_pConfig = QSharedPointer<Config>(); // initialize signleton
+// initialize signleton
+Config *Config::m_pConfig = 0;
 
 Config::Config()
 {
@@ -60,12 +61,26 @@ Config::Config()
 #endif // Q_OS_*
 }
 
+Config::~Config()
+{
+	QFile log(this->getPath() + "/robotqt_log.txt");
+
+	if (log.open(QFile::WriteOnly | QFile::Append)) {
+		QTextStream logs(&log);
+		logs.setCodec("UTF-8"); // force to use unicode
+
+		logs << endl;
+		logs << "====================" << endl;
+		logs << endl;
+	}
+}
+
 /**
  * Singleton implementation
  */
-QSharedPointer<Config> Config::getInstance()
+Config * Config::getInstance()
 {
-	return (m_pConfig.isNull()) ? (m_pConfig = QSharedPointer<Config>(new Config())) : m_pConfig;
+	return (m_pConfig) ? m_pConfig : (m_pConfig = new Config());
 }
 
 QDir Config::getDir() const
@@ -83,17 +98,7 @@ QString Config::getPath() const
  */
 void Config::closeLog()
 {
-	QSharedPointer<Config> config = Config::getInstance();
-	QFile log(config->getPath() + "/robotqt_log.txt");
-
-	if (log.open(QFile::WriteOnly | QFile::Append)) {
-		QTextStream logs(&log);
-		logs.setCodec("UTF-8"); // force to use unicode
-
-		logs << endl;
-		logs << "====================" << endl;
-		logs << endl;
-	}
+	
 }
 
 /**
@@ -101,7 +106,7 @@ void Config::closeLog()
  */
 void handleRobotQtMessages(QtMsgType type, const char *msg)
 {
-	QSharedPointer<Config> config = Config::getInstance();
+	Config *config = Config::getInstance();
 	QFile log(config->getPath() + "/robotqt_log.txt");
 	//TODO: Check if log file is too large
 	if (log.open(QFile::WriteOnly | QFile::Append)) {

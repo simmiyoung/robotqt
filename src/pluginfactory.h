@@ -34,8 +34,6 @@
 #ifndef PLUGINFACTORY_H
 #define PLUGINFACTORY_H
 
-#include <QSharedPointer>
-
 #include "pluginhandler.h"
 #include "plugin.h"
 
@@ -45,12 +43,10 @@
 
 class PluginFactory {
 public:
-	static QSharedPointer<Plugin> getInstance(PluginHandler::PluginType pluginType);
+	static Plugin * getInstance(PluginHandler::PluginType pluginType);
 
 private:
 	PluginFactory();
-
-	static QSharedPointer<Plugin> m_pScenario; // There will be only one Scenario
 };
 
 #endif // PLUGINFACTORY_H

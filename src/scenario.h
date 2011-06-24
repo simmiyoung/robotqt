@@ -37,7 +37,13 @@
 #include "plugin.h"
 
 class Scenario : public Plugin {
+public:
+	virtual bool setXMLCommand(const QString &cmd, const QXmlAttributes &atts);
+	virtual bool render(QGraphicsView *graphicsView);
 
+private:
+	int m_width;
+	int m_height;
 };
 
 #endif // SCENARIO_H

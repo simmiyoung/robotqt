@@ -36,30 +36,26 @@
 #include "sensor.h"
 #include "robot.h"
 
-QSharedPointer<Plugin> PluginFactory::m_pScenario = QSharedPointer<Plugin>(); // Scenario Singleton
+PluginFactory::PluginFactory()
+{
 
-QSharedPointer<Plugin> PluginFactory::getInstance(PluginHandler::PluginType pluginType)
+}
+
+Plugin * PluginFactory::getInstance(PluginHandler::PluginType pluginType)
 {
 	switch (pluginType) {
 	case PluginHandler::Scenario:
-
-		if (m_pScenario.isNull()) {
-			m_pScenario = QSharedPointer<Plugin>(new Scenario());
-		}
-
-		return m_pScenario;
+		return new Scenario();
 		break;
 
-	case PluginHandler::Sensor:
-		
-		QSharedPointer<Plugin>(new Sensor());
+	case PluginHandler::Sensor:		
+		return new Sensor();
 		break;
 
 	case PluginHandler::Robot:
-
-		QSharedPointer<Plugin>(new Robot());
+		return new Robot();
 		break;
 	}
 
-	return QSharedPointer<Plugin>();
+	return 0;
 }

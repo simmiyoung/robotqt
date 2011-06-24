@@ -1,3 +1,6 @@
+* Debug
+  - Create a macro that shows the __FILE__ __FUNCTION__ __LINE__ macros to the debug output
+
 * XML Plugin
   - Design a XML pattern for scenario, sensor and robot plugins (done)
   - XML Parser (under development)

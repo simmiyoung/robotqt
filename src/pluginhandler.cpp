@@ -37,17 +37,42 @@
 #include "pluginhandler.h"
 #include "pluginfactory.h"
 
+#include "config.h"
+
 /**
  * TODO: - add debug log comments
  *       - explatory comments
  *       - support a generic viewer of plugins
  */
 
-PluginHandler::PluginHandler(QGraphicsView *graphicsView)
-	: m_graphicsView(graphicsView),
+// initialize signleton
+PluginHandler *PluginHandler::m_pPluginHandler = 0;
+
+PluginHandler::PluginHandler()
+	: m_graphicsView(0),
+	  m_metDrawingTag(false),
 	  m_metPluginTag(false)
 {
 
+}
+
+PluginHandler::~PluginHandler()
+{
+	qDeleteAll(m_MMPlugin);
+}
+
+/**
+ * Singleton implementation
+ */
+PluginHandler * PluginHandler::getInstance()
+{
+	return (m_pPluginHandler) ? m_pPluginHandler : 
+		(m_pPluginHandler = new PluginHandler());
+}
+
+void PluginHandler::setGraphicsView(QGraphicsView *graphicsView)
+{
+	m_graphicsView = graphicsView;
 }
 
 bool PluginHandler::startDocument()
@@ -57,6 +82,13 @@ bool PluginHandler::startDocument()
 
 bool PluginHandler::endDocument()
 {
+	qDebug() << "End of XML document";
+
+	qDebug() << "Rendering the plugin to the GraphicsView Widget";
+	// Render all modifications
+	m_curPlugin->render(m_graphicsView);
+
+	m_metPluginTag = false;
 	return true;
 }
 
@@ -65,27 +97,57 @@ bool PluginHandler::startElement(const QString &namespaceURI,
                                  const QString &qName,
                                  const QXmlAttributes &atts)
 {
+
+	qDebug() << "Start namespaceURI: " << namespaceURI;
+	qDebug() << "Start localName: " << localName;
+	qDebug() << "Start qName: " << qName;
+
 	if (!m_metPluginTag) {
 		if (qName == "scenario") {
+			qDebug() << "Found a Scenario Plugin";
 			m_pluginType = Scenario;
 
 		} else if (qName == "sensor") {
+			qDebug() << "Found a Sensor Plugin";
 			m_pluginType = Sensor;
-
+ 
 		} else if (qName == "robot") {
+			qDebug() << "Found a Robot Plugin";
 			m_pluginType = Robot;
 
 		} else {
-			m_errorStr = QObject::tr("The file is not a RobotQt Plugin file.");
+			qDebug() << "This file is not a RobotQt Plugin file";
+			m_errorStr = QObject::tr("This file is not a RobotQt Plugin file.");
 			return false;
 		}
 
 		// if didn't returned an error, it initializes the current plugin
-		m_plugin = PluginFactory::getInstance(m_pluginType);
+		m_curPlugin = PluginFactory::getInstance(m_pluginType);
+		m_MMPlugin.insert(m_pluginType, m_curPlugin);
+
 		m_metPluginTag = true;
 
+		return true;
+	} 
+
+	if (!m_metDrawingTag && qName == "drawing") {
+		qDebug() << "Found a drawing command";
+		m_metDrawingTag = true;
+
+		return true;
 	}
 
+	if (m_metDrawingTag) {
+		if (!m_curPlugin->setXMLDrawingCommand(qName, atts)) {
+			m_errorStr = m_curPlugin->errorStr();
+			return false;
+		}
+	} else {		
+		if (!m_curPlugin->setXMLCommand(qName, atts)) {
+			m_errorStr = m_curPlugin->errorStr();
+			return false;
+		}
+	}
 
 	return true;
 }
@@ -94,13 +156,14 @@ bool PluginHandler::endElement(const QString &namespaceURI,
                                const QString &localName,
                                const QString &qName)
 {
-
+	if (qName == "drawing")
+		m_metDrawingTag = false;
 	return true;
 }
 
 bool PluginHandler::characters(const QString &ch)
 {
-
+	qDebug() << "characters: " << ch;
 	return true;
 }
 
