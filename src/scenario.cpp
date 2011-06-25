@@ -73,7 +73,6 @@ bool Scenario::setXMLCommand(const QString &cmd, const QXmlAttributes &atts)
 		qDebug() << "Scenario width = " << m_width << " height = " << m_height;
 
 	} else {
-		qDebug() << cmd << " command is not supported by a Scenario Plugin";
 		m_errorStr = QObject::tr("%1 command is not supported by a Scenario Plugin.")
 			.arg(cmd);
 
@@ -85,14 +84,14 @@ bool Scenario::setXMLCommand(const QString &cmd, const QXmlAttributes &atts)
 
 bool Scenario::render(QGraphicsView *graphicsView)
 {
-	setGraphicsView(graphicsView);
-
 	qDebug() << "Cleaning past Scenarios, if exists, and setting up the new one";
 
 	QGraphicsScene *scene = new QGraphicsScene();
 
-	// TODO: take care of other plugins items in this scene.
-	delete graphicsView->scene();
+	// deletes items that belongs to the last scenario plugin, if this
+	// is the first scenario loaded, it does nothing.
+	delete m_itemsGroup;
+
 	graphicsView->setScene(scene);
 
 	qDebug() << "Painting the Scenario";
@@ -111,12 +110,24 @@ bool Scenario::render(QGraphicsView *graphicsView)
 		case Plugin::Command::Pen: 
 
 			// setting up width
-			tokIdx = tokList.indexOf(QRegExp("width=\\d+(\\.\\d+)?"));
+			tokIdx = tokList.indexOf(QRegExp("width=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("width", "pen", "0-9[.0-9]");
+				return false;
+			}
+
 			tmpList = tokList.at(tokIdx).split('=');
 			m_curPen.setWidthF(tmpList.at(1).toDouble());
 
 			// setting up color
-			tokIdx = tokList.indexOf(QRegExp("color=#[A-F\\d]{6}"));
+			tokIdx = tokList.indexOf(QRegExp("color=" REGEXP_COLOR));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("color", "pen", "#RRGGBB");
+				return false;
+			}
+
 			tmpList = tokList.at(tokIdx).split('=');
 			m_curPen.setColor(QColor(tmpList.at(1)));
 			break;
@@ -124,38 +135,172 @@ bool Scenario::render(QGraphicsView *graphicsView)
 			// added brackets to delimit the variables scope
 			// thats not necessary on case Pen.
 		case Plugin::Command::Rect: {
-			tokIdx = tokList.indexOf(QRegExp("x=\\d+(\\.\\d+)?"));
+			tokIdx = tokList.indexOf(QRegExp("x=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("x", "rect", "0-9[.0-9]");
+				return false;
+			}
+
 			tmpList = tokList.at(tokIdx).split('=');
 			qreal x = tmpList.at(1).toDouble();
 
-			tokIdx = tokList.indexOf(QRegExp("y=\\d+(\\.\\d+)?"));
+			tokIdx = tokList.indexOf(QRegExp("y=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("y", "rect", "0-9[.0-9]");
+				return false;
+			}
+
 			tmpList = tokList.at(tokIdx).split('=');
 			qreal y = tmpList.at(1).toDouble();
 
-			tokIdx = tokList.indexOf(QRegExp("width=\\d+(\\.\\d+)?"));
+			tokIdx = tokList.indexOf(QRegExp("width=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("width", "rect", "0-9[.0-9]");
+				return false;
+			}
+
 			tmpList = tokList.at(tokIdx).split('=');
 			qreal w = tmpList.at(1).toDouble();
 
-			tokIdx = tokList.indexOf(QRegExp("height=\\d+(\\.\\d+)?"));
+			tokIdx = tokList.indexOf(QRegExp("height=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("height", "rect", "0-9[.0-9]");
+				return false;
+			}
+
 			tmpList = tokList.at(tokIdx).split('=');
 			qreal h = tmpList.at(1).toDouble();
 
-			QGraphicsRectItem *rectItem = new QGraphicsRectItem(x, y, w, h);
-
 			// setting up color
-			tmpList = tokList.at(tokList.indexOf(QRegExp("color=#[A-F\\d]{6}"))).split('=');
-			rectItem->setBrush(QBrush(QColor(tmpList.at(1))));
+			tokIdx = tokList.indexOf(QRegExp("color=" REGEXP_COLOR));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("color", "rect", "#RRGGBB");
+				return false;
+			}
 
+			tmpList = tokList.at(tokIdx).split('=');
+
+			QGraphicsRectItem *rectItem = new QGraphicsRectItem(x, y, w, h);
+	
+			rectItem->setBrush(QBrush(QColor(tmpList.at(1))));
 			rectItem->setPen(m_curPen);
 
 			itemsList.push_back(rectItem);
 		}
 			break;
 
-		case Plugin::Command::Line:
+		case Plugin::Command::Line: {
+			tokIdx = tokList.indexOf(QRegExp("x1=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("x1", "line", "0-9[.0-9]");
+				return false;
+			}
+
+			tmpList = tokList.at(tokIdx).split('=');
+			qreal x1 = tmpList.at(1).toDouble();
+
+			tokIdx = tokList.indexOf(QRegExp("y1=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("y1", "line", "0-9[.0-9]");
+				return false;
+			}
+
+			tmpList = tokList.at(tokIdx).split('=');
+			qreal y1 = tmpList.at(1).toDouble();
+
+			tokIdx = tokList.indexOf(QRegExp("x2=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("x2", "line", "0-9[.0-9]");
+				return false;
+			}
+
+			tmpList = tokList.at(tokIdx).split('=');
+			qreal x2 = tmpList.at(1).toDouble();
+
+			tokIdx = tokList.indexOf(QRegExp("y2=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("y2", "line", "0-9[.0-9]");
+				return false;
+			}
+
+			tmpList = tokList.at(tokIdx).split('=');
+			qreal y2 = tmpList.at(1).toDouble();
+
+			QGraphicsLineItem *lineItem = new QGraphicsLineItem(x1, y1, x2, y2);
+	
+			lineItem->setPen(m_curPen);
+
+			itemsList.push_back(lineItem);
+		}
 			break;
 
-		case Plugin::Command::Ellipse:
+		case Plugin::Command::Ellipse: {
+			tokIdx = tokList.indexOf(QRegExp("x=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("x", "rect", "0-9[.0-9]");
+				return false;
+			}
+				
+			tmpList = tokList.at(tokIdx).split('=');
+			qreal x = tmpList.at(1).toDouble();
+				
+			tokIdx = tokList.indexOf(QRegExp("y=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("y", "rect", "0-9[.0-9]");
+				return false;
+			}
+				
+			tmpList = tokList.at(tokIdx).split('=');
+			qreal y = tmpList.at(1).toDouble();
+				
+			tokIdx = tokList.indexOf(QRegExp("width=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("width", "rect", "0-9[.0-9]");
+				return false;
+			}
+				
+			tmpList = tokList.at(tokIdx).split('=');
+			qreal w = tmpList.at(1).toDouble();
+				
+			tokIdx = tokList.indexOf(QRegExp("height=" REGEXP_FLOAT));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("height", "rect", "0-9[.0-9]");
+				return false;
+			}
+				
+			tmpList = tokList.at(tokIdx).split('=');
+			qreal h = tmpList.at(1).toDouble();
+				
+			// setting up color
+			tokIdx = tokList.indexOf(QRegExp("color=" REGEXP_COLOR));
+			// error, regexp not found
+			if (tokIdx == -1) {
+				m_errorStr = errorCmdStr("color", "rect", "#RRGGBB");
+				return false;
+			}
+				
+			tmpList = tokList.at(tokIdx).split('=');
+				
+			QGraphicsEllipseItem *ellipseItem = new QGraphicsEllipseItem(x, y, w, h);
+				
+			ellipseItem->setBrush(QBrush(QColor(tmpList.at(1))));
+			ellipseItem->setPen(m_curPen);
+				
+			itemsList.push_back(ellipseItem);
+		}
 			break;
 		}
 	}
@@ -164,18 +309,8 @@ bool Scenario::render(QGraphicsView *graphicsView)
 
 	qDebug() << "Resizing GraphicsView Widget";
 
-	// TODO: melhorar o esquema de sizehint da mainwindow e do
-	// graphicsprint.
-
-	QSize newSz(m_width, m_height);
-
-	QSize gvSz = graphicsView->size();
-	QSize mwSz = graphicsView->window()->size();
-
-	QSize diffSz(m_width - gvSz.width(), m_height - gvSz.height());
-
-	graphicsView->setMinimumSize(newSz);
-	graphicsView->window()->resize(mwSz + diffSz);
+	graphicsView->resize(QSize(m_width, m_height));
+	graphicsView->setMaximumSize(QSize(m_width, m_height));
 
 	// ========
 

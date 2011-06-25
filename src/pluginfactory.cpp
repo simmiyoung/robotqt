@@ -32,9 +32,13 @@
  */
 
 #include "pluginfactory.h"
+#include "plugin.h"
 #include "scenario.h"
 #include "sensor.h"
 #include "robot.h"
+
+// loading singleton object
+Scenario *PluginFactory::m_pScenario = 0;
 
 PluginFactory::PluginFactory()
 {
@@ -45,7 +49,7 @@ Plugin * PluginFactory::getInstance(PluginHandler::PluginType pluginType)
 {
 	switch (pluginType) {
 	case PluginHandler::Scenario:
-		return new Scenario();
+		return (m_pScenario) ? m_pScenario : (m_pScenario = new Scenario());
 		break;
 
 	case PluginHandler::Sensor:		

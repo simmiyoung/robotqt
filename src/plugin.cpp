@@ -75,6 +75,7 @@
 	.arg(#f).arg(atts.value(#f))
 
 Plugin::Plugin()
+	: m_itemsGroup(0)
 {
 	m_curPen.setStyle(Qt::SolidLine);
 	m_curPen.setBrush(Qt::SolidPattern);
@@ -85,13 +86,9 @@ Plugin::Plugin()
 Plugin::~Plugin()
 {
 	qDeleteAll(m_drawStack);
-	
-	m_graphicsView->scene()->destroyItemGroup( m_itemsGroup);
-}
 
-void Plugin::setGraphicsView(QGraphicsView *graphicsView)
-{
-	m_graphicsView = graphicsView;
+	// it also deletes all items that belongs to this group
+	delete m_itemsGroup;
 }
 
 bool Plugin::setXMLDrawingCommand(const QString &cmd, const QXmlAttributes &atts)
@@ -104,12 +101,11 @@ bool Plugin::setXMLDrawingCommand(const QString &cmd, const QXmlAttributes &atts
 		                                CMD5(x, y, width, height, color)));
 	} else if (cmd == "line") {
 		m_drawStack.push_back(new Command(Command::Line,
-		                                CMD5(x1, y1, x2, y2, color)));
+		                                CMD4(x1, y1, x2, y2)));
 	} else if (cmd == "ellipse") {
 		m_drawStack.push_back(new Command(Command::Ellipse,
 		                                CMD5(x, y, width, height, color)));
 	} else {
-		qCritical() << cmd << " is not a valid draw command";
 		m_errorStr = QObject::tr("%1 is not a valid draw command.").arg(cmd);
 		return false;
 	}
@@ -119,8 +115,26 @@ bool Plugin::setXMLDrawingCommand(const QString &cmd, const QXmlAttributes &atts
 
 QString Plugin::errorStr() const
 {
+	qCritical() << m_errorStr;
 	return m_errorStr;
 }
+
+QString Plugin::errorCmdStr(const QString &attr,
+                            const QString &cmd,
+                            const QString &format) const
+{
+	qCritical() << attr << "attribute inside " << cmd
+	            << " command was not found or it's in wrong format."
+	            << " The right format is " << attr << '=' << format;
+
+	return QObject::tr("%1 attribute inside %2 command was not found or it's in"
+	                   "wrong format.\nThe right format is %3=%4.")
+		.arg(attr)
+		.arg(cmd)
+		.arg(attr)
+		.arg(format);
+}
+
 
 QGraphicsItemGroup * Plugin::group() const
 {

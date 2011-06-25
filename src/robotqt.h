@@ -49,9 +49,6 @@ public:
 	RobotQt(QWidget *parent = 0);
 	~RobotQt();
 
-/* public slots: */
-/* 	void beforeQuit(); */
-
 private slots:
 	void openAbout();
 	void openFile();

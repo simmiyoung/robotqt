@@ -35,7 +35,9 @@
 #define PLUGINFACTORY_H
 
 #include "pluginhandler.h"
-#include "plugin.h"
+
+class Plugin;
+class Scenario;
 
 /**
  * This class creates all Plugins instances
@@ -46,6 +48,8 @@ public:
 	static Plugin * getInstance(PluginHandler::PluginType pluginType);
 
 private:
+	static Scenario *m_pScenario;
+
 	PluginFactory();
 };
 
