@@ -42,6 +42,13 @@
 class QGraphicsView;
 class QGraphicsItemGroup;
 
+#define REGEXP_COLOR "#([a-fA-F\\d]{1}|[a-fA-F\\d]{3}|[a-fA-F\\d]{6})"
+#define REGEXP_FLOAT "\\d+(\\.\\d+)?"
+
+/**
+ * This is the base plugin class
+ */
+
 class Plugin {
 public:
 
@@ -74,8 +81,6 @@ public:
 	Plugin();
 	~Plugin();
 
-	void setGraphicsView(QGraphicsView *graphicsView);
-
 	/**
 	 * For XML Processing.
 	 * Maybe it is better to separate this to the Plugin classes. But,
@@ -86,9 +91,11 @@ public:
 	virtual bool setXMLDrawingCommand(const QString &cmd,
 	                                  const QXmlAttributes &atts);
 	QString errorStr() const;
+	QString errorCmdStr(const QString &attr,
+	                    const QString &cmd,
+	                    const QString &format) const;
 
 	virtual bool render(QGraphicsView *graphicsView) = 0;
-
 	QGraphicsItemGroup * group() const;
 
 protected:
@@ -103,10 +110,6 @@ protected:
 
 	// All QGraphicsItem from this plugin
 	QGraphicsItemGroup *m_itemsGroup;
-
-private:
-	// To destroy items in the scene
-	QGraphicsView      *m_graphicsView;
 };
 
 #endif // PLUGIN_H

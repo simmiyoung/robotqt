@@ -41,6 +41,9 @@ set(SOURCES_QRC
 	robotqt_imgs.qrc
 )
 
+# Groups for some IDEs
+source_group("Resources" FILES ${SOURCES_UI} ${SOURCES_QRC})
+
 # Icon for Mac OS X
 if(APPLE)
 	set(MACOSX_BUNDLE_ICON_FILE ${ROBOTQT_ICON})
@@ -48,6 +51,8 @@ if(APPLE)
 	set_source_files_properties(${MACOSX_BUNDLE_ICON_FILE} PROPERTIES
 		MACOSX_PACKAGE_LOCATION Resources
 	)
+
+    source_group("Resources" FILES ${ROBOTQT_ICON})
 endif(APPLE)
 
 QT4_WRAP_CPP(GEN_SOURCES_MOC ${SOURCES_HEADERS_MOC})

@@ -84,18 +84,7 @@ RobotQt::~RobotQt()
 
 	PluginHandler *handler = PluginHandler::getInstance();
 	delete handler;
-
 }
-
-/**
- * Public Slots
- */
-
-// void RobotQt::beforeQuit()
-// {	
-// 	Config *config = Config::getInstance();
-// 	delete config;
-// }
 
 /**
  * Private Slots

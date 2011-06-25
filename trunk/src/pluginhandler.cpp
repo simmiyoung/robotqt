@@ -51,7 +51,8 @@ PluginHandler *PluginHandler::m_pPluginHandler = 0;
 PluginHandler::PluginHandler()
 	: m_graphicsView(0),
 	  m_metDrawingTag(false),
-	  m_metPluginTag(false)
+	  m_metPluginTag(false),
+		m_curPlugin(0)
 {
 
 }
@@ -123,7 +124,10 @@ bool PluginHandler::startElement(const QString &namespaceURI,
 
 		// if didn't returned an error, it initializes the current plugin
 		m_curPlugin = PluginFactory::getInstance(m_pluginType);
-		m_MMPlugin.insert(m_pluginType, m_curPlugin);
+
+		// map all plugins n times, except scenario, that is only one possible
+		if ((m_pluginType == Scenario) && (!m_MMPlugin.contains(m_pluginType)))
+			m_MMPlugin.insert(m_pluginType, m_curPlugin);
 
 		m_metPluginTag = true;
 
