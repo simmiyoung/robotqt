@@ -248,7 +248,7 @@ bool Scenario::render(QGraphicsView *graphicsView)
 			tokIdx = tokList.indexOf(QRegExp("x=" REGEXP_FLOAT));
 			// error, regexp not found
 			if (tokIdx == -1) {
-				m_errorStr = errorCmdStr("x", "rect", "0-9[.0-9]");
+				m_errorStr = errorCmdStr("x", "ellipse", "0-9[.0-9]");
 				return false;
 			}
 				
@@ -258,7 +258,7 @@ bool Scenario::render(QGraphicsView *graphicsView)
 			tokIdx = tokList.indexOf(QRegExp("y=" REGEXP_FLOAT));
 			// error, regexp not found
 			if (tokIdx == -1) {
-				m_errorStr = errorCmdStr("y", "rect", "0-9[.0-9]");
+				m_errorStr = errorCmdStr("y", "ellipse", "0-9[.0-9]");
 				return false;
 			}
 				
@@ -268,7 +268,7 @@ bool Scenario::render(QGraphicsView *graphicsView)
 			tokIdx = tokList.indexOf(QRegExp("width=" REGEXP_FLOAT));
 			// error, regexp not found
 			if (tokIdx == -1) {
-				m_errorStr = errorCmdStr("width", "rect", "0-9[.0-9]");
+				m_errorStr = errorCmdStr("width", "ellipse", "0-9[.0-9]");
 				return false;
 			}
 				
@@ -278,7 +278,7 @@ bool Scenario::render(QGraphicsView *graphicsView)
 			tokIdx = tokList.indexOf(QRegExp("height=" REGEXP_FLOAT));
 			// error, regexp not found
 			if (tokIdx == -1) {
-				m_errorStr = errorCmdStr("height", "rect", "0-9[.0-9]");
+				m_errorStr = errorCmdStr("height", "ellipse", "0-9[.0-9]");
 				return false;
 			}
 				
@@ -289,7 +289,7 @@ bool Scenario::render(QGraphicsView *graphicsView)
 			tokIdx = tokList.indexOf(QRegExp("color=" REGEXP_COLOR));
 			// error, regexp not found
 			if (tokIdx == -1) {
-				m_errorStr = errorCmdStr("color", "rect", "#RRGGBB");
+				m_errorStr = errorCmdStr("color", "ellipse", "#RRGGBB");
 				return false;
 			}
 				
@@ -316,8 +316,6 @@ bool Scenario::render(QGraphicsView *graphicsView)
 	QSize size = QSize(m_width + 2, m_height + 2);
 	graphicsView->resize(size);
 	graphicsView->setMaximumSize(size);
-
-	// ========
 
 	return true;
 }
