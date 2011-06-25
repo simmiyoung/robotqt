@@ -78,6 +78,8 @@ void PluginHandler::setGraphicsView(QGraphicsView *graphicsView)
 
 bool PluginHandler::startDocument()
 {
+	qDebug() << "Begin of XML document";
+
 	return true;
 }
 
@@ -87,10 +89,10 @@ bool PluginHandler::endDocument()
 
 	qDebug() << "Rendering the plugin to the GraphicsView Widget";
 	// Render all modifications
-	m_curPlugin->render(m_graphicsView);
+	bool ret = m_curPlugin->render(m_graphicsView);
 
 	m_metPluginTag = false;
-	return true;
+	return ret;
 }
 
 bool PluginHandler::startElement(const QString &namespaceURI,
@@ -98,11 +100,6 @@ bool PluginHandler::startElement(const QString &namespaceURI,
                                  const QString &qName,
                                  const QXmlAttributes &atts)
 {
-
-	qDebug() << "Start namespaceURI: " << namespaceURI;
-	qDebug() << "Start localName: " << localName;
-	qDebug() << "Start qName: " << qName;
-
 	if (!m_metPluginTag) {
 		if (qName == "scenario") {
 			qDebug() << "Found a Scenario Plugin";
@@ -167,7 +164,6 @@ bool PluginHandler::endElement(const QString &namespaceURI,
 
 bool PluginHandler::characters(const QString &ch)
 {
-	qDebug() << "characters: " << ch;
 	return true;
 }
 

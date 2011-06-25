@@ -31,6 +31,7 @@
  * Date: $Date$
  */
 
+#include <QGraphicsWidget>
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsEllipseItem>
@@ -309,8 +310,12 @@ bool Scenario::render(QGraphicsView *graphicsView)
 
 	qDebug() << "Resizing GraphicsView Widget";
 
-	graphicsView->resize(QSize(m_width, m_height));
-	graphicsView->setMaximumSize(QSize(m_width, m_height));
+	scene->setSceneRect(0.0, 0.0, m_width, m_height);
+
+	// these 2 pixels more is for the scenerect pen width
+	QSize size = QSize(m_width + 2, m_height + 2);
+	graphicsView->resize(size);
+	graphicsView->setMaximumSize(size);
 
 	// ========
 
