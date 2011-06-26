@@ -41,6 +41,7 @@
 #include <QMessageBox>
 #include <QKeySequence>
 #include <QFileDialog>
+#include <QGraphicsScene>
 
 // XML
 #include <QXmlSimpleReader>
@@ -67,9 +68,6 @@ RobotQt::RobotQt(QWidget *parent)
 	// There are no reason to use smart pointer, since Qt destroys all QWidgets
 	sourceEditor = new SourceEditor(this);
 
-	PluginHandler *handler = PluginHandler::getInstance();
-	handler->setGraphicsView(graphicsView);
-
 	qDebug() << "Setting up Actions";
 	setupActions();
 
@@ -89,6 +87,12 @@ RobotQt::~RobotQt()
 /**
  * Private Slots
  */
+
+void RobotQt::resetScenario()
+{
+	PluginHandler *handler = PluginHandler::getInstance();
+	delete handler;
+}
 
 void RobotQt::openAbout()
 {
@@ -115,6 +119,7 @@ void RobotQt::openFile()
 
 	// setup SAX XML Parser
 	PluginHandler *handler = PluginHandler::getInstance();
+	handler->setGraphicsView(graphicsView);
 	QXmlSimpleReader reader;
 	reader.setContentHandler(handler);
 	reader.setErrorHandler(handler);
@@ -160,6 +165,7 @@ void RobotQt::setupActions()
 	graphicsView->addAction(actionStop);
 	graphicsView->setContextMenuPolicy(Qt::ActionsContextMenu);
 
+	connect(actionNew, SIGNAL(triggered()), this, SLOT(resetScenario()));
 	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
 	connect(actionAddPlugin, SIGNAL(triggered()), this, SLOT(openFile()));
 	connect(actionAboutRobotQt, SIGNAL(triggered()), this, SLOT(openAbout()));

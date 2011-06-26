@@ -34,6 +34,8 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#include <QStringList>
+
 #include <QXmlAttributes>
 
 #include <QVector>
@@ -41,6 +43,9 @@
 
 class QGraphicsView;
 class QGraphicsItemGroup;
+class QGraphicsEllipseItem;
+class QGraphicsLineItem;
+class QGraphicsRectItem;
 
 #define REGEXP_COLOR "#([a-fA-F\\d]{1}|[a-fA-F\\d]{3}|[a-fA-F\\d]{6})"
 #define REGEXP_FLOAT "\\d+(\\.\\d+)?"
@@ -87,18 +92,33 @@ public:
 	 * for now, it's not necessary to add this complexity to the
 	 * codebase
 	 */
-	virtual bool setXMLCommand(const QString &cmd, const QXmlAttributes &atts) = 0;
-	virtual bool setXMLDrawingCommand(const QString &cmd,
-	                                  const QXmlAttributes &atts);
-	QString errorStr() const;
-	QString errorCmdStr(const QString &attr,
-	                    const QString &cmd,
-	                    const QString &format) const;
+	virtual bool           setXMLCommand(const QString &cmd,
+	                                     const QXmlAttributes &atts) = 0;
+	virtual bool           setXMLDrawingCommand(const QString &cmd,
+	                                            const QXmlAttributes &atts);
+							           
+	void                   setErrorStr(const QString &str);
+	QString                errorStr() const;
 
-	virtual bool render(QGraphicsView *graphicsView) = 0;
-	QGraphicsItemGroup * group() const;
+	virtual bool           render(QGraphicsView *graphicsView) = 0;
 
 protected:
+	void                   setErrorCmdStr(const QString &attr,
+	                                      const QString &cmd,
+	                                      const QString &format);
+
+	QVector<Command *>     drawStack() const;
+
+	QGraphicsItemGroup   * itemGroup() const;
+	void                   setItemGroup(QGraphicsItemGroup *group);
+
+	// drawing commands parser
+	bool                   setCurPen(const QStringList &tokList);
+	QGraphicsRectItem    * rectItem(const QStringList &tokList);
+	QGraphicsLineItem    * lineItem(const QStringList &tokList);
+	QGraphicsEllipseItem * ellipseItem(const QStringList &tokList);
+
+private:
 	// XML Parser error string
 	QString             m_errorStr;
 
@@ -109,7 +129,7 @@ protected:
 	QPen                m_curPen;
 
 	// All QGraphicsItem from this plugin
-	QGraphicsItemGroup *m_itemsGroup;
+	QGraphicsItemGroup *m_itemGroup;
 };
 
 #endif // PLUGIN_H

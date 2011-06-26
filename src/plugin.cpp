@@ -32,6 +32,7 @@
  */
 
 #include <QGraphicsView>
+#include <QGraphicsItemGroup>
 #include <QGraphicsEllipseItem>
 #include <QGraphicsLineItem>
 #include <QGraphicsRectItem>
@@ -75,7 +76,7 @@
 	.arg(#f).arg(atts.value(#f))
 
 Plugin::Plugin()
-	: m_itemsGroup(0)
+	: m_itemGroup(0)
 {
 	m_curPen.setStyle(Qt::SolidLine);
 	m_curPen.setBrush(Qt::SolidPattern);
@@ -88,23 +89,23 @@ Plugin::~Plugin()
 	qDeleteAll(m_drawStack);
 
 	// it also deletes all items that belongs to this group
-	delete m_itemsGroup;
+	delete m_itemGroup;
 }
 
 bool Plugin::setXMLDrawingCommand(const QString &cmd, const QXmlAttributes &atts)
 {
 	if (cmd == "pen") {
 		m_drawStack.push_back(new Command(Command::Pen,
-		                                CMD2(color, width)));
+																			CMD2(color, width)));
 	} else if (cmd == "rect") {
 		m_drawStack.push_back(new Command(Command::Rect,
-		                                CMD5(x, y, width, height, color)));
+																			CMD5(x, y, width, height, color)));
 	} else if (cmd == "line") {
 		m_drawStack.push_back(new Command(Command::Line,
-		                                CMD4(x1, y1, x2, y2)));
+																			CMD4(x1, y1, x2, y2)));
 	} else if (cmd == "ellipse") {
 		m_drawStack.push_back(new Command(Command::Ellipse,
-		                                CMD5(x, y, width, height, color)));
+																			CMD5(x, y, width, height, color)));
 	} else {
 		m_errorStr = QObject::tr("%1 is not a valid draw command.").arg(cmd);
 		return false;
@@ -113,30 +114,250 @@ bool Plugin::setXMLDrawingCommand(const QString &cmd, const QXmlAttributes &atts
 	return true;
 }
 
-QString Plugin::errorStr() const
+void Plugin::setErrorStr(const QString &str)
 {
-	qCritical() << m_errorStr;
-	return m_errorStr;
+	m_errorStr = str;
 }
 
-QString Plugin::errorCmdStr(const QString &attr,
-                            const QString &cmd,
-                            const QString &format) const
-{
-	qCritical() << attr << "attribute inside " << cmd
-	            << " command was not found or it's in wrong format."
-	            << " The right format is " << attr << '=' << format;
 
-	return QObject::tr("%1 attribute inside %2 command was not found or it's in"
-	                   "wrong format.\nThe right format is %3=%4.")
+void Plugin::setErrorCmdStr(const QString &attr,
+                            const QString &cmd,
+                            const QString &format)
+{
+	m_errorStr = QObject::tr("%1 attribute inside %2 command was not found or it's"
+													 "in wrong format.\nThe right format is %3=%4.")
 		.arg(attr)
 		.arg(cmd)
 		.arg(attr)
 		.arg(format);
 }
 
-
-QGraphicsItemGroup * Plugin::group() const
+QString Plugin::errorStr() const
 {
-	return m_itemsGroup;
+	qCritical() << m_errorStr;
+	return m_errorStr;
+}
+
+QVector<Plugin::Command *> Plugin::drawStack() const
+{
+	return m_drawStack;
+}
+
+QGraphicsItemGroup * Plugin::itemGroup() const
+{
+	return m_itemGroup;
+}
+
+void Plugin::setItemGroup(QGraphicsItemGroup *group)
+{
+	m_itemGroup = group;
+}
+
+/**
+ * Drawign parsers
+ */
+
+bool Plugin::setCurPen(const QStringList &tokList)
+{
+	QStringList tmpList;
+	int tokIdx;
+
+	// setting up width
+	tokIdx = tokList.indexOf(QRegExp("width=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("width", "pen", "0-9[.0-9]");
+		return false;
+	}
+
+	tmpList = tokList.at(tokIdx).split('=');
+	m_curPen.setWidthF(tmpList.at(1).toDouble());
+
+	// setting up color
+	tokIdx = tokList.indexOf(QRegExp("color=" REGEXP_COLOR));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("color", "pen", "#RRGGBB");
+		return false;
+	}
+
+	tmpList = tokList.at(tokIdx).split('=');
+	m_curPen.setColor(QColor(tmpList.at(1)));
+	
+	return true;
+}
+
+QGraphicsRectItem * Plugin::rectItem(const QStringList &tokList)
+{
+	QStringList tmpList;
+	int tokIdx;
+
+	tokIdx = tokList.indexOf(QRegExp("x=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("x", "rect", "0-9[.0-9]");
+		return 0;
+	}
+
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal x = tmpList.at(1).toDouble();
+
+	tokIdx = tokList.indexOf(QRegExp("y=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("y", "rect", "0-9[.0-9]");
+		return 0;
+	}
+
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal y = tmpList.at(1).toDouble();
+
+	tokIdx = tokList.indexOf(QRegExp("width=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("width", "rect", "0-9[.0-9]");
+		return 0;
+	}
+
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal w = tmpList.at(1).toDouble();
+
+	tokIdx = tokList.indexOf(QRegExp("height=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("height", "rect", "0-9[.0-9]");
+		return 0;
+	}
+
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal h = tmpList.at(1).toDouble();
+
+	// setting up color
+	tokIdx = tokList.indexOf(QRegExp("color=" REGEXP_COLOR));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("color", "rect", "#RRGGBB");
+		return 0;
+	}
+
+	tmpList = tokList.at(tokIdx).split('=');
+
+	QGraphicsRectItem *rectItem = new QGraphicsRectItem(x, y, w, h);
+	rectItem->setBrush(QBrush(QColor(tmpList.at(1))));
+	rectItem->setPen(m_curPen);
+
+	return rectItem;
+}
+
+QGraphicsLineItem * Plugin::lineItem(const QStringList &tokList)
+{
+	QStringList tmpList;
+	int tokIdx;
+
+	tokIdx = tokList.indexOf(QRegExp("x1=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("x1", "line", "0-9[.0-9]");
+		return 0;
+	}
+
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal x1 = tmpList.at(1).toDouble();
+
+	tokIdx = tokList.indexOf(QRegExp("y1=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("y1", "line", "0-9[.0-9]");
+		return 0;
+	}
+
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal y1 = tmpList.at(1).toDouble();
+
+	tokIdx = tokList.indexOf(QRegExp("x2=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("x2", "line", "0-9[.0-9]");
+		return 0;
+	}
+
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal x2 = tmpList.at(1).toDouble();
+
+	tokIdx = tokList.indexOf(QRegExp("y2=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("y2", "line", "0-9[.0-9]");
+		return 0;
+	}
+
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal y2 = tmpList.at(1).toDouble();
+
+	QGraphicsLineItem *lineItem = new QGraphicsLineItem(x1, y1, x2, y2);
+	lineItem->setPen(m_curPen);
+
+	return lineItem;
+}
+
+QGraphicsEllipseItem * Plugin::ellipseItem(const QStringList &tokList)
+{
+	QStringList tmpList;
+	int tokIdx;
+
+	tokIdx = tokList.indexOf(QRegExp("x=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("x", "ellipse", "0-9[.0-9]");
+		return 0;
+	}
+				
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal x = tmpList.at(1).toDouble();
+				
+	tokIdx = tokList.indexOf(QRegExp("y=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("y", "ellipse", "0-9[.0-9]");
+		return 0;
+	}
+				
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal y = tmpList.at(1).toDouble();
+				
+	tokIdx = tokList.indexOf(QRegExp("width=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("width", "ellipse", "0-9[.0-9]");
+		return 0;
+	}
+				
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal w = tmpList.at(1).toDouble();
+				
+	tokIdx = tokList.indexOf(QRegExp("height=" REGEXP_FLOAT));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("height", "ellipse", "0-9[.0-9]");
+		return 0;
+	}
+				
+	tmpList = tokList.at(tokIdx).split('=');
+	qreal h = tmpList.at(1).toDouble();
+				
+	// setting up color
+	tokIdx = tokList.indexOf(QRegExp("color=" REGEXP_COLOR));
+	// error, regexp not found
+	if (tokIdx == -1) {
+		setErrorCmdStr("color", "ellipse", "#RRGGBB");
+		return 0;
+	}
+				
+	tmpList = tokList.at(tokIdx).split('=');
+				
+	QGraphicsEllipseItem *ellipseItem = new QGraphicsEllipseItem(x, y, w, h);
+	ellipseItem->setBrush(QBrush(QColor(tmpList.at(1))));
+	ellipseItem->setPen(m_curPen);
+
+	return ellipseItem;
 }

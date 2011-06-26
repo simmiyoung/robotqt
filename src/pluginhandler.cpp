@@ -60,6 +60,8 @@ PluginHandler::PluginHandler()
 PluginHandler::~PluginHandler()
 {
 	qDeleteAll(m_MMPlugin);
+	PluginFactory::cleanScenario();
+	m_pPluginHandler = 0;
 }
 
 /**
@@ -88,11 +90,9 @@ bool PluginHandler::endDocument()
 	qDebug() << "End of XML document";
 
 	qDebug() << "Rendering the plugin to the GraphicsView Widget";
-	// Render all modifications
-	bool ret = m_curPlugin->render(m_graphicsView);
 
-	m_metPluginTag = false;
-	return ret;
+	// Render all modifications
+	return m_curPlugin->render(m_graphicsView);
 }
 
 bool PluginHandler::startElement(const QString &namespaceURI,
@@ -129,7 +129,7 @@ bool PluginHandler::startElement(const QString &namespaceURI,
 		m_metPluginTag = true;
 
 		return true;
-	} 
+	}
 
 	if (!m_metDrawingTag && qName == "drawing") {
 		qDebug() << "Found a drawing command";
@@ -159,6 +159,10 @@ bool PluginHandler::endElement(const QString &namespaceURI,
 {
 	if (qName == "drawing")
 		m_metDrawingTag = false;
+	else if (qName == "scenario" ||
+					 qName == "robot" ||
+					 qName == "sensor")
+		m_metPluginTag = false;
 	return true;
 }
 

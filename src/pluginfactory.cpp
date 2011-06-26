@@ -63,3 +63,8 @@ Plugin * PluginFactory::getInstance(PluginHandler::PluginType pluginType)
 
 	return 0;
 }
+
+void PluginFactory::cleanScenario()
+{
+	m_pScenario = 0;
+}
