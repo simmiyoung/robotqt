@@ -50,6 +50,7 @@ public:
 	~RobotQt();
 
 private slots:
+	void resetScenario();
 	void openAbout();
 	void openFile();
 

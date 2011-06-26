@@ -73,6 +73,8 @@ Config::~Config()
 		logs << "====================" << endl;
 		logs << endl;
 	}
+	
+	m_pConfig = 0;
 }
 
 /**

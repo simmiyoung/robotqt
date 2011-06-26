@@ -47,6 +47,9 @@ class PluginFactory {
 public:
 	static Plugin * getInstance(PluginHandler::PluginType pluginType);
 
+	// to be called when pluginhandler is destroyed
+	static void cleanScenario();
+
 private:
 	static Scenario *m_pScenario;
 
