@@ -23,7 +23,7 @@ _Last Update: 27-06-2011_
  * Set tag
   * Attribute:
    * attribute's_name
-    * Ex: {{{`<set name="My Scenario" />`}}}
+    * Ex: {{{<set name="My Scenario" />}}}
 
  * Size tag
   * Required
@@ -56,8 +56,6 @@ _Last Update: 27-06-2011_
      * width
      * height
      * color: RGB eg. #FF00BB
-
-
 
 
 
