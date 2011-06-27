@@ -12,8 +12,8 @@ Last Update: %%date(%d-%m-%Y)
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <scenario>
-	<set name="" value="" />
-	<size width="" height="" />
+	<set ... />
+	<size ... />
 	<drawing>
 		<...>
 	</drawing>
@@ -22,9 +22,8 @@ Last Update: %%date(%d-%m-%Y)
 
 - Set tag
  - Attribute:
-  - name
-  - value
-
+  - attribute's_name
+   - Ex: ```<set name="My Scenario" />```
 
 - Size tag
  - Required

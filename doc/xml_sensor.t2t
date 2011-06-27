@@ -11,24 +11,31 @@ Last Update: %%date(%d-%m-%Y)
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
-<sensor>
-	<set name="" value="" />
+<robot>
+	<set ... />
+  <pos ... />
 	<drawing>
 		<...>
 	</drawing>
-</sensor>
+</robot>
 ```
 
 - Set tag
  - Attribute:
-  - name
-  - value
+  - attribute's_name
+   - Ex: ```<set name="My Sensor" />```
 
+- Pos tag
+ - Position in parent coordinates
+  - Ex: The sensor parent is a Robot
+ - Attribute:
+  - x
+  - y
 
 - Drawing tag
  - Required, but it can be blank
  - Drawing is ordered straight forward according to the list
- - Elements:
+ - All position in drawing system is in position's parent coordinates(see Pos tag - Elements:
   - rect
    - Attribute:
     - x
