@@ -40,7 +40,6 @@
 
 #include <QVector>
 #include <QStringList>
-#include <QRegExp>
 
 #include "scenario.h"
 #include "config.h"
@@ -49,6 +48,20 @@ bool Scenario::setXMLCommand(const QString &cmd, const QXmlAttributes &atts)
 {
 	if (cmd == "set") {
 		qDebug() << "Found a set command";
+
+		QString ret;
+		
+		if (!atts.value("name").isEmpty()) {
+			ret = atts.value("name");
+			if (!ret.isEmpty()) {
+				setPluginName(ret);
+			} else {
+				setErrorStr(QObject::tr("Value attribute is empty."));
+				return false;
+			}
+		}
+		
+		qDebug() << "Scenario plugin name = " << ret;
 
 	} else if (cmd == "size") {
 		qDebug() << "Found a size command";
@@ -83,7 +96,7 @@ bool Scenario::setXMLCommand(const QString &cmd, const QXmlAttributes &atts)
 	return true;
 }
 
-bool Scenario::render(QGraphicsView *graphicsView)
+bool Scenario::render(QGraphicsView *graphicsView, QGraphicsItem *parent)
 {
 	qDebug() << "Cleaning past Scenarios, if exists, and setting up the new one";
 
@@ -95,60 +108,7 @@ bool Scenario::render(QGraphicsView *graphicsView)
 
 	graphicsView->setScene(scene);
 
-	qDebug() << "Painting the Scenario";
-
-	QList<QGraphicsItem *>     itemsList;
-	QVector<Plugin::Command *> stack = drawStack();
-
-	while (!stack.isEmpty()) {
-		const Plugin::Command *cmd = stack.front();
-		stack.pop_front();
-
-		QStringList tokList = cmd->values().split(':', QString::SkipEmptyParts);
-		bool ret = true; // return value
-
-		switch (cmd->drawCommand()) {
-		case Plugin::Command::Pen: 
-			ret = setCurPen(tokList);
-			break;
-
-			// added brackets to delimit the variables scope
-			// thats not necessary on case Pen.
-		case Plugin::Command::Rect: {
-			QGraphicsRectItem *rect = rectItem(tokList);
-			if (rect)
-				itemsList.push_back(rect);
-			else
-				ret = false;
-		}
-			break;
-
-		case Plugin::Command::Line: {
-			QGraphicsLineItem *line = lineItem(tokList);
-			if (line)
-				itemsList.push_back(line);
-			else
-				ret = false;
-		}
-			break;
-
-		case Plugin::Command::Ellipse: {
-			QGraphicsEllipseItem *ellipse = ellipseItem(tokList);
-			if (ellipse)
-				itemsList.push_back(ellipse);
-			else
-				ret = false;
-		}
-			break;
-		}
-
-		if (!ret)
-			return false; // ret == false
-	}
-
-	setItemGroup(scene->createItemGroup(itemsList));
-
-	qDebug() << "Resizing GraphicsView Widget";
+	qDebug() << "Resizing Scene and GraphicsView Widget";
 
 	scene->setSceneRect(0.0, 0.0, m_width, m_height);
 
@@ -157,5 +117,8 @@ bool Scenario::render(QGraphicsView *graphicsView)
 	graphicsView->resize(size);
 	graphicsView->setMaximumSize(size);
 
-	return true;
+	// setting up graphicsview name
+	graphicsView->setWindowTitle(pluginName());
+
+	return Plugin::render(graphicsView);
 }

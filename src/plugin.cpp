@@ -32,6 +32,7 @@
  */
 
 #include <QGraphicsView>
+#include <QGraphicsItem>
 #include <QGraphicsItemGroup>
 #include <QGraphicsEllipseItem>
 #include <QGraphicsLineItem>
@@ -76,7 +77,8 @@
 	.arg(#f).arg(atts.value(#f))
 
 Plugin::Plugin()
-	: m_itemGroup(0)
+	: m_itemGroup(0),
+		m_point(QPointF())
 {
 	m_curPen.setStyle(Qt::SolidLine);
 	m_curPen.setBrush(Qt::SolidPattern);
@@ -114,11 +116,30 @@ bool Plugin::setXMLDrawingCommand(const QString &cmd, const QXmlAttributes &atts
 	return true;
 }
 
+void Plugin::setPos(const QPointF &point)
+{
+	m_point = point;
+}
+
+QPointF Plugin::pos() const
+{
+	return m_point;
+}
+
+QString Plugin::pluginName() const
+{
+	return m_pluginName;
+}
+
+void Plugin::setPluginName(const QString &name)
+{
+	m_pluginName = name;
+}
+
 void Plugin::setErrorStr(const QString &str)
 {
 	m_errorStr = str;
 }
-
 
 void Plugin::setErrorCmdStr(const QString &attr,
                             const QString &cmd,
@@ -137,6 +158,74 @@ QString Plugin::errorStr() const
 	qCritical() << m_errorStr;
 	return m_errorStr;
 }
+
+bool Plugin::render(QGraphicsView *graphicsView, QGraphicsItem *parent)
+{
+	qDebug() << "Painting the Scenario";
+	
+	m_itemGroup = new QGraphicsItemGroup();
+	QVector<Plugin::Command *> stack = drawStack(); // copying
+	
+	while (!stack.isEmpty()) {
+		const Plugin::Command *cmd = stack.front();
+		stack.pop_front();
+		
+		QStringList tokList = cmd->values().split(':', QString::SkipEmptyParts);
+		bool ret = true; // return value
+		
+		switch (cmd->drawCommand()) {
+			case Plugin::Command::Pen: 
+				ret = setCurPen(tokList);
+				break;
+				
+				// added brackets to delimit the variables scope
+				// thats not necessary on case Pen.
+			case Plugin::Command::Rect: {
+				QGraphicsRectItem *rect = rectItem(tokList);
+
+				if (rect)
+					m_itemGroup->addToGroup(rect);
+				else
+					ret = false;
+			}
+				break;
+				
+			case Plugin::Command::Line: {
+				QGraphicsLineItem *line = lineItem(tokList);
+
+				if (line)
+					m_itemGroup->addToGroup(line);
+				else
+					ret = false;
+			}
+				break;
+				
+			case Plugin::Command::Ellipse: {
+				QGraphicsEllipseItem *ellipse = ellipseItem(tokList);
+
+				if (ellipse)
+					m_itemGroup->addToGroup(ellipse);
+				else
+					ret = false;
+			}
+				break;
+		}
+		
+		if (!ret) {
+			delete m_itemGroup; // force to delete the group
+			return false;
+		}
+	}
+	
+	if (parent)
+		m_itemGroup->setParentItem(parent);
+	
+	m_itemGroup->setPos(m_point);
+	graphicsView->scene()->addItem(m_itemGroup);
+	
+	return true;
+}
+
 
 QVector<Plugin::Command *> Plugin::drawStack() const
 {

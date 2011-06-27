@@ -32,15 +32,65 @@
  */
 
 #include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QGraphicsEllipseItem>
+#include <QGraphicsLineItem>
+#include <QGraphicsRectItem>
+#include <QGraphicsItemGroup>
+
+#include <QVector>
+#include <QStringList>
 
 #include "robot.h"
+#include "config.h"
 
 bool Robot::setXMLCommand(const QString &cmd, const QXmlAttributes &atts)
 {
-	return true;
-}
-
-bool Robot::render(QGraphicsView *graphicsView)
-{
+	if (cmd == "set") {
+		qDebug() << "Found a set command";
+		
+		QString ret;
+		
+		if (!atts.value("name").isEmpty()) {
+			ret = atts.value("name");
+			if (!ret.isEmpty()) {
+				setPluginName(ret);
+			} else {
+				setErrorStr(QObject::tr("Name attribute is empty."));
+				return false;
+			}
+		}
+		
+		qDebug() << "Robot plugin name = " << ret;
+		
+	} else if(cmd == "pos") {
+		QString ret;
+		qreal x, y;
+		
+		ret = atts.value("x");
+		if (!ret.isEmpty()) {
+			x = ret.toDouble();
+		} else {
+			setErrorStr(QObject::tr("x attribute is empty."));
+			return false;
+		}
+		
+		ret = atts.value("y");
+		if (!ret.isEmpty()) {
+			y = ret.toDouble();
+		} else {
+			setErrorStr(QObject::tr("y attribute is empty."));
+			return false;
+		}
+		
+		setPos(QPointF(x, y));
+		
+	} else {
+		setErrorStr(QObject::tr("%1 command is not supported by a Robot Plugin.")
+		            .arg(cmd));
+		
+		return false;
+	}
+	
 	return true;
 }

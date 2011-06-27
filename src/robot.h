@@ -38,8 +38,7 @@
 
 class Robot : public Plugin {
 public:
-	virtual bool setXMLCommand(const QString &cmd, const QXmlAttributes &atts);;
-	virtual bool render(QGraphicsView *graphicsView);
+	virtual bool setXMLCommand(const QString &cmd, const QXmlAttributes &atts);
 };
 
 #endif // ROBOT_H

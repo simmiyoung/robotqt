@@ -53,6 +53,8 @@ public:
 		Sensor,
 		Robot
 	};
+	
+	typedef QMultiMap<PluginType, Plugin *> MMPlugin;
 
 	~PluginHandler();
 
@@ -61,28 +63,27 @@ public:
 	 */
 	static PluginHandler * getInstance();
 
-	void    setGraphicsView(QGraphicsView *graphicsView);
+	void     setGraphicsView(QGraphicsView *graphicsView);
 
-	bool    startDocument();
-	bool    endDocument();
-
-	bool    startElement(const QString &namespaceURI,
-	                     const QString &localName,
-	                     const QString &qName,
-	                     const QXmlAttributes &atts);
-	bool    endElement(const QString &namespaceURI,
-	                   const QString &localName,
-	                   const QString &qName);
-
-	bool    characters(const QString &ch);
-
-	bool    fatalError(const QXmlParseException &exception);
-
-	QString errorString() const;
+	bool     startDocument();
+	bool     endDocument();
+	
+	bool     startElement(const QString &namespaceURI,
+												const QString &localName,
+												const QString &qName,
+												const QXmlAttributes &atts);
+	bool     endElement(const QString &namespaceURI,
+											const QString &localName,
+											const QString &qName);
+	
+	bool     characters(const QString &ch);
+	
+	bool     fatalError(const QXmlParseException &exception);
+	
+	QString  errorString() const;
+	MMPlugin pluginMM() const;
 
 private:
-	typedef QMultiMap<PluginType, Plugin *> MMPlugin;
-
 	QGraphicsView *m_graphicsView;
 								
 	QString        m_currentText;
