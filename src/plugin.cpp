@@ -77,8 +77,7 @@
 	.arg(#f).arg(atts.value(#f))
 
 Plugin::Plugin()
-	: m_itemGroup(0),
-		m_point(QPointF())
+	: m_itemGroup(0)
 {
 	m_curPen.setStyle(Qt::SolidLine);
 	m_curPen.setBrush(Qt::SolidPattern);
@@ -164,11 +163,10 @@ bool Plugin::render(QGraphicsView *graphicsView, QGraphicsItem *parent)
 	qDebug() << "Painting the Scenario";
 	
 	m_itemGroup = new QGraphicsItemGroup();
-	QVector<Plugin::Command *> stack = drawStack(); // copying
 	
-	while (!stack.isEmpty()) {
-		const Plugin::Command *cmd = stack.front();
-		stack.pop_front();
+	while (!m_drawStack.isEmpty()) {
+		const Plugin::Command *cmd = m_drawStack.front();
+		m_drawStack.pop_front();
 		
 		QStringList tokList = cmd->values().split(':', QString::SkipEmptyParts);
 		bool ret = true; // return value
@@ -224,12 +222,6 @@ bool Plugin::render(QGraphicsView *graphicsView, QGraphicsItem *parent)
 	graphicsView->scene()->addItem(m_itemGroup);
 	
 	return true;
-}
-
-
-QVector<Plugin::Command *> Plugin::drawStack() const
-{
-	return m_drawStack;
 }
 
 QGraphicsItemGroup * Plugin::itemGroup() const

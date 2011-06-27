@@ -60,7 +60,7 @@ PluginHandler::PluginHandler()
 PluginHandler::~PluginHandler()
 {
 	qDeleteAll(m_MMPlugin);
-	PluginFactory::cleanScenario();
+	PluginFactory::cleanScenario(); // scenario pointer = 0
 	m_pPluginHandler = 0;
 }
 
