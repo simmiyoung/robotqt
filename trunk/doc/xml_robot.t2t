@@ -12,7 +12,8 @@ Last Update: %%date(%d-%m-%Y)
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <robot>
-	<set name="" value="" />
+	<set ... />
+  <pos ... />
 	<drawing>
 		<...>
 	</drawing>
@@ -21,12 +22,20 @@ Last Update: %%date(%d-%m-%Y)
 
 - Set tag
  - Attribute:
-  - name
-  - value
+  - attribute's_name
+   - Ex: ```<set name="My Robot" />```
+
+- Pos tag
+ - Position in parent coordinates
+  - Ex: The robot parent is the Scenario
+ - Attribute:
+  - x
+  - y
 
 - Drawing tag
  - Required
  - Drawing is ordered straight forward according to the list
+ - All position in drawing system is in position's parent coordinates(see Pos tag)
  - Elements:
   - rect
    - Attribute:
