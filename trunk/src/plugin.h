@@ -48,7 +48,7 @@ class QGraphicsLineItem;
 class QGraphicsRectItem;
 
 #define REGEXP_COLOR "#([a-fA-F\\d]{1}|[a-fA-F\\d]{3}|[a-fA-F\\d]{6})"
-#define REGEXP_FLOAT "\\d+(\\.\\d+)?"
+#define REGEXP_FLOAT "-?\\d+(\\.\\d+)?"
 
 /**
  * This is the base plugin class
@@ -122,8 +122,6 @@ protected:
 	void                   setErrorCmdStr(const QString &attr,
 	                                      const QString &cmd,
 	                                      const QString &format);
-
-	QVector<Command *>     drawStack() const;
 
 	void                   setItemGroup(QGraphicsItemGroup *group);
 

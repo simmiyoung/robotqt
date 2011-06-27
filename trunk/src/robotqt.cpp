@@ -69,6 +69,9 @@ RobotQt::RobotQt(QWidget *parent)
 	// There are no reason to use smart pointer, since Qt destroys all QWidgets
 	sourceEditor = new SourceEditor(this);
 
+	// setting a new scene to the graphics view
+	graphicsView->setScene(new QGraphicsScene());
+
 	qDebug() << "Setting up Actions";
 	setupActions();
 

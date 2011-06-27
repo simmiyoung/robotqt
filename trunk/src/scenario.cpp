@@ -100,17 +100,13 @@ bool Scenario::render(QGraphicsView *graphicsView, QGraphicsItem *parent)
 {
 	qDebug() << "Cleaning past Scenarios, if exists, and setting up the new one";
 
-	QGraphicsScene *scene = new QGraphicsScene();
-
 	// deletes items that belongs to the last scenario plugin, if this
 	// is the first scenario loaded, it does nothing.
 	delete itemGroup();
 
-	graphicsView->setScene(scene);
-
 	qDebug() << "Resizing Scene and GraphicsView Widget";
 
-	scene->setSceneRect(0.0, 0.0, m_width, m_height);
+	graphicsView->setSceneRect(-150, -150, m_width, m_height);
 
 	// these 2 pixels more is for the scenerect pen width
 	QSize size = QSize(m_width + 2, m_height + 2);
