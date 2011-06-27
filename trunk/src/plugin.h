@@ -35,13 +35,13 @@
 #define PLUGIN_H
 
 #include <QStringList>
-
 #include <QXmlAttributes>
-
 #include <QVector>
 #include <QPen>
+#include <QPointF>
 
 class QGraphicsView;
+class QGraphicsItem;
 class QGraphicsItemGroup;
 class QGraphicsEllipseItem;
 class QGraphicsLineItem;
@@ -86,6 +86,9 @@ public:
 	Plugin();
 	~Plugin();
 
+	// TODO: force abstract class without setXMLCommand as
+	// a pure virtual
+	
 	/**
 	 * For XML Processing.
 	 * Maybe it is better to separate this to the Plugin classes. But,
@@ -96,20 +99,32 @@ public:
 	                                     const QXmlAttributes &atts) = 0;
 	virtual bool           setXMLDrawingCommand(const QString &cmd,
 	                                            const QXmlAttributes &atts);
-							           
+
+	void setPos(const QPointF &point);
+	QPointF pos() const;
+
 	void                   setErrorStr(const QString &str);
 	QString                errorStr() const;
 
-	virtual bool           render(QGraphicsView *graphicsView) = 0;
+	/**
+	 * Render the plugin into the graphicsview object.
+	 * if parent is passed, a sensor por instance, its position
+	 * will be mapped to the parent
+	 */
+	virtual bool           render(QGraphicsView *graphicsView,
+																QGraphicsItem *parent = 0);
+	
+	QGraphicsItemGroup   * itemGroup() const;
+	QString                pluginName() const;
 
 protected:
+	void                   setPluginName(const QString &name);
 	void                   setErrorCmdStr(const QString &attr,
 	                                      const QString &cmd,
 	                                      const QString &format);
 
 	QVector<Command *>     drawStack() const;
 
-	QGraphicsItemGroup   * itemGroup() const;
 	void                   setItemGroup(QGraphicsItemGroup *group);
 
 	// drawing commands parser
@@ -119,6 +134,9 @@ protected:
 	QGraphicsEllipseItem * ellipseItem(const QStringList &tokList);
 
 private:
+	// All plugins should have a neme
+	QString             m_pluginName;
+
 	// XML Parser error string
 	QString             m_errorStr;
 
@@ -130,6 +148,8 @@ private:
 
 	// All QGraphicsItem from this plugin
 	QGraphicsItemGroup *m_itemGroup;
+	
+	QPointF             m_point;
 };
 
 #endif // PLUGIN_H

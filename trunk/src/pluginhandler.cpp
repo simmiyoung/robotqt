@@ -100,6 +100,9 @@ bool PluginHandler::startElement(const QString &namespaceURI,
                                  const QString &qName,
                                  const QXmlAttributes &atts)
 {
+	Q_UNUSED(namespaceURI);
+	Q_UNUSED(localName);
+
 	if (!m_metPluginTag) {
 		if (qName == "scenario") {
 			qDebug() << "Found a Scenario Plugin";
@@ -123,7 +126,8 @@ bool PluginHandler::startElement(const QString &namespaceURI,
 		m_curPlugin = PluginFactory::getInstance(m_pluginType);
 
 		// map all plugins n times, except scenario, that is only one possible
-		if ((m_pluginType == Scenario) && (!m_MMPlugin.contains(m_pluginType)))
+		if (m_pluginType == Scenario && !m_MMPlugin.contains(m_pluginType) ||
+				m_pluginType != Scenario)
 			m_MMPlugin.insert(m_pluginType, m_curPlugin);
 
 		m_metPluginTag = true;
@@ -141,11 +145,15 @@ bool PluginHandler::startElement(const QString &namespaceURI,
 	if (m_metDrawingTag) {
 		if (!m_curPlugin->setXMLDrawingCommand(qName, atts)) {
 			m_errorStr = m_curPlugin->errorStr();
+			m_metDrawingTag = false;
+			m_metPluginTag = false;
 			return false;
 		}
 	} else {		
 		if (!m_curPlugin->setXMLCommand(qName, atts)) {
 			m_errorStr = m_curPlugin->errorStr();
+			m_metDrawingTag = false;
+			m_metPluginTag = false;
 			return false;
 		}
 	}
@@ -157,6 +165,9 @@ bool PluginHandler::endElement(const QString &namespaceURI,
                                const QString &localName,
                                const QString &qName)
 {
+	Q_UNUSED(namespaceURI);
+	Q_UNUSED(localName);
+	
 	if (qName == "drawing")
 		m_metDrawingTag = false;
 	else if (qName == "scenario" ||
@@ -185,4 +196,9 @@ bool PluginHandler::fatalError(const QXmlParseException &exception)
 QString PluginHandler::errorString() const
 {
 	return m_errorStr;
+}
+
+PluginHandler::MMPlugin PluginHandler::pluginMM() const
+{
+	return m_MMPlugin;
 }

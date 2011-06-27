@@ -39,7 +39,7 @@
 class Scenario : public Plugin {
 public:
 	virtual bool setXMLCommand(const QString &cmd, const QXmlAttributes &atts);
-	virtual bool render(QGraphicsView *graphicsView);
+	virtual bool render(QGraphicsView *graphicsView, QGraphicsItem *parent = 0);
 
 private:
 	int m_width;

@@ -41,6 +41,7 @@
 #include <QMessageBox>
 #include <QKeySequence>
 #include <QFileDialog>
+#include <QSize>
 #include <QGraphicsScene>
 
 // XML
