@@ -1,11 +1,8 @@
-#summary Sensor XML Pattern for RobotQt.
-#labels Phase-Design
+*Sensor XML Pattern for RobotQt*
 
-*Sensor XML Pattern for !RobotQt*
+Felipe Ferreri Tonello <eu@felipetonello.com>
 
-Felipe Ferreri Tonello <felipe.tonello@felipetonello.com>
-
-_Last Update: 01-12-2010_
+_Last Update: 27-06-2011_
 
 
 = Sensor XML Pattern =
@@ -14,23 +11,31 @@ _Last Update: 01-12-2010_
 
 {{{
 <?xml version="1.0" encoding="UTF-8"?>
-<sensor>
-	<set name="" value="" />
+<robot>
+	<set ... />
+  <pos ... />
 	<drawing>
 		<...>
 	</drawing>
-</sensor>
+</robot>
 }}}
 
  * Set tag
   * Attribute:
-   * name
-   * value
+   * attribute's_name
+    * Ex: {{{`<set name="My Sensor" />`}}}
+
+ * Pos tag
+  * Position in parent coordinates
+   * Ex: The sensor parent is a Robot
+  * Attribute:
+   * x
+   * y
 
  * Drawing tag
   * Required, but it can be blank
   * Drawing is ordered straight forward according to the list
-  * Elements:
+  * All position in drawing system is in position's parent coordinates(see Pos tag - Elements:
    * rect
     * Attribute:
      * x
@@ -52,3 +57,8 @@ _Last Update: 01-12-2010_
      * width
      * height
      * color: RGB eg. #FF00BB
+
+
+
+
+
