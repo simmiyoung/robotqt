@@ -3,7 +3,7 @@
 
 * XML Plugin
   - Design a XML pattern for scenario, sensor and robot plugins (done)
-  - XML Parser (under development)
+  - XML Parser (done)
 
 * Interpreter
   - Choose which interpreter to use as default robotqt language
@@ -11,10 +11,10 @@
 
 * Simulation engine
   - Implement the simulation engine on top of QGraphicsView Framework, if possible
-  - if not possible, find out another solution
+    - if not possible, find out another solution
 
 * State machine
-  - Implement State machine using QSateMachine Framework to handle all simulation process
+  - Implement State machine using QSateMachine Framework to handle all simulation process (under development)
 
 * Handle setting
   - Design which settings should be saved and restored
