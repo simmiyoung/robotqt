@@ -36,6 +36,10 @@
 
 #include "ui_robotqt.h"
 
+#include <QStateMachine>
+#include <QState>
+#include <QFinalState>
+
 class SourceEditor;
 
 /**
@@ -49,6 +53,9 @@ public:
 	RobotQt(QWidget *parent = 0);
 	~RobotQt();
 
+signals:
+	void pluginLoaded();
+
 private slots:
 	void resetScenario();
 	void openAbout();
@@ -56,9 +63,21 @@ private slots:
 
 private:
 	void setupActions();
+	void setupStateMachine();
 	void readSettings();
 
+	// UI's
 	SourceEditor *sourceEditor;
+
+	/* State Machine Framewok
+	   For mor info, check docs/state-machine.png
+	 */
+	QStateMachine m_stateMachine;
+	QState        m_stateRunning;       // Simulation is running
+	QState        m_statePaused;        // Simulation has been paused
+	QState        m_stateStopped;       // Simulation has been forced to stop
+	QState        m_stateLoadingPlugin; // Loading Plugin
+	QState        m_stateInitial;       // Simulation is empty (initial state)
 };
 
 #endif // ROBOTQT_H

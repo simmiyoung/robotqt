@@ -75,6 +75,9 @@ RobotQt::RobotQt(QWidget *parent)
 	qDebug() << "Setting up Actions";
 	setupActions();
 
+	qDebug() << "Setting up State Machine";
+	setupStateMachine();
+
 	qDebug() << "Reading Settup";
 	readSettings();
 }
@@ -146,6 +149,8 @@ void RobotQt::openFile()
 	if (reader.parse(xmlInputSource)) {
 		qDebug() << "Plugin Loaded";
 	}
+
+	emit pluginLoaded();
 }
 
 /**
@@ -169,11 +174,62 @@ void RobotQt::setupActions()
 	graphicsView->addAction(actionStop);
 	graphicsView->setContextMenuPolicy(Qt::ActionsContextMenu);
 
-	connect(actionNew, SIGNAL(triggered()), this, SLOT(resetScenario()));
+	// connect(actionNew, SIGNAL(triggered()), this, SLOT(resetScenario()));
 	connect(actionQuit, SIGNAL(triggered()), this, SLOT(close()));
-	connect(actionAddPlugin, SIGNAL(triggered()), this, SLOT(openFile()));
+	// connect(actionAddPlugin, SIGNAL(triggered()), this, SLOT(openFile()));
 	connect(actionAboutRobotQt, SIGNAL(triggered()), this, SLOT(openAbout()));
 	connect(actionSourceEditor, SIGNAL(triggered()), sourceEditor, SLOT(show()));
+}
+
+void RobotQt::setupStateMachine()
+{
+	m_stateInitial.addTransition(actionAddPlugin, SIGNAL(triggered()), &m_stateLoadingPlugin);
+	m_stateLoadingPlugin.addTransition(this, SIGNAL(pluginLoaded()), &m_stateStopped);
+	m_stateStopped.addTransition(actionPlay, SIGNAL(triggered()), &m_stateRunning);
+	m_stateStopped.addTransition(actionAddPlugin, SIGNAL(triggered()), &m_stateLoadingPlugin);
+	m_stateStopped.addTransition(actionNew, SIGNAL(triggered()), &m_stateInitial);
+	m_stateRunning.addTransition(actionStop, SIGNAL(triggered()), &m_stateStopped);
+	m_stateRunning.addTransition(actionPause, SIGNAL(triggered()), &m_statePaused);
+	m_statePaused.addTransition(actionPlay, SIGNAL(triggered()), &m_stateRunning);
+	m_statePaused.addTransition(actionStop, SIGNAL(triggered()), &m_stateStopped);
+	m_statePaused.addTransition(actionAddPlugin, SIGNAL(triggered()), &m_stateLoadingPlugin);
+
+	// Linking properties with respective state
+	m_stateInitial.assignProperty(actionPlay, "enabled", false);
+	m_stateInitial.assignProperty(actionStop, "enabled", false);
+	m_stateInitial.assignProperty(actionPause, "enabled", false);
+	m_stateInitial.assignProperty(actionAddPlugin, "enabled", true);
+	m_stateInitial.assignProperty(actionNew, "enabled", false);
+
+	m_stateStopped.assignProperty(actionPlay, "enabled", true);
+	m_stateStopped.assignProperty(actionStop, "enabled", false);
+	m_stateStopped.assignProperty(actionPause, "enabled", false);
+	m_stateStopped.assignProperty(actionAddPlugin, "enabled", true);
+	m_stateStopped.assignProperty(actionNew, "enabled", true);
+
+	m_stateRunning.assignProperty(actionPlay, "enabled", false);
+	m_stateRunning.assignProperty(actionStop, "enabled", true);
+	m_stateRunning.assignProperty(actionPause, "enabled", true);
+	m_stateRunning.assignProperty(actionAddPlugin, "enabled", false);
+	m_stateRunning.assignProperty(actionNew, "enabled", false);
+
+	m_statePaused.assignProperty(actionPlay, "enabled", true);
+	m_statePaused.assignProperty(actionStop, "enabled", true);
+	m_statePaused.assignProperty(actionPause, "enabled", false);
+	m_statePaused.assignProperty(actionAddPlugin, "enabled", true);
+	m_statePaused.assignProperty(actionNew, "enabled", false);
+
+	connect(&m_stateInitial, SIGNAL(entered()), this, SLOT(resetScenario()));
+	connect(&m_stateLoadingPlugin, SIGNAL(entered()), this, SLOT(openFile()));
+
+	m_stateMachine.addState(&m_stateInitial);
+	m_stateMachine.addState(&m_stateLoadingPlugin);
+	m_stateMachine.addState(&m_stateStopped);
+	m_stateMachine.addState(&m_stateRunning);
+	m_stateMachine.addState(&m_statePaused);
+
+	m_stateMachine.setInitialState(&m_stateInitial);
+	m_stateMachine.start();
 }
 
 void RobotQt::readSettings()
