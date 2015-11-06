@@ -1,0 +1,61 @@
+**Sensor XML Pattern for RobotQt**
+
+Felipe Ferreri Tonello <eu@felipetonello.com>
+
+_Last Update: 27-06-2011_
+
+
+# Sensor XML Pattern #
+
+## Declaration: ##
+
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<robot>
+	<set ... />
+	<pos ... />
+	<drawing>
+		<...>
+	</drawing>
+</robot>
+```
+
+  * Set tag
+    * Attribute:
+      * attribute's\_name
+        * Ex: `<set name="My Sensor" />`
+
+  * Pos tag
+    * Position in parent coordinates
+      * Ex: The sensor parent is a Robot
+    * Attribute:
+      * x
+      * y
+
+  * Drawing tag
+    * Required, but it can be blank
+    * Drawing is ordered straight forward according to the list
+    * All position in drawing system is in position's parent coordinates(see Pos tag - Elements:
+      * rect
+        * Attribute:
+          * x
+          * y
+          * width
+          * height
+          * color: RGB eg. #FF00BB
+      * line
+        * Attribute:
+          * x1
+          * y1
+          * x2
+          * y2
+          * color: RGB eg. #FF00BB
+      * ellipse
+        * Attribute:
+          * x
+          * y
+          * width
+          * height
+          * color: RGB eg. #FF00BB
+
+
